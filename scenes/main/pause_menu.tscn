@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://d2nwaqxlu5tnx"]
+
+[ext_resource type="Script" uid="uid://ck7pyg45t7j7f" path="res://scripts/ui/pause_menu.gd" id="1_qo3ou"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=653895923 node_paths=PackedStringArray("resume_button", "menu_button", "quit_button")]
+process_mode = 3
+layer = 10
+script = ExtResource("1_qo3ou")
+resume_button = NodePath("Control/CenterContainer/VBoxContainer/btnContinuar")
+menu_button = NodePath("Control/CenterContainer/VBoxContainer/btnMenu")
+quit_button = NodePath("Control/CenterContainer/VBoxContainer/btnSalir")
+
+[node name="Control" type="Control" parent="." unique_id=1277635826]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Dimmer" type="ColorRect" parent="Control" unique_id=151348433]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21176471, 0.21176471, 0.21176471, 0.7411765)
+
+[node name="CenterContainer" type="CenterContainer" parent="Control" unique_id=1359436503]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer" unique_id=1403381242]
+layout_mode = 2
+
+[node name="btnContinuar" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=192957462]
+layout_mode = 2
+text = "Continuar"
+
+[node name="btnMenu" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=248282235]
+layout_mode = 2
+text = "Volver al menú"
+
+[node name="btnSalir" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=539636861]
+layout_mode = 2
+text = "Salir
+"

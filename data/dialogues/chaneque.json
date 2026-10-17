@@ -1,0 +1,20 @@
+{
+  "chaneque_rama": [
+    {"speaker": "Voz del Chaneque", "text": "¿Quién pisa mi monte?"},
+    {"speaker": "Protagonista", "text": "Perdón, no quise romper nada."}
+  ],
+  "chaneque_ruido": [
+    {"speaker": "Voz del Chaneque", "text": "Haces mucho ruido."}
+  ],
+  "chaneque_ruido_2": [
+    {"speaker": "Voz del Chaneque", "text": "Esto es mío."}
+  ],
+  "chaneque_ruido_3": [
+    {"speaker": "Voz del Chaneque", "text": "Cuida donde pisas."}
+  ],
+  "chaneque_altar": [
+    {"speaker": "Protagonista", "text": "Esto es para ti. Gracias por dejarme pasar."},
+    {"speaker": "Chaneque", "text": "Quien respeta el monte, el monte lo deja ir."},
+    {"speaker": "Chaneque", "text": "Llévate esta moneda. Y recuerda: el monte también habla."}
+  ]
+}

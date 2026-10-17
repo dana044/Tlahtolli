@@ -1,0 +1,37 @@
+{
+  "carboncillo": {
+    "name": "Carboncillo",
+    "icon": "res://assets/sprites/ui/icons/icon_carboncillo.png",
+    "context": "La leyenda cuenta que la Mulata de Córdoba escapó de su prisión dibujando un barco con carbón."
+  },
+  "muneca": {
+    "name": "Muñeca",
+    "icon": "res://assets/sprites/ui/icons/icon_muneca.png",
+    "context": "Los relatos dicen que la Llorona busca a sus hijos; objetos como este nos recuerdan que su historia es de dolor."
+  },
+  "medallon": {
+    "name": "Medallón",
+    "icon": "res://assets/sprites/ui/icons/icon_medallon.png",
+    "context": "La Llorona es una de las leyendas más conocidas de México; cada región la cuenta a su manera."
+  },
+  "liston": {
+    "name": "Listón",
+    "icon": "res://assets/sprites/ui/icons/icon_liston.png",
+    "context": "El listón rojo se usa en varias tradiciones populares como símbolo de protección."
+  },
+  "cempasuchil": {
+    "name": "Cempasúchil",
+    "icon": "res://assets/sprites/ui/icons/icon_cempasuchil.png",
+    "context": "El cempasúchil es la flor de las ofrendas de Día de Muertos; su color y aroma guían a las almas."
+  },
+  "mandarina": {
+    "name": "Mandarina",
+    "icon": "res://assets/sprites/ui/icons/icon_mandarina.png",
+    "context": "La mandarina es una de las frutas típicas de las ofrendas."
+  },
+  "moneda": {
+    "name": "Moneda de oro",
+    "icon": "res://assets/sprites/ui/icons/icon_moneda.png",
+    "context": "Según la tradición, los chaneques cuidan la naturaleza y piden respeto a quien entra en ella."
+  }
+}

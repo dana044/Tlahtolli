@@ -1,0 +1,17 @@
+{
+  "protagonista_pradera": [
+	{"speaker": "Protagonista", "text": "Ese llanto… viene de la casa."}
+  ],
+  "llorona_atrapa": [
+	{"speaker": "Llorona", "text": "¡Mis hijos… mis hijos!"}
+  ],
+  "muneca_encontrada": [
+	{"speaker": "Protagonista", "text": "Una muñeca de trapo… Quizá es lo que busca."}
+  ],
+  "llorona_ofrenda": [
+	{"speaker": "Llorona", "text": "Esa muñeca… era de uno de mis niños."},
+	{"speaker": "Protagonista", "text": "La encontré para ti."},
+	{"speaker": "Llorona", "text": "Durante siglos me llamaron fantasma. Nadie preguntó qué buscaba."},
+	{"speaker": "Llorona", "text": "Toma este medallón. Que alguien me recuerde sin miedo."}
+  ]
+}

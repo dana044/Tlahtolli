@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ctiudr7fk68k3"]
+
+[ext_resource type="Script" uid="uid://dh4j25ysymrnx" path="res://scripts/ui/inventory_bar.gd" id="1_65we4"]
+[ext_resource type="PackedScene" uid="uid://b8u65sd8meqhy" path="res://scenes/ui/inventory_slot.tscn" id="2_aw4w6"]
+
+[node name="InventoryBar" type="CanvasLayer" unique_id=1376625741 node_paths=PackedStringArray("slots_container")]
+script = ExtResource("1_65we4")
+slot_scene = ExtResource("2_aw4w6")
+slots_container = NodePath("MarginContainer/Slots")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=966888302]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Slots" type="HBoxContainer" parent="MarginContainer" unique_id=1056483766]
+layout_mode = 2
+theme_override_constants/separation = 6

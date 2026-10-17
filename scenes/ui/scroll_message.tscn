@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dwfm7xibx3vxo"]
+
+[ext_resource type="Texture2D" uid="uid://bd83rd515h8xr" path="res://assets/sprites/ui/scroll_message.png" id="1_c8br3"]
+[ext_resource type="Script" uid="uid://cxo56vxcnwjxm" path="res://scripts/ui/scroll_message.gd" id="1_e8c4e"]
+[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="2_e8c4e"]
+
+[node name="ScrollMessaje" type="CanvasLayer" unique_id=233710266 node_paths=PackedStringArray("banner", "message_label")]
+layer = 8
+script = ExtResource("1_e8c4e")
+message_id = "llorona_mensaje_inicio"
+banner = NodePath("Banner")
+message_label = NodePath("Banner/MarginContainer/MessageLabel")
+
+[node name="Banner" type="NinePatchRect" parent="." unique_id=1388030116]
+custom_minimum_size = Vector2(420, 100)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture = ExtResource("1_c8br3")
+patch_margin_left = 40
+patch_margin_top = 20
+patch_margin_right = 40
+patch_margin_bottom = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="Banner" unique_id=1277611343]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 24
+
+[node name="MessageLabel" type="Label" parent="Banner/MarginContainer" unique_id=27827430]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("2_e8c4e")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

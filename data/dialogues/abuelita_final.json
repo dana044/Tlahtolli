@@ -1,0 +1,9 @@
+{
+  "ofrenda_inicio": [
+    {"speaker": "Protagonista", "text": "Moneda de oro, medallón de plata y carboncillo… Es hora."}
+  ],
+  "abuelita_final": [
+    {"speaker": "Abuelita", "text": "Gracias, mijo/a. Las leyendas ya no tendrán que gritar para ser recordadas."},
+    {"speaker": "Abuelita", "text": "Y tú ya sabes que todo pueblo vive mientras alguien cuente sus historias."}
+  ]
+}
