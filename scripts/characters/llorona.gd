@@ -13,12 +13,18 @@ extends Area2D
 ## Debe conectarse desde el nivel o el GameManager para aplicar la consecuencia.
 signal caught_player
 
+## Se emite cuando el jugador interactúa con la Llorona mientras está en
+## estado [constant State.PEACEFUL] (por ejemplo, para entregarle la muñeca).
+## El nivel decide qué ocurre a continuación.
+signal interacted
+
 
 ## Estados de comportamiento de la Llorona.
 enum State {
 	INACTIVE, ## Sin actividad: invisible y sin detección.
 	STALKING, ## Acecho mediante teletransportes periódicos.
 	CHASING, ## Persecución directa al jugador.
+	PEACEFUL, ## Visible y sin hostilidad: no captura y puede recibir la ofrenda.
 }
 
 
@@ -67,6 +73,14 @@ enum State {
 ## se mueve en línea recta hacia él con cualquier ángulo.
 @export var snap_to_eight_directions: bool = true
 
+@export var cry_min_distance: float = 30.0
+@export var cry_max_distance: float = 300.0
+@export var cry_near_volume_db: float = -24.0
+@export var cry_far_volume_db: float = 0.0
+@export var cry_volume_smoothing: float = 5.0
+
+var _target_cry_volume_db: float = 0.0
+
 #endregion
 
 
@@ -79,6 +93,15 @@ enum State {
 ## Región del mundo, en coordenadas globales, donde se permite aparecer.
 ## Si el área es cero (valor por defecto), no se aplica ninguna restricción.
 @export var spawn_bounds: Rect2 = Rect2()
+
+#endregion
+
+
+#region Parámetros de la fase pacífica
+
+## Duración, en segundos, del fundido con el que la Llorona aparece ante el
+## jugador y del fundido con el que se despide.
+@export var appear_fade_time: float = 1.2
 
 #endregion
 
@@ -116,6 +139,9 @@ func _ready() -> void:
 	# El orden de inicialización entre nodos no está garantizado, por lo que
 	# la referencia al jugador también se reintenta bajo demanda.
 	_try_find_player()
+	cry_player.attenuation = 0.0
+	cry_player.max_distance = 100000.0
+	cry_player.finished.connect(_on_cry_finished)
 
 	body_entered.connect(_on_body_entered)
 	timer.timeout.connect(_on_timer_timeout)
@@ -131,6 +157,7 @@ func _ready() -> void:
 ## Evalúa la detección y la persecución en cada paso de física.
 ## [param delta] es el tiempo transcurrido desde el paso anterior, en segundos.
 func _physics_process(delta: float) -> void:
+	_update_cry_volume(delta)
 	match _state:
 		State.STALKING:
 			# Solo puede detectar al jugador mientras está en escena.
@@ -141,6 +168,10 @@ func _physics_process(delta: float) -> void:
 					_start_chasing()
 		State.CHASING:
 			_chase(delta)
+		State.PEACEFUL:
+			# Permanece quieta mirando al jugador; no detecta ni persigue.
+			if is_instance_valid(player):
+				_play_directional("idle", player.global_position - global_position)
 
 
 ## Inicia la caza: la Llorona comenzará a acechar cerca del jugador.
@@ -166,6 +197,77 @@ func stop_hunting() -> void:
 	cry_player.stop()
 	# Se difiere porque puede invocarse durante el procesamiento de colisiones.
 	set_deferred("monitoring", false)
+
+
+## Hace que la Llorona aparezca ante el jugador con un fundido y deje de ser
+## hostil. Cancela cualquier acecho o persecución, silencia el llanto, la hace
+## inofensiva (sin captura) e interactuable mediante [method interact].
+## Puede esperarse con [code]await[/code]: termina cuando el fundido acaba.
+## [param distance] es la separación, en píxeles, respecto al jugador; se
+## prefiere una posición libre de obstáculos.
+func appear_before_player(distance: float = 80.0) -> void:
+	_try_find_player()
+	if not is_instance_valid(player):
+		push_warning("Llorona: no hay ningún nodo en el grupo 'player'; no puede aparecer.")
+		return
+
+	# Fin de toda actividad hostil.
+	timer.stop()
+	cry_player.stop()
+	set_deferred("monitoring", false)
+	_state = State.PEACEFUL
+
+	# Las consultas al espacio físico (validación de la posición) deben
+	# hacerse durante el paso de física, igual que en el teletransporte.
+	await get_tree().physics_frame
+	global_position = _find_peaceful_position(distance)
+	_play_directional("idle", player.global_position - global_position)
+
+	# Fundido de entrada: se vuelve visible con opacidad cero y se aclara.
+	modulate.a = 0.0
+	visible = true
+	add_to_group("interactable")
+
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "modulate:a", 1.0, appear_fade_time)
+	await tween.finished
+
+
+## Despide a la Llorona con un fundido de salida y la deja inactiva (oculta y
+## sin detección). Ya no será interactuable. Puede esperarse con
+## [code]await[/code].
+func disappear() -> void:
+	remove_from_group("interactable")
+
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, appear_fade_time)
+	await tween.finished
+
+	stop_hunting()
+	# Se restaura la opacidad para que una futura aparición no nazca invisible.
+	modulate.a = 1.0
+
+
+## Punto de entrada de la interacción: lo invoca el [Player] cuando el jugador
+## presiona [code]interact[/code] estando cerca. Solo reacciona en estado
+## [constant State.PEACEFUL] y emite [signal interacted].
+## [param _by] es el nodo que interactúa (no se usa por ahora).
+func interact(_by: Node2D) -> void:
+	if _state == State.PEACEFUL:
+		interacted.emit()
+
+
+## Busca una posición libre a [param distance] píxeles del jugador, probando
+## ocho direcciones a partir de un ángulo aleatorio. Si todas están
+## bloqueadas, devuelve la posición a la derecha del jugador.
+func _find_peaceful_position(distance: float) -> Vector2:
+	var start_angle: float = randf() * TAU
+	for i in 8:
+		var angle: float = start_angle + i * (TAU / 8.0)
+		var candidate: Vector2 = player.global_position + Vector2.from_angle(angle) * distance
+		if _is_valid_spawn(candidate):
+			return candidate
+	return player.global_position + Vector2.RIGHT * distance
 
 
 ## Pasa a perseguir al jugador y suspende los teletransportes.
@@ -237,6 +339,28 @@ func _play_directional(prefix: String, direction: Vector2) -> void:
 			sprite.animation = fallback_name
 			sprite.frame = 0
 			sprite.pause()
+
+
+func _update_cry_volume(delta: float) -> void:
+	if is_instance_valid(player):
+		var distance: float = global_position.distance_to(player.global_position)
+		var max_distance: float = maxf(cry_max_distance, cry_min_distance + 1.0)
+		var weight: float = clampf(
+			(distance - cry_min_distance) / (max_distance - cry_min_distance),
+			0.0,
+			1.0
+		)
+		weight = weight * weight * (3.0 - 2.0 * weight)
+		_target_cry_volume_db = lerpf(cry_near_volume_db, cry_far_volume_db, weight)
+
+	var smoothing: float = 1.0 - exp(-maxf(cry_volume_smoothing, 0.01) * delta)
+	cry_player.volume_db = lerpf(cry_player.volume_db, _target_cry_volume_db, smoothing)
+
+
+func _on_cry_finished() -> void:
+	# En estado pacífico el llanto no se reanuda.
+	if _state != State.INACTIVE and _state != State.PEACEFUL and visible and cry_player.stream != null:
+		cry_player.play()
 
 
 ## Devuelve la distancia al jugador, en píxeles.
@@ -317,7 +441,8 @@ func _is_valid_spawn(pos: Vector2) -> bool:
 
 ## Gestiona el contacto con un cuerpo. Solo el jugador activa la captura.
 func _on_body_entered(body: Node2D) -> void:
-	if _state == State.INACTIVE:
+	# Inactiva o pacífica: nunca captura al jugador.
+	if _state == State.INACTIVE or _state == State.PEACEFUL:
 		return
 	if body.is_in_group("player"):
 		caught_player.emit()

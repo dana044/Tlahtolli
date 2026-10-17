@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqoc228ljbidj"
-path="res://.godot/imported/casa.png-17a9677f3797aac9d4ff5b68d8006bc7.ctex"
+uid="uid://cf38mb651u1vq"
+path="res://.godot/imported/icon_cempasuchil.png-58e72df5a9ac41574164788a84c82cd3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/casa.png"
-dest_files=["res://.godot/imported/casa.png-17a9677f3797aac9d4ff5b68d8006bc7.ctex"]
+source_file="res://assets/sprites/ui/icons/icon_cempasuchil.png"
+dest_files=["res://.godot/imported/icon_cempasuchil.png-58e72df5a9ac41574164788a84c82cd3.ctex"]
 
 [params]
 

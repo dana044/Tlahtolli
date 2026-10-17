@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf38mb651u1vq"
-path="res://.godot/imported/icon_flor.png-4b3bb4446c2e064ebcf29bac7b5842cb.ctex"
+uid="uid://c72m1qamj14ys"
+path="res://.godot/imported/pino2.png-f080c9ab5acb1df847f1da95126c3f5f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/icons/icon_flor.png"
-dest_files=["res://.godot/imported/icon_flor.png-4b3bb4446c2e064ebcf29bac7b5842cb.ctex"]
+source_file="res://assets/sprites/objects/pino2.png"
+dest_files=["res://.godot/imported/pino2.png-f080c9ab5acb1df847f1da95126c3f5f.ctex"]
 
 [params]
 

@@ -94,18 +94,21 @@ fill_to = Vector2(0.5, 0)
 script = ExtResource("1_yewv4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276208741]
+position = Vector2(0, -13)
 sprite_frames = SubResource("SpriteFrames_am0s3")
 animation = &"walk_s"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1946720363]
+position = Vector2(0, -13)
 shape = SubResource("CapsuleShape2D_dyp2m")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1963291744]
+position = Vector2(0, -13)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 
 [node name="LanternLight" type="PointLight2D" parent="." unique_id=45901275]
-position = Vector2(1, 0)
+position = Vector2(1, -13)
 scale = Vector2(0.33007815, 0.33007815)
 color = Color(1, 0.9309246, 0.7977378, 1)
 energy = 1.4

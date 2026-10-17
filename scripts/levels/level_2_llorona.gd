@@ -1,3 +1,5 @@
+## @author Citlaly Morales Viveros (Cliente / Programadora XP)
+
 ## Nivel 2: la pradera de la Llorona.
 ##
 ## Actúa como director de la escena: coloca al jugador, delimita el mapa,
@@ -26,6 +28,10 @@ extends Node2D
 ## Segundos de gracia tras el respawn antes de que la Llorona reanude la caza.
 @export var hunt_resume_delay: float = 1.0
 
+## Distancia, en píxeles, a la que la Llorona aparece del jugador al recoger
+## la muñeca.
+@export var peace_appear_distance: float = 80.0
+
 ## Indica si hay una captura en curso. Evita que un segundo contacto inicie
 ## un respawn anidado.
 var _respawning: bool = false
@@ -33,6 +39,31 @@ var _respawning: bool = false
 @onready var player: Player = $Player
 @onready var llorona: Llorona = $Llorona
 @onready var spawn_point: Marker2D = $SpawnPoint
+
+## Muñeca de trapo escondida en el mapa. Es [code]null[/code] si la escena no
+## incluye el nodo [code]Muneca[/code] (o si la misión ya se completó).
+@onready var doll: ItemPickup = get_node_or_null("Muneca")
+
+## Id del objeto de la muñeca en [code]items.json[/code].
+const ITEM_DOLL: String = "muneca"
+
+## Id del objeto del medallón de plata en [code]items.json[/code].
+const ITEM_MEDALLION: String = "medallon"
+
+## Bandera de [GameState] que indica que la Llorona ya recibió la muñeca.
+const FLAG_QUEST_DONE: String = "llorona_en_paz"
+
+## Archivo con los diálogos de este nivel.
+const DIALOGUE_PATH: String = "res://data/dialogues/llorona.json"
+
+## Si es [code]true[/code], la Llorona ya no debe cazar al jugador (se
+## recogió la muñeca o la misión terminó). Evita que un respawn en curso
+## reanude la caza.
+var _hunt_suspended: bool = false
+
+## Indica si hay un diálogo o una entrega en curso. Evita que se disparen dos
+## secuencias de misión a la vez.
+var _quest_busy: bool = false
 
 
 func _ready() -> void:
@@ -55,9 +86,22 @@ func _ready() -> void:
 	# solo requiere editar este script.
 	llorona.caught_player.connect(_on_player_caught)
 
+	# Misión de la muñeca: al recogerla aparece la Llorona (ya sin hostilidad)
+	# y al interactuar con ella se le entrega.
+	llorona.interacted.connect(_on_llorona_interacted)
+	if GameState.has_flag(FLAG_QUEST_DONE):
+		# La misión ya se completó (por ejemplo, tras recargar el nivel): no
+		# hay muñeca que buscar ni Llorona que cace.
+		_hunt_suspended = true
+		if doll != null:
+			doll.queue_free()
+	elif doll != null:
+		doll.picked_up.connect(_on_doll_picked_up)
+
 	# Inicio inmediato de la caza. Más adelante puede delegarse en un Area2D
 	# de entrada que invoque start_hunting() al ser atravesado.
-	llorona.start_hunting()
+	if not _hunt_suspended:
+		llorona.start_hunting()
 
 
 ## Ejecuta la secuencia de captura: fundido de salida, regreso al checkpoint,
@@ -94,6 +138,70 @@ func _on_player_caught() -> void:
 
 	# 6. Periodo de gracia antes de reanudar la caza.
 	await get_tree().create_timer(hunt_resume_delay).timeout
-	llorona.start_hunting()
+	# Si mientras tanto se recogió la muñeca, la Llorona ya no es hostil.
+	if not _hunt_suspended:
+		llorona.start_hunting()
 
 	_respawning = false
+
+
+
+## Reacciona al recoger la muñeca: detiene la caza, muestra el diálogo del
+## hallazgo y hace aparecer a la Llorona, ya sin hostilidad, delante del
+## jugador. El jugador no puede moverse mientras dura la secuencia.
+## [param _item_id] es el id del objeto recogido (no se usa por ahora).
+func _on_doll_picked_up(_item_id: String) -> void:
+	if _quest_busy:
+		return
+	_quest_busy = true
+
+	# Desde este momento la Llorona deja de cazar, incluso si había un
+	# respawn en curso (ver _on_player_caught).
+	_hunt_suspended = true
+	llorona.stop_hunting()
+	player.can_move = false
+
+	await _play_dialogue("muneca_encontrada")
+	await llorona.appear_before_player(peace_appear_distance)
+
+	player.can_move = true
+	_quest_busy = false
+
+
+## Se ejecuta cuando el jugador interactúa con la Llorona pacífica. Si lleva
+## la muñeca, reproduce el diálogo de agradecimiento, cambia la muñeca por el
+## medallón de plata, registra la misión como completada y despide a la
+## Llorona.
+func _on_llorona_interacted() -> void:
+	if _quest_busy or not Inventory.has_item(ITEM_DOLL):
+		return
+	_quest_busy = true
+	player.can_move = false
+
+	await _play_dialogue("llorona_ofrenda")
+
+	# Entrega: sale la muñeca, entra el medallón.
+	Inventory.remove_item(ITEM_DOLL)
+	Inventory.add_item(ITEM_MEDALLION)
+	GameState.set_flag(FLAG_QUEST_DONE)
+
+	await llorona.disappear()
+
+	player.can_move = true
+	_quest_busy = false
+
+
+## Reproduce el bloque [param key] de [constant DIALOGUE_PATH] con el cuadro
+## de diálogo del juego y espera a que el jugador lo cierre. Puede esperarse
+## con [code]await[/code].
+## [br]Mientras el cuadro está abierto el juego queda en pausa (lo gestiona el
+## [DialogueManager]) y las líneas avanzan con Enter / Espacio.
+func _play_dialogue(key: String) -> void:
+	DialogueManager.play(DIALOGUE_PATH, key)
+
+	# Si el bloque no existe o está vacío, el cuadro no se abre y nunca se
+	# emite la señal de fin; se sale para no dejar al jugador bloqueado.
+	if not DialogueManager.is_active():
+		return
+
+	await DialogueManager.dialogue_finished

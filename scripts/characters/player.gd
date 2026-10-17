@@ -68,6 +68,17 @@ const DIRECTION_DEADZONE: float = 0.2
 #endregion
 
 
+#region Interacción
+
+## Distancia máxima, en píxeles, a la que el jugador puede interactuar con un
+## nodo del grupo [code]interactable[/code] (objetos recogibles, personajes
+## con los que se puede hablar, etc.). Se mide desde el origen del jugador
+## hasta el origen del objeto.
+@export var interact_range: float = 56.0
+
+#endregion
+
+
 ## Nodo [AnimatedSprite2D] que representa visualmente al personaje.
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -195,5 +206,28 @@ func set_lantern_enabled(enabled: bool) -> void:
 ## Punto de extensión para la interacción con objetos del entorno.
 ## Su implementación prevista se basa en un [Area2D] que detecte los
 ## objetos interactuables al alcance mediante señales.
+## [br][br]Implementación actual: en lugar de un [Area2D], se recorre el grupo
+## [code]interactable[/code] y se elige el nodo visible más cercano dentro de
+## [member interact_range] que tenga el método [code]interact(by)[/code]. Así
+## cualquier objeto o personaje se vuelve interactuable con solo añadirse al
+## grupo e implementar ese método, sin tocar el Player.
 func _try_interact() -> void:
-	pass
+	var closest: Node2D = null
+	var closest_distance: float = interact_range
+
+	for node in get_tree().get_nodes_in_group("interactable"):
+		var candidate := node as Node2D
+		# Se ignoran nodos ocultos (por ejemplo, la Llorona cuando no está
+		# en escena) y los que no saben reaccionar a la interacción.
+		if candidate == null or not candidate.is_visible_in_tree():
+			continue
+		if not candidate.has_method("interact"):
+			continue
+
+		var distance: float = global_position.distance_to(candidate.global_position)
+		if distance <= closest_distance:
+			closest = candidate
+			closest_distance = distance
+
+	if closest != null:
+		closest.call("interact", self)

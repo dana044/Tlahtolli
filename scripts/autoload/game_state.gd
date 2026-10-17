@@ -20,3 +20,20 @@ func set_checkpoint(pos: Vector2) -> void:
 ## Un nivel debe haber invocado [method set_checkpoint] antes de leerlo.
 func get_checkpoint() -> Vector2:
 	return _checkpoint
+
+
+## Banderas de progreso de la partida (misiones completadas, eventos vistos).
+## Clave: nombre de la bandera; valor: [code]true[/code]/[code]false[/code].
+var _flags: Dictionary = {}
+
+
+## Marca la bandera [param flag_name] con [param value].
+## Ejemplo: [code]GameState.set_flag("llorona_en_paz")[/code].
+func set_flag(flag_name: String, value: bool = true) -> void:
+	_flags[flag_name] = value
+
+
+## Indica si la bandera [param flag_name] está activa.
+## Una bandera que nunca se marcó se considera [code]false[/code].
+func has_flag(flag_name: String) -> bool:
+	return _flags.get(flag_name, false)
