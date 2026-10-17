@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="9_wwb3o"]
 [ext_resource type="PackedScene" uid="uid://camubbgcmv2se" path="res://scenes/objects/piedra.tscn" id="11_4lu1n"]
 [ext_resource type="PackedScene" uid="uid://csr6djppbb3p0" path="res://scenes/objects/pinos.tscn" id="12_2r2fg"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="13_5fp2a"]
+[ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="14_vl65c"]
 
 [node name="Level3Chaneque" type="Node2D" unique_id=408040604]
 y_sort_enabled = true
@@ -87,3 +89,8 @@ position = Vector2(141, 68)
 
 [node name="Pinos" parent="." unique_id=577072453 instance=ExtResource("12_2r2fg")]
 position = Vector2(95, 130)
+
+[node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("13_5fp2a")]
+
+[node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("14_vl65c")]
+current_level = 3

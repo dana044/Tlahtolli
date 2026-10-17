@@ -20,19 +20,6 @@ extends Node2D
 ## la vista del jugador. Valores de 0.5 a 1.0 añaden un momento de tensión.
 @export var respawn_blackout: float = 0.4
 
-## Segundos de espera al cargar el nivel antes de iniciar la introducción.
-## Deja terminar el fundido de entrada para que el diálogo no salga sobre negro.
-@export var intro_delay: float = 0.8
-
-## Solo para pruebas: si es true, desbloquea todas las pistas del diario al
-## iniciar. Sirve al ejecutar este nivel directamente (F6), porque las pistas
-## reales las desbloquea la abuelita en la intro. Déjalo en false al entregar.
-@export var debug_unlock_all_clues: bool = false
-
-## Pergamino con los mensajes de inicio. Es [code]null[/code] si el nivel
-## no lo incluye.
-@onready var scroll_message: ScrollMessage = get_node_or_null("ScrollMessage")
-
 ## Duración de cada fundido (salida y entrada), en segundos.
 @export var fade_duration: float = 0.6
 
@@ -42,6 +29,19 @@ extends Node2D
 ## Distancia, en píxeles, a la que la Llorona aparece del jugador al recoger
 ## la muñeca.
 @export var peace_appear_distance: float = 80.0
+
+## Segundos de espera al cargar el nivel antes de iniciar la introducción.
+## Deja terminar el fundido de entrada para que el diálogo no salga sobre negro.
+@export var intro_delay: float = 0.8
+
+## Solo para pruebas: si es true, desbloquea todas las pistas del diario al
+## iniciar. Sirve al ejecutar este nivel directamente (F6), porque las pistas
+## reales las desbloquea la abuelita en la intro. Déjalo en false al entregar.
+@export var debug_unlock_all_clues: bool = false
+
+## Si es true, imprime en la consola cada paso de la captura y la caza.
+## Sirve para depurar; desactívalo al entregar.
+@export var debug_log: bool = true
 
 ## Zona de paso hacia el nivel del Chaneque, en coordenadas globales (posición
 ## y tamaño). Es el hueco del borde derecho por el que el jugador puede salir
@@ -61,17 +61,6 @@ extends Node2D
 ## personaje camina de un mapa a otro.
 @export var exit_fade_time: float = 0.0
 
-## Indica si hay una captura en curso. Evita que un segundo contacto inicie
-## un respawn anidado.
-var _respawning: bool = false
-
-@onready var player: Player = $Player
-@onready var llorona: Llorona = $Llorona
-@onready var spawn_point: Marker2D = $SpawnPoint
-
-## Muñeca de trapo escondida en el mapa. Es [code]null[/code] si la escena no
-## incluye el nodo [code]Muneca[/code] (o si la misión ya se completó).
-@onready var doll: ItemPickup = get_node_or_null("Muneca")
 
 ## Id del objeto de la muñeca en [code]items.json[/code].
 const ITEM_DOLL: String = "muneca"
@@ -92,6 +81,24 @@ const LEVEL_3_PATH: String = "res://scenes/levels/level_3_chaneque.tscn"
 ## caminando desde este nivel. El nivel 3 la consume al iniciar. Debe coincidir
 ## con la constante del mismo nombre en [code]level_3_chaneque.gd[/code].
 const FLAG_WALKING_INTO_LEVEL_3: String = "entrando_nivel_3"
+
+
+@onready var player: Player = $Player
+@onready var llorona: Llorona = $Llorona
+@onready var spawn_point: Marker2D = $SpawnPoint
+
+## Muñeca de trapo escondida en el mapa. Es [code]null[/code] si la escena no
+## incluye el nodo [code]Muneca[/code] (o si la misión ya se completó).
+@onready var doll: ItemPickup = get_node_or_null("Muneca")
+
+## Pergamino con los mensajes de inicio. Es [code]null[/code] si el nivel
+## no lo incluye.
+@onready var scroll_message: ScrollMessage = get_node_or_null("ScrollMessage")
+
+
+## Indica si hay una captura en curso. Evita que un segundo contacto inicie
+## un respawn anidado.
+var _respawning: bool = false
 
 ## Si es [code]true[/code], la Llorona ya no debe cazar al jugador (se
 ## recogió la muñeca o la misión terminó). Evita que un respawn en curso
@@ -145,10 +152,15 @@ func _ready() -> void:
 	if debug_unlock_all_clues:
 		Journal.unlock_all()
 
+	# La salida se crea siempre, también al recargar el nivel con la misión
+	# ya completada (en ese caso queda abierta desde el inicio).
+	_setup_exit()
+
 	# Introducción del nivel: diálogo, pergamino y, al final, la caza.
-	# Solo se reproduce en la primera visita (si la misión ya terminó, se omite).
+	# Si la misión ya terminó, se omite.
 	if not _hunt_suspended:
 		_play_intro()
+
 
 ## Secuencia de entrada al nivel:
 ## 1. Diálogo del protagonista ("Ese llanto… viene de la casa.").
@@ -172,11 +184,8 @@ func _play_intro() -> void:
 
 	# 3. La caza empieza una vez cerrado el diálogo.
 	if not _hunt_suspended:
+		_log("Intro terminada: inicia la caza")
 		llorona.start_hunting()
-
-	# Salida hacia el nivel del Chaneque: queda lista pero cerrada hasta que la
-	# Llorona entregue el medallón.
-	_setup_exit()
 
 
 ## Ejecuta la secuencia de captura: fundido de salida, regreso al checkpoint,
@@ -187,8 +196,10 @@ func _play_intro() -> void:
 ## devuelve el control.
 func _on_player_caught() -> void:
 	if _respawning:
+		_log("Captura ignorada: ya hay un respawn en curso")
 		return
 	_respawning = true
+	_log("Capturado: inicia respawn")
 
 	# 1. Detener la caza y bloquear el input.
 	llorona.stop_hunting()
@@ -197,6 +208,7 @@ func _on_player_caught() -> void:
 	# 2. Esperar a que la pantalla esté completamente negra antes de mover
 	# al jugador; hacerlo antes dejaría ver el teletransporte.
 	await SceneManager.fade_out(fade_duration)
+	_log("Fundido de salida terminado")
 
 	# 3. Reubicar al jugador en el checkpoint y anular su velocidad residual.
 	player.global_position = GameState.get_checkpoint()
@@ -210,17 +222,34 @@ func _on_player_caught() -> void:
 	# sienta lento.
 	SceneManager.fade_in(fade_duration)
 	player.can_move = true
-	
-	await llorona.appear_before_player(peace_appear_distance)
+	_log("Respawn hecho: el jugador recupera el control")
 
+	# 6. La aparición de la Llorona corre en paralelo (sin await). Así, si esa
+	# animación tarda o nunca termina, no puede dejar bloqueada la reanudación
+	# de la caza. Si la caza se reanuda demasiado pronto, sube hunt_resume_delay.
 	# 6. Periodo de gracia antes de reanudar la caza.
 	await get_tree().create_timer(hunt_resume_delay).timeout
+
 	# Si mientras tanto se recogió la muñeca, la Llorona ya no es hostil.
 	if not _hunt_suspended:
+		_log("Reanudando caza")
 		llorona.start_hunting()
+	else:
+		_log("Caza NO reanudada: _hunt_suspended es true")
 
 	_respawning = false
 
+	# 7. Periodo de gracia antes de reanudar la caza.
+	await get_tree().create_timer(hunt_resume_delay).timeout
+
+	# Si mientras tanto se recogió la muñeca, la Llorona ya no es hostil.
+	if not _hunt_suspended:
+		_log("Reanudando caza")
+		llorona.start_hunting()
+	else:
+		_log("Caza NO reanudada: _hunt_suspended es true")
+
+	_respawning = false
 
 
 ## Reacciona al recoger la muñeca: detiene la caza, muestra el diálogo del
@@ -265,7 +294,8 @@ func _on_llorona_interacted() -> void:
 	await llorona.disappear()
 
 	# Con el medallón en mano se abre el camino hacia el nivel del Chaneque.
-	_exit.enable()
+	if _exit != null:
+		_exit.enable()
 
 	player.can_move = true
 	_quest_busy = false
@@ -325,3 +355,9 @@ func _play_dialogue(key: String) -> void:
 		return
 
 	await DialogueManager.dialogue_finished
+
+
+## Imprime un mensaje de depuración si [member debug_log] está activo.
+func _log(message: String) -> void:
+	if debug_log:
+		print("[Nivel2] ", message)

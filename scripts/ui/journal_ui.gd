@@ -1,10 +1,8 @@
-## Interfaz del diario de pistas. Se abre con J (acción "open_journal").
-## Muestra las pistas desbloqueadas y avisa cuando llega una nueva.
+## Interfaz del diario de pistas. Se abre con la acción "open_journal" (Tab).
+## Muestra solo las pistas que corresponden al nivel actual y avisa cuando
+## llega una nueva.
 extends CanvasLayer
 
-## Tipografía del diario (título, entradas e indicaciones). Si está vacía,
-## se usa la fuente por defecto del proyecto.
-@export var journal_font: Font
 ## Color de la letra para todas las entradas del diario.
 @export var font_color: Color = Color("3b2314")
 ## Panel completo del diario. Asígnalo en el Inspector.
@@ -15,14 +13,24 @@ extends CanvasLayer
 @export var toast_label: Label
 ## Acción que abre/cierra el diario.
 @export var toggle_action: StringName = &"open_journal"
-## Si es true, las pistas aún no descubiertas salen como "???".
+
+## Nivel en el que está esta instancia del diario (1 = Mulata, 2 = Llorona,
+## 3 = Chaneque). Solo se muestran las pistas cuyo "level" en journal.json
+## sea menor o igual a este número. Se cambia en el Inspector de cada nivel.
+@export_range(1, 3) var current_level: int = 1
+
+## Si es true, las pistas del nivel aún no descubiertas salen como "???".
 @export var show_locked_entries: bool = true
 ## Título de una pista bloqueada.
 @export var locked_title: String = "???"
 ## Texto de una pista bloqueada.
 @export var locked_text: String = "Aún no conozco esta pista."
-## Tamaños de letra.
+
+## Tipografía del diario. Si está vacía, usa la fuente por defecto del proyecto.
+@export var journal_font: Font
+## Tamaño de letra del título de cada pista.
 @export_range(8, 48) var title_font_size: int = 22
+## Tamaño de letra del texto de cada pista.
 @export_range(8, 32) var body_font_size: int = 16
 ## Segundos que se ve el aviso de nueva pista.
 @export_range(1.0, 10.0, 0.5) var toast_seconds: float = 3.0
@@ -37,17 +45,7 @@ func _ready() -> void:
 	toast_label.modulate.a = 0.0
 	Journal.clue_unlocked.connect(_on_clue_unlocked)
 
-## Aplica la tipografía a todo el diario con un Theme. Un Theme asignado a
-## 'book' se hereda por todos sus hijos, incluidas las entradas creadas
-## por código, y también por TitleLabel y HintLabel.
-func _apply_font() -> void:
-	if journal_font == null:
-		return
-	var diary_theme := Theme.new()
-	diary_theme.default_font = journal_font
-	diary_theme.set_color("font_color", "Label", font_color)
-	book.theme = diary_theme
-	
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(toggle_action):
 		if book.visible:
@@ -76,17 +74,40 @@ func close() -> void:
 	Journal.is_open = false
 
 
-## Dibuja de nuevo todas las entradas.
+## Aplica la tipografía a todo el diario con un Theme heredado por los hijos.
+func _apply_font() -> void:
+	if journal_font == null:
+		return
+	var diary_theme := Theme.new()
+	diary_theme.default_font = journal_font
+	diary_theme.set_color("font_color", "Label", font_color)
+	book.theme = diary_theme
+
+
+## ¿Esta pista corresponde al nivel actual?
+func _is_in_current_level(entry: Dictionary) -> bool:
+	return int(entry.get("level", 1)) <= current_level
+
+
+## Busca una pista por id. Devuelve {} si no existe.
+func _find_entry(id: String) -> Dictionary:
+	for entry in Journal.entries:
+		if entry.get("id", "") == id:
+			return entry
+	return {}
+
+
+## Dibuja de nuevo las entradas del nivel actual.
 func _rebuild_entries() -> void:
 	for child in entries_box.get_children():
 		child.queue_free()
 	for entry in Journal.entries:
-		var unlocked := Journal.is_unlocked(entry.get("id", ""))
-		if not unlocked and not show_locked_entries:
+		if not _is_in_current_level(entry):
 			continue
+		var unlocked := Journal.is_unlocked(entry.get("id", ""))
 		if unlocked:
 			_add_entry(entry.get("title", ""), entry.get("text", ""), false)
-		else:
+		elif show_locked_entries:
 			_add_entry(locked_title, locked_text, true)
 
 
@@ -112,8 +133,11 @@ func _add_entry(title_text: String, body_text: String, locked: bool) -> void:
 	entries_box.add_child(box)
 
 
-## Muestra el aviso "Nueva pista" con fundido.
-func _on_clue_unlocked(_clue_id: String) -> void:
+## Muestra el aviso "Nueva pista" (solo si la pista pertenece a este nivel).
+func _on_clue_unlocked(clue_id: String) -> void:
+	var entry := _find_entry(clue_id)
+	if entry.is_empty() or not _is_in_current_level(entry):
+		return
 	toast_label.show()
 	if _toast_tween:
 		_toast_tween.kill()

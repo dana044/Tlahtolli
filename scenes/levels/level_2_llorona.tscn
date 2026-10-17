@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="3_yc251"]
 [ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="4_3dx4f"]
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="4_n8dxx"]
-[ext_resource type="PackedScene" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
+[ext_resource type="PackedScene" uid="uid://dnddxgxcfjhop" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
 [ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="6_invbar"]
 [ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="9_3bo8v"]
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="11_n8jnb"]
@@ -234,6 +234,7 @@ position = Vector2(50, 570)
 
 [node name="Llorona" parent="." unique_id=1089438462 instance=ExtResource("3_ok67w")]
 position = Vector2(-41, 32)
+teleport_interval = 5.0
 
 [node name="Muneca" parent="." unique_id=167098197 instance=ExtResource("5_muneca")]
 position = Vector2(930, 262)
@@ -242,6 +243,7 @@ position = Vector2(930, 262)
 follow_up_ids = Array[String](["llorona_mision"])
 
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("9_3bo8v")]
+current_level = 2
 
 [node name="InventoryBar" parent="." unique_id=1686932264 instance=ExtResource("6_invbar")]
 

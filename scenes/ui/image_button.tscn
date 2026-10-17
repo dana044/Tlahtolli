@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://k3ei1dm4ale5"]
+
+[ext_resource type="Texture2D" uid="uid://dgtwx6v033eq" path="res://assets/sprites/ui/botones.png" id="1_fvsb0"]
+[ext_resource type="Script" uid="uid://donseol3yalmi" path="res://scripts/ui/image_button.gd" id="2_vjth5"]
+
+[node name="ImageButton" type="TextureButton" unique_id=1175162725]
+custom_minimum_size = Vector2(600, 64)
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_fvsb0")
+script = ExtResource("2_vjth5")

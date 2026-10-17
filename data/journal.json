@@ -2,31 +2,36 @@
   {
 	"id": "pista_intro",
 	"unlocked_by": "abuelita_intro",
+	"level": 1,
 	"title": "La neblina",
 	"text": "Una neblina mala cubrió el pueblo cuando la gente empezó a olvidar sus historias. Las leyendas despertaron y son tres."
   },
   {
 	"id": "pista_mulata",
 	"unlocked_by": "abuelita_mulata",
+	"level": 1,
 	"title": "La Mulata de Córdoba",
 	"text": "La encerraron injustamente. Dibujó un barco con carbón y se fue por el mar. Si la ayudo con ingenio, me dará su carboncillo."
   },
   {
 	"id": "pista_llorona",
 	"unlocked_by": "abuelita_llorona",
+	"level": 2,
 	"title": "La Llorona",
 	"text": "No debo seguirla, pero tampoco huir de ella para siempre. Tengo que buscar lo que perdió; quien se lo devuelva recibirá su medallón."
   },
   {
 	"id": "pista_chaneque",
 	"unlocked_by": "abuelita_chaneque",
+	"level": 3,
 	"title": "El Chaneque",
 	"text": "Es el guardián del monte. No debo hacer ruido ni tomar lo que no es mío. Hay que llevarle un listón rojo, cempasúchil y una mandarina para recibir una moneda de oro."
   },
   {
 	"id": "pista_ofrenda",
 	"unlocked_by": "abuelita_cierre",
+	"level": 3,
 	"title": "La ofrenda",
 	"text": "Con los tres regalos haremos la ofrenda en el altar antiguo."
   }
-]
+]	
