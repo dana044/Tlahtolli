@@ -1,5 +1,3 @@
-## @author Citlaly Morales Viveros (Cliente / Programadora XP)
-
 ## Nivel 2: la pradera de la Llorona.
 ##
 ## Actúa como director de la escena: coloca al jugador, delimita el mapa,
