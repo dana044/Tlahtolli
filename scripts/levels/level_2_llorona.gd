@@ -20,6 +20,19 @@ extends Node2D
 ## la vista del jugador. Valores de 0.5 a 1.0 añaden un momento de tensión.
 @export var respawn_blackout: float = 0.4
 
+## Segundos de espera al cargar el nivel antes de iniciar la introducción.
+## Deja terminar el fundido de entrada para que el diálogo no salga sobre negro.
+@export var intro_delay: float = 0.8
+
+## Solo para pruebas: si es true, desbloquea todas las pistas del diario al
+## iniciar. Sirve al ejecutar este nivel directamente (F6), porque las pistas
+## reales las desbloquea la abuelita en la intro. Déjalo en false al entregar.
+@export var debug_unlock_all_clues: bool = false
+
+## Pergamino con los mensajes de inicio. Es [code]null[/code] si el nivel
+## no lo incluye.
+@onready var scroll_message: ScrollMessage = get_node_or_null("ScrollMessage")
+
 ## Duración de cada fundido (salida y entrada), en segundos.
 @export var fade_duration: float = 0.6
 
@@ -129,8 +142,35 @@ func _ready() -> void:
 	elif doll != null:
 		doll.picked_up.connect(_on_doll_picked_up)
 
-	# Inicio inmediato de la caza. Más adelante puede delegarse en un Area2D
-	# de entrada que invoque start_hunting() al ser atravesado.
+	if debug_unlock_all_clues:
+		Journal.unlock_all()
+
+	# Introducción del nivel: diálogo, pergamino y, al final, la caza.
+	# Solo se reproduce en la primera visita (si la misión ya terminó, se omite).
+	if not _hunt_suspended:
+		_play_intro()
+
+## Secuencia de entrada al nivel:
+## 1. Diálogo del protagonista ("Ese llanto… viene de la casa.").
+## 2. Pergamino con el aviso y la misión (no bloquea al jugador).
+## 3. Comienza la caza de la Llorona.
+## El jugador no puede moverse hasta que se cierra el diálogo.
+func _play_intro() -> void:
+	player.can_move = false
+
+	# Deja terminar el fundido de entrada.
+	await get_tree().create_timer(intro_delay).timeout
+
+	# 1. Diálogo (pausa el juego hasta que el jugador lo cierra).
+	await _play_dialogue("protagonista_pradera")
+	player.can_move = true
+
+	# 2. Pergamino. Sin await a propósito: los mensajes se muestran mientras el
+	# jugador ya puede moverse.
+	if scroll_message != null:
+		scroll_message.play_configured_sequence()
+
+	# 3. La caza empieza una vez cerrado el diálogo.
 	if not _hunt_suspended:
 		llorona.start_hunting()
 
@@ -170,6 +210,8 @@ func _on_player_caught() -> void:
 	# sienta lento.
 	SceneManager.fade_in(fade_duration)
 	player.can_move = true
+	
+	await llorona.appear_before_player(peace_appear_distance)
 
 	# 6. Periodo de gracia antes de reanudar la caza.
 	await get_tree().create_timer(hunt_resume_delay).timeout

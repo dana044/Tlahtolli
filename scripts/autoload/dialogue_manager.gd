@@ -1,6 +1,6 @@
 ## Gestor global de diálogos (autoload "DialogueManager").
 ## Uso:
-##     DialogueManager.play("res://data/dialogues/llorona.json")
+##     DialogueManager.play("res://data/dialogues/llorona.json", "llorona_atrapa")
 ##     await DialogueManager.dialogue_finished
 extends Node
 
@@ -12,25 +12,31 @@ signal dialogue_finished
 
 ## Referencia al cuadro de diálogo.
 var dialog_box: CanvasLayer
+## Bloque que se está reproduciendo (para desbloquear pistas del diario).
+var _current_block: String = ""
 
 
 func _ready() -> void:
-	# Siempre activo, incluso con el juego en pausa.
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	dialog_box = dialog_box_scene.instantiate()
 	add_child(dialog_box)
-	dialog_box.dialog_finished.connect(func(): dialogue_finished.emit())
+	dialog_box.dialog_finished.connect(_on_dialog_finished)
 
 
 ## Reproduce un bloque de un archivo JSON.
-## Si el archivo es una lista simple, no hace falta el id del bloque.
 func play(json_path: String, block_id: String = "") -> void:
+	_current_block = block_id
 	dialog_box.start(_load_lines(json_path, block_id))
 
 
-## Diálogo abierto
+## ¿Hay un diálogo abierto?
 func is_active() -> bool:
 	return dialog_box.visible
+
+
+func _on_dialog_finished() -> void:
+	Journal.unlock_from_dialogue(_current_block)
+	dialogue_finished.emit()
 
 
 func _load_lines(path: String, block_id: String) -> Array:

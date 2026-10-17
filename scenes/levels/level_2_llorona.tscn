@@ -4,10 +4,13 @@
 [ext_resource type="Script" uid="uid://nfc3hlo67y58" path="res://scripts/levels/level_2_llorona.gd" id="1_tednk"]
 [ext_resource type="PackedScene" uid="uid://bpd0ceifcawic" path="res://scenes/levels/mapa_llorona.tscn" id="2_ok67w"]
 [ext_resource type="PackedScene" uid="uid://yyhjdujjvitd" path="res://scenes/characters/llorona.tscn" id="3_ok67w"]
+[ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="3_yc251"]
 [ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="4_3dx4f"]
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="4_n8dxx"]
 [ext_resource type="PackedScene" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
 [ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="6_invbar"]
+[ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="9_3bo8v"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="11_n8jnb"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3dx4f"]
 load_path = "res://.godot/imported/casa_abandonada.png-23ae3fd97371bc9d24188e310e63b91d.ctex"
@@ -19,6 +22,7 @@ size = Vector2(82, 43)
 y_sort_enabled = true
 script = ExtResource("1_tednk")
 map_bounds = Rect2(0, 0, 1152, 648)
+debug_unlock_all_clues = true
 
 [node name="mapa_llorona" parent="." unique_id=339989998 instance=ExtResource("2_ok67w")]
 
@@ -234,4 +238,11 @@ position = Vector2(-41, 32)
 [node name="Muneca" parent="." unique_id=167098197 instance=ExtResource("5_muneca")]
 position = Vector2(930, 262)
 
+[node name="ScrollMessaje" parent="." unique_id=233710266 instance=ExtResource("3_yc251")]
+follow_up_ids = Array[String](["llorona_mision"])
+
+[node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("9_3bo8v")]
+
 [node name="InventoryBar" parent="." unique_id=1686932264 instance=ExtResource("6_invbar")]
+
+[node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("11_n8jnb")]
