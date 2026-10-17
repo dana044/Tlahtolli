@@ -1,0 +1,25 @@
+{
+  "abuelita_intro": [
+    {"speaker": "Abuelita", "text": "Ay, qué bueno que llegaste. Acércate a la luz, que la neblina ya no deja ver nada."},
+    {"speaker": "Protagonista", "text": "¿Qué le pasó al pueblo?"},
+    {"speaker": "Abuelita", "text": "Una neblina mala lo cubrió. Dicen que llegó cuando la gente empezó a olvidar sus historias."},
+    {"speaker": "Abuelita", "text": "Y las leyendas, que llevaban años dormidas, despertaron. Ya no quieren ser solo cuentos."},
+    {"speaker": "Abuelita", "text": "Son tres, y cada una te va a pedir algo distinto. Escúchame bien."}
+  ],
+  "abuelita_mulata": [
+    {"speaker": "Abuelita", "text": "La Mulata de Córdoba, a la que encerraron injustamente. Dibujó un barco con carbón y se fue por el mar."},
+    {"speaker": "Abuelita", "text": "Si la ayudas con ingenio, te dará su carboncillo."}
+  ],
+  "abuelita_llorona": [
+    {"speaker": "Abuelita", "text": "La Llorona. No la sigas, pero tampoco le huyas por siempre."},
+    {"speaker": "Abuelita", "text": "Busca lo que perdió, y quien se lo devuelva recibirá su medallón."}
+  ],
+  "abuelita_chaneque": [
+    {"speaker": "Abuelita", "text": "El Chaneque, el guardián del monte. No hagas ruido y no tomes lo que no es tuyo."},
+    {"speaker": "Abuelita", "text": "Llévale un listón rojo, cempasúchil y una mandarina. Él te dará una moneda de oro."}
+  ],
+  "abuelita_cierre": [
+    {"speaker": "Abuelita", "text": "Con esos tres regalos haremos la ofrenda en el altar antiguo. Ve con cuidado."},
+    {"speaker": "Protagonista", "text": "Lo haré. Lo prometo."}
+  ]
+}

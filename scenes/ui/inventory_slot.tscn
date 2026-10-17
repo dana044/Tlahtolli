@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b8u65sd8meqhy"]
+
+[ext_resource type="Texture2D" uid="uid://dgs6qirxgv221" path="res://assets/sprites/ui/inventory_slot.png" id="1_kscix"]
+[ext_resource type="Script" uid="uid://d0mswjuhuhl1e" path="res://scripts/ui/inventory_slot.gd" id="2_ru537"]
+
+[node name="InventorySlot" type="TextureRect" unique_id=504417858 node_paths=PackedStringArray("icon_rect")]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("1_kscix")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_ru537")
+icon_rect = NodePath("Icon")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1701228015]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(2.5, 2.5)
+expand_mode = 1
+stretch_mode = 3
