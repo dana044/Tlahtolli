@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bpd0ceifcawic"]
+
+[ext_resource type="Texture2D" uid="uid://buaw8k1qi2jxp" path="res://assets/tilesets/Sin título.png" id="1_e2imn"]
+[ext_resource type="Texture2D" uid="uid://c57km5ignk3i5" path="res://assets/tilesets/Puente grande.png" id="2_uowxw"]
+[ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="3_uowxw"]
+[ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="4_aoxwd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2imn"]
+size = Vector2(276, 101)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uowxw"]
+size = Vector2(216.79688, 99)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aoxwd"]
+size = Vector2(99.5, 149)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6gw3"]
+size = Vector2(149, 98)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cgeik"]
+size = Vector2(101, 183)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2kryb"]
+size = Vector2(101, 148)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_am0s3"]
+a = Vector2(1154, 2)
+b = Vector2(-3, 1)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_h1a5f"]
+a = Vector2(1, 646)
+b = Vector2(1, 2)
+
+[node name="mapa_llorona" type="StaticBody2D" unique_id=339989998]
+
+[node name="Pasto_rio" type="Sprite2D" parent="." unique_id=1943885493]
+position = Vector2(577, 323)
+texture = ExtResource("1_e2imn")
+
+[node name="Puente1" type="Sprite2D" parent="." unique_id=1732420910]
+position = Vector2(298, 224)
+texture = ExtResource("2_uowxw")
+
+[node name="Puente2" type="Sprite2D" parent="." unique_id=501803040]
+position = Vector2(975, 444)
+rotation = 1.5707964
+texture = ExtResource("2_uowxw")
+
+[node name="Pino2" parent="." unique_id=1307830309 instance=ExtResource("3_uowxw")]
+position = Vector2(75, 476)
+
+[node name="limite_tio_1" type="CollisionShape2D" parent="." unique_id=770460746]
+position = Vector2(140, 74.5)
+shape = SubResource("RectangleShape2D_e2imn")
+
+[node name="limite_tio_2" type="CollisionShape2D" parent="." unique_id=1556331797]
+position = Vector2(598.5, 224)
+scale = Vector2(2.56, 1)
+shape = SubResource("RectangleShape2D_uowxw")
+
+[node name="limite_tio_3" type="CollisionShape2D" parent="." unique_id=363844704]
+position = Vector2(826.25, 348.5)
+shape = SubResource("RectangleShape2D_aoxwd")
+
+[node name="limite_tio_4" type="CollisionShape2D" parent="." unique_id=1318965770]
+position = Vector2(950.5, 374)
+shape = SubResource("RectangleShape2D_x6gw3")
+
+[node name="limite_tio_5" type="CollisionShape2D" parent="." unique_id=470917517]
+position = Vector2(976.5, 555.5)
+shape = SubResource("RectangleShape2D_cgeik")
+
+[node name="limite_tio_6" type="CollisionShape2D" parent="." unique_id=693177407]
+position = Vector2(227.5, 199)
+shape = SubResource("RectangleShape2D_2kryb")
+
+[node name="limite_mapa_1" type="CollisionShape2D" parent="." unique_id=268783569]
+position = Vector2(0, -2)
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="limite_mapa_2" type="CollisionShape2D" parent="." unique_id=1707723889]
+position = Vector2(0, 646)
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="limite_mapa_3" type="CollisionShape2D" parent="." unique_id=281193233]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="limite_mapa_4" type="CollisionShape2D" parent="." unique_id=1197136251]
+position = Vector2(1150, 0)
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="Pino" parent="." unique_id=1255098683 instance=ExtResource("3_uowxw")]
+position = Vector2(144, 125)
+
+[node name="Arbusto" parent="." unique_id=585369755 instance=ExtResource("4_aoxwd")]
+position = Vector2(124, 568)

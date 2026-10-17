@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b6b3f6n71fgdm"]
+
+[ext_resource type="Texture2D" uid="uid://cal76sr267qst" path="res://assets/sprites/objects/arbusto.png" id="1_1bjk8"]
+
+[node name="Arbusto" type="StaticBody2D" unique_id=585369755]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1491067356]
+texture = ExtResource("1_1bjk8")

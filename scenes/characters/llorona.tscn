@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://yyhjdujjvitd"]
+
+[ext_resource type="Script" uid="uid://coecmomgf63op" path="res://scripts/characters/llorona.gd" id="1_4ukn5"]
+[ext_resource type="AudioStream" uid="uid://c5ce1leoaad2n" path="res://assets/audio/sfx/llorona_cry.mp3" id="3_imlf8"]
+[ext_resource type="Texture2D" uid="uid://bie4b8nir1wss" path="res://assets/sprites/characters/llorona_s.png" id="4_r11sn"]
+[ext_resource type="Texture2D" uid="uid://boq5tm8v5kf8k" path="res://assets/sprites/characters/llorona_sw.png" id="5_lydgw"]
+[ext_resource type="Texture2D" uid="uid://b1370vbusm0j4" path="res://assets/sprites/characters/llorona_w.png" id="6_nxj51"]
+[ext_resource type="Texture2D" uid="uid://cl6sdpqnkc7pb" path="res://assets/sprites/characters/llorona_nw.png" id="7_7iddy"]
+[ext_resource type="Texture2D" uid="uid://db3dyjy3bu43v" path="res://assets/sprites/characters/llorona_n.png" id="8_yp2m4"]
+[ext_resource type="Texture2D" uid="uid://bghv44sjxm417" path="res://assets/sprites/characters/llorona_ne.png" id="9_nyg3i"]
+[ext_resource type="Texture2D" uid="uid://kkof200jiakh" path="res://assets/sprites/characters/llorona_e.png" id="10_rmhn1"]
+[ext_resource type="Texture2D" uid="uid://c3hdgmjwu5itb" path="res://assets/sprites/characters/llorona_se.png" id="11_wsw2w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_am0s3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_rmhn1")
+}],
+"loop": 1,
+"name": &"walk_e",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_yp2m4")
+}],
+"loop": 1,
+"name": &"walk_n",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_nyg3i")
+}],
+"loop": 1,
+"name": &"walk_ne",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_7iddy")
+}],
+"loop": 1,
+"name": &"walk_nw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_r11sn")
+}],
+"loop": 1,
+"name": &"walk_s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_wsw2w")
+}],
+"loop": 1,
+"name": &"walk_se",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_lydgw")
+}],
+"loop": 1,
+"name": &"walk_sw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_nxj51")
+}],
+"loop": 1,
+"name": &"walk_w",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_imlf8"]
+radius = 34.0
+
+[node name="Llorona" type="Area2D" unique_id=1089438462]
+collision_layer = 8
+script = ExtResource("1_4ukn5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1583982740]
+sprite_frames = SubResource("SpriteFrames_am0s3")
+animation = &"walk_s"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1066881365]
+shape = SubResource("CircleShape2D_imlf8")
+
+[node name="Timer" type="Timer" parent="." unique_id=954833486]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=53960340]
+stream = ExtResource("3_imlf8")
+volume_db = -6.0
+max_distance = 300.0

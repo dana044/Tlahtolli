@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://tkhy6pnyv3m0"]
+
+[ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="1_g52vf"]
+[ext_resource type="Script" uid="uid://nfc3hlo67y58" path="res://scripts/levels/level_2_llorona.gd" id="1_tednk"]
+[ext_resource type="PackedScene" uid="uid://bpd0ceifcawic" path="res://scenes/levels/mapa_llorona.tscn" id="2_ok67w"]
+[ext_resource type="PackedScene" uid="uid://yyhjdujjvitd" path="res://scenes/characters/llorona.tscn" id="3_ok67w"]
+[ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="4_n8dxx"]
+
+[node name="Level2Llorona" type="Node2D" unique_id=2108523290]
+script = ExtResource("1_tednk")
+map_bounds = Rect2(0, 0, 1152, 648)
+
+[node name="mapa_llorona" parent="." unique_id=339989998 instance=ExtResource("2_ok67w")]
+
+[node name="Player" parent="." unique_id=1088824485 instance=ExtResource("1_g52vf")]
+
+[node name="Arbusto" parent="." unique_id=585369755 instance=ExtResource("4_n8dxx")]
+position = Vector2(124, 568)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=567859792]
+color = Color(0.24702165, 0.24696124, 0.3264566, 1)
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1751911604]
+position = Vector2(50, 570)
+
+[node name="Llorona" parent="." unique_id=1089438462 instance=ExtResource("3_ok67w")]
+position = Vector2(75, 62)

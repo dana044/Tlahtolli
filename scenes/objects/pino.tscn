@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bbam81hrgixpu"]
+
+[ext_resource type="Texture2D" uid="uid://cn81wkhysuu6g" path="res://assets/sprites/objects/pino.png" id="1_kf6sx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_am0s3"]
+radius = 11.0
+height = 58.0
+
+[node name="Pino" type="StaticBody2D" unique_id=1061197245]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=270377965]
+position = Vector2(1, -2)
+texture = ExtResource("1_kf6sx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441372135]
+position = Vector2(1, 18)
+scale = Vector2(1, 0.3600002)
+shape = SubResource("CapsuleShape2D_am0s3")
