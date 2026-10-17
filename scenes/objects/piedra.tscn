@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://camubbgcmv2se"]
+
+[ext_resource type="Texture2D" uid="uid://dmqdrewp6fvaq" path="res://assets/sprites/objects/piedracesped.png" id="1_3gd6u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(32, 7)
+
+[node name="Piedra" type="StaticBody2D" unique_id=294083158]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=782747957]
+position = Vector2(0, -14)
+texture = ExtResource("1_3gd6u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1012546671]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_am0s3")

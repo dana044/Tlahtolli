@@ -1,10 +1,93 @@
 [gd_scene format=3 uid="uid://w8o0em2ncxpq"]
 
+[ext_resource type="Script" uid="uid://d4h3r7wlyxnh" path="res://scripts/characters/chaneque.gd" id="1_chaneque"]
+[ext_resource type="Texture2D" uid="uid://8o41iggkpt3l" path="res://assets/sprites/characters/chaneque_e.png" id="2_83qgn"]
+[ext_resource type="Texture2D" uid="uid://dkrltymj0hox7" path="res://assets/sprites/characters/chaneque_n.png" id="3_axmvh"]
+[ext_resource type="Texture2D" uid="uid://c4cqtlv1a8n4e" path="res://assets/sprites/characters/chaneque_ne.png" id="4_ssvwa"]
+[ext_resource type="Texture2D" uid="uid://b54im53mcn447" path="res://assets/sprites/characters/chaneque_nw.png" id="5_o13ne"]
+[ext_resource type="Texture2D" uid="uid://cducnidg7n01e" path="res://assets/sprites/characters/chaneque_s.png" id="6_xh66e"]
+[ext_resource type="Texture2D" uid="uid://cesgo0hqbgf4b" path="res://assets/sprites/characters/chaneque_se.png" id="7_hl5uw"]
+[ext_resource type="Texture2D" uid="uid://bcfcnsjb0wnwx" path="res://assets/sprites/characters/chaneque_sw.png" id="8_csthy"]
+[ext_resource type="Texture2D" uid="uid://lp66pjvcn0d4" path="res://assets/sprites/characters/chaneque_w.png" id="9_xldnm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_am0s3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_83qgn")
+}],
+"loop": 1,
+"name": &"walk_e",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_axmvh")
+}],
+"loop": 1,
+"name": &"walk_n",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ssvwa")
+}],
+"loop": 1,
+"name": &"walk_ne",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_o13ne")
+}],
+"loop": 1,
+"name": &"walk_nw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_xh66e")
+}],
+"loop": 1,
+"name": &"walk_s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_hl5uw")
+}],
+"loop": 1,
+"name": &"walk_se",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_csthy")
+}],
+"loop": 1,
+"name": &"walk_sw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_xldnm")
+}],
+"loop": 1,
+"name": &"walk_w",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(20, 24)
 
-[node name="Node2D" type="StaticBody2D" unique_id=665667586]
+[node name="Chaneque" type="CharacterBody2D" unique_id=665667586]
+script = ExtResource("1_chaneque")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2058930700]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=651562679]
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_am0s3")
+animation = &"walk_w"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=734119021]
+position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_am0s3")

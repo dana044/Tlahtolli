@@ -169,9 +169,12 @@ position = Vector2(1048, 404)
 position = Vector2(1035, 399)
 
 [node name="Arbusto33" parent="." unique_id=987471674 instance=ExtResource("4_n8dxx")]
-position = Vector2(1128, 182)
+position = Vector2(1114, 183)
 
 [node name="Arbusto34" parent="." unique_id=2041665129 instance=ExtResource("4_n8dxx")]
+position = Vector2(1120, 170)
+
+[node name="Arbusto44" parent="." unique_id=694822868 instance=ExtResource("4_n8dxx")]
 position = Vector2(1120, 170)
 
 [node name="Arbusto35" parent="." unique_id=321196173 instance=ExtResource("4_n8dxx")]

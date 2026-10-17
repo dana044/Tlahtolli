@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ccosbailfnhbm"]
+
+[ext_resource type="Texture2D" uid="uid://dcygs22lff1kw" path="res://assets/sprites/objects/hongo.png" id="1_fw1wo"]
+
+[node name="Hongo" type="Area2D" unique_id=1001182821]
+
+[node name="Hongo_Chico" type="Sprite2D" parent="." unique_id=693552424]
+position = Vector2(2, -4.000002)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_fw1wo")
+
+[node name="Hongo_Mediano" type="Sprite2D" parent="." unique_id=627682565]
+position = Vector2(-3, -5.000002)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_fw1wo")

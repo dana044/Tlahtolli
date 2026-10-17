@@ -30,6 +30,24 @@ extends Node2D
 ## la muñeca.
 @export var peace_appear_distance: float = 80.0
 
+## Zona de paso hacia el nivel del Chaneque, en coordenadas globales (posición
+## y tamaño). Es el hueco del borde derecho por el que el jugador puede salir
+## del mapa; debe extenderse hacia fuera del mapa. Por defecto está a la
+## altura de la casa (centro vertical en Y = 231). El nivel 3 hace entrar al
+## jugador a esa misma altura (ver [code]entry_y[/code] en
+## [code]level_3_chaneque.gd[/code]).
+@export var exit_gate_rect: Rect2 = Rect2(1092, 191, 100, 80)
+
+## Coordenada X a partir de la cual se cambia de nivel. Con el borde derecho
+## del mapa (1152) el cambio ocurre cuando el centro del personaje llega al
+## borde, es decir, cuando ya salió medio cuerpo.
+@export var exit_trigger_x: float = 1152.0
+
+## Duración del fundido a negro al salir hacia el nivel 3, en segundos. Con
+## [code]0.0[/code] el corte es directo, lo que refuerza la sensación de que el
+## personaje camina de un mapa a otro.
+@export var exit_fade_time: float = 0.0
+
 ## Indica si hay una captura en curso. Evita que un segundo contacto inicie
 ## un respawn anidado.
 var _respawning: bool = false
@@ -54,6 +72,14 @@ const FLAG_QUEST_DONE: String = "llorona_en_paz"
 ## Archivo con los diálogos de este nivel.
 const DIALOGUE_PATH: String = "res://data/dialogues/llorona.json"
 
+## Escena del nivel 3 (el Chaneque), a la que lleva la salida.
+const LEVEL_3_PATH: String = "res://scenes/levels/level_3_chaneque.tscn"
+
+## Bandera de [GameState] que avisa al nivel 3 de que el jugador llega
+## caminando desde este nivel. El nivel 3 la consume al iniciar. Debe coincidir
+## con la constante del mismo nombre en [code]level_3_chaneque.gd[/code].
+const FLAG_WALKING_INTO_LEVEL_3: String = "entrando_nivel_3"
+
 ## Si es [code]true[/code], la Llorona ya no debe cazar al jugador (se
 ## recogió la muñeca o la misión terminó). Evita que un respawn en curso
 ## reanude la caza.
@@ -62,6 +88,13 @@ var _hunt_suspended: bool = false
 ## Indica si hay un diálogo o una entrega en curso. Evita que se disparen dos
 ## secuencias de misión a la vez.
 var _quest_busy: bool = false
+
+## Salida hacia el nivel del Chaneque (flecha guía y detección del cruce). Se
+## crea por código en [method _setup_exit] y se activa al recibir el medallón.
+var _exit: LevelExit
+
+## Indica si ya se inició el cambio de nivel. Evita cambiarlo dos veces.
+var _leaving: bool = false
 
 
 func _ready() -> void:
@@ -100,6 +133,10 @@ func _ready() -> void:
 	# de entrada que invoque start_hunting() al ser atravesado.
 	if not _hunt_suspended:
 		llorona.start_hunting()
+
+	# Salida hacia el nivel del Chaneque: queda lista pero cerrada hasta que la
+	# Llorona entregue el medallón.
+	_setup_exit()
 
 
 ## Ejecuta la secuencia de captura: fundido de salida, regreso al checkpoint,
@@ -185,8 +222,51 @@ func _on_llorona_interacted() -> void:
 
 	await llorona.disappear()
 
+	# Con el medallón en mano se abre el camino hacia el nivel del Chaneque.
+	_exit.enable()
+
 	player.can_move = true
 	_quest_busy = false
+
+
+## Crea la salida hacia el nivel del Chaneque con los valores de
+## [member exit_gate_rect] y [member exit_trigger_x]. Si la misión ya estaba
+## completada (por ejemplo, al recargar el nivel), la deja abierta sin animación.
+func _setup_exit() -> void:
+	_exit = LevelExit.new()
+	_exit.name = "SalidaChaneque"
+	_exit.gate_rect = exit_gate_rect
+	_exit.trigger_x = exit_trigger_x
+	add_child(_exit)
+	_exit.player_crossed.connect(_on_exit_crossed)
+
+	if GameState.has_flag(FLAG_QUEST_DONE):
+		_exit.enable(false)
+
+
+## El jugador cruzó la salida (ya pasó medio cuerpo). Marca que el nivel 3
+## debe hacerlo entrar caminando por la izquierda y cambia de escena. El
+## inventario y las banderas viajan solos porque viven en autoloads
+## ([Inventory] y [GameState]).
+func _on_exit_crossed() -> void:
+	if _leaving:
+		return
+	_leaving = true
+	player.can_move = false
+
+	GameState.set_flag(FLAG_WALKING_INTO_LEVEL_3)
+
+	if exit_fade_time > 0.0:
+		await SceneManager.fade_out(exit_fade_time)
+
+	var error: Error = get_tree().change_scene_to_file(LEVEL_3_PATH)
+	if error != OK:
+		# Sin escena a la que ir, se devuelve el control para no dejar bloqueado
+		# al jugador.
+		push_error("Level2: no se pudo cargar " + LEVEL_3_PATH)
+		GameState.set_flag(FLAG_WALKING_INTO_LEVEL_3, false)
+		player.can_move = true
+		_leaving = false
 
 
 ## Reproduce el bloque [param key] de [constant DIALOGUE_PATH] con el cuadro

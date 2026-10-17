@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://csr6djppbb3p0"]
+
+[ext_resource type="Texture2D" uid="uid://c72m1qamj14ys" path="res://assets/sprites/objects/pino2.png" id="1_ohdvo"]
+[ext_resource type="Texture2D" uid="uid://cn81wkhysuu6g" path="res://assets/sprites/objects/pino.png" id="2_vt2km"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1a5f"]
+size = Vector2(20, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhs3m"]
+size = Vector2(14, 15)
+
+[node name="Pinos" type="StaticBody2D" unique_id=577072453]
+
+[node name="Pino_grande" type="Sprite2D" parent="." unique_id=670567631]
+position = Vector2(-8, -45)
+texture = ExtResource("1_ohdvo")
+
+[node name="Pino_grande_c" type="CollisionShape2D" parent="." unique_id=975792999]
+position = Vector2(-8, -13.5)
+shape = SubResource("RectangleShape2D_h1a5f")
+
+[node name="Pino_chico" type="Sprite2D" parent="." unique_id=1528390673]
+position = Vector2(11, -30)
+texture = ExtResource("2_vt2km")
+
+[node name="Pino_chico_c" type="CollisionShape2D" parent="." unique_id=1010983747]
+position = Vector2(11, -8.5)
+shape = SubResource("RectangleShape2D_rhs3m")

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d0cyj4io4ur0f"]
+
+[ext_resource type="Script" uid="uid://bmxfq5k56pq5p" path="res://scripts/objets/branch.gd" id="1_branch"]
+[ext_resource type="AudioStream" uid="uid://cjsnl4okq3sw0" path="res://assets/audio/sfx/rama_rompiendose.mp3" id="2_sbfgk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_branch"]
+size = Vector2(16, 10)
+
+[node name="Rama" type="Area2D" unique_id=309779454]
+script = ExtResource("1_branch")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2116332581]
+position = Vector2(0, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=777688014]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_branch")
+
+[node name="BreakSound" type="AudioStreamPlayer2D" parent="." unique_id=1322725420]
+position = Vector2(0, -5)
+stream = ExtResource("2_sbfgk")

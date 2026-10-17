@@ -81,7 +81,3 @@ shape = SubResource("SegmentShape2D_am0s3")
 
 [node name="limite_mapa_3" type="CollisionShape2D" parent="." unique_id=281193233]
 shape = SubResource("SegmentShape2D_h1a5f")
-
-[node name="limite_mapa_4" type="CollisionShape2D" parent="." unique_id=1197136251]
-position = Vector2(1150, 0)
-shape = SubResource("SegmentShape2D_h1a5f")
