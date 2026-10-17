@@ -20,6 +20,7 @@ GameState="*uid://dws7qdhakxw24"
 SceneManager="*uid://cegxlgc7pk3e8"
 Inventory="*uid://dem0xtbxrxcf2"
 DialogueManager="*uid://cct348cjf2lsf"
+Journal="*uid://bqmmuaa0qrd7o"
 
 [display]
 

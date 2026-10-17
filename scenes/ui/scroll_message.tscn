@@ -8,11 +8,12 @@
 layer = 8
 script = ExtResource("1_e8c4e")
 message_id = "llorona_mensaje_inicio"
+display_seconds = 5.0
 banner = NodePath("Banner")
 message_label = NodePath("Banner/MarginContainer/MessageLabel")
 
 [node name="Banner" type="NinePatchRect" parent="." unique_id=1388030116]
-custom_minimum_size = Vector2(420, 100)
+custom_minimum_size = Vector2(550, 200)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -42,7 +43,7 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
 theme_override_fonts/font = ExtResource("2_e8c4e")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

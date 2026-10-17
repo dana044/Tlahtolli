@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://76l6kocgcea0"]
+
+[ext_resource type="Script" uid="uid://cemoot8rttc7o" path="res://scripts/ui/journal_ui.gd" id="1_gs82g"]
+[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="1_qmpw5"]
+[ext_resource type="Texture2D" uid="uid://bd83rd515h8xr" path="res://assets/sprites/ui/scroll_message.png" id="2_gs82g"]
+
+[node name="JournalUI" type="CanvasLayer" unique_id=1229920834 node_paths=PackedStringArray("book", "entries_box", "toast_label")]
+process_mode = 3
+layer = 9
+script = ExtResource("1_gs82g")
+journal_font = ExtResource("1_qmpw5")
+book = NodePath("Book")
+entries_box = NodePath("Book/CenterContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/EntriesBox")
+toast_label = NodePath("ToastLabel")
+title_font_size = 32
+body_font_size = 28
+
+[node name="ToastLabel" type="Label" parent="." unique_id=1357897858]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -316.0
+offset_top = -105.0
+offset_bottom = -70.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_qmpw5")
+theme_override_font_sizes/font_size = 25
+text = "Pistas en el diario (Tab)"
+
+[node name="Book" type="Control" parent="." unique_id=141267314]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="Book" unique_id=366148396]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="CenterContainer" type="CenterContainer" parent="Book" unique_id=1292401309]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Book/CenterContainer" unique_id=72868521]
+custom_minimum_size = Vector2(720, 420)
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Book/CenterContainer/Panel" unique_id=2105761456]
+layout_mode = 2
+texture = ExtResource("2_gs82g")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="Book/CenterContainer/Panel" unique_id=416353275]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Book/CenterContainer/Panel/MarginContainer" unique_id=2091158905]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLable" type="Label" parent="Book/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=1806225799]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("1_qmpw5")
+theme_override_font_sizes/font_size = 45
+text = "Diario de pistas"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Book/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=212217903]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="EntriesBox" type="VBoxContainer" parent="Book/CenterContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1169964644]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="HintLabel" type="Label" parent="Book/CenterContainer/Panel/MarginContainer/VBoxContainer" unique_id=823301138]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("1_qmpw5")
+theme_override_font_sizes/font_size = 28
+text = "Tab para cerrar"
