@@ -1,0 +1,77 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://caucmtnfe5pc1"]
+
+[ext_resource type="Texture2D" uid="uid://byvcsuc4jbyo0" path="res://assets/sprites/characters/personaje_e.png" id="1_bs7qo"]
+[ext_resource type="Texture2D" uid="uid://cxy32byntmdad" path="res://assets/sprites/characters/personaje_n.png" id="2_umd7o"]
+[ext_resource type="Texture2D" uid="uid://culhnec1l7dpl" path="res://assets/sprites/characters/personaje_ne.png" id="3_vmdlh"]
+[ext_resource type="Texture2D" uid="uid://mvfilgj2eunl" path="res://assets/sprites/characters/personaje_nw.png" id="4_b0cak"]
+[ext_resource type="Texture2D" uid="uid://blc2havcarhnb" path="res://assets/sprites/characters/personaje_s.png" id="5_dq01y"]
+[ext_resource type="Texture2D" uid="uid://bmdcku74knf7g" path="res://assets/sprites/characters/personaje_se.png" id="6_qd2tk"]
+[ext_resource type="Texture2D" uid="uid://dv6qiiw34sjlg" path="res://assets/sprites/characters/personaje_sw.png" id="7_k28e1"]
+[ext_resource type="Texture2D" uid="uid://b1dwivltlkaxs" path="res://assets/sprites/characters/personaje_w.png" id="8_j5loq"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bs7qo")
+}],
+"loop": 1,
+"name": &"walk_e",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_umd7o")
+}],
+"loop": 1,
+"name": &"walk_n",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_vmdlh")
+}],
+"loop": 1,
+"name": &"walk_ne",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_b0cak")
+}],
+"loop": 1,
+"name": &"walk_nw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_dq01y")
+}],
+"loop": 1,
+"name": &"walk_s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_qd2tk")
+}],
+"loop": 1,
+"name": &"walk_se",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_k28e1")
+}],
+"loop": 1,
+"name": &"walk_sw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_j5loq")
+}],
+"loop": 1,
+"name": &"walk_w",
+"speed": 5.0
+}]

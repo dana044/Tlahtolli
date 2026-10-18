@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c72m1qamj14ys" path="res://assets/sprites/objects/pino2.png" id="1_kf6sx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3dx4f"]
-size = Vector2(12, 44.44442)
+size = Vector2(10, 27.499994)
 
 [node name="Pino" type="StaticBody2D" unique_id=1061197245]
 
@@ -12,6 +12,6 @@ position = Vector2(0, -45)
 texture = ExtResource("1_kf6sx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441372135]
-position = Vector2(0, -8)
+position = Vector2(0, -5.0499988)
 scale = Vector2(1, 0.3600002)
 shape = SubResource("RectangleShape2D_3dx4f")

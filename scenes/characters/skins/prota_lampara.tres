@@ -1,0 +1,77 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bkhlh3jgcm85r"]
+
+[ext_resource type="Texture2D" uid="uid://cv3vbqb2c40nh" path="res://assets/sprites/characters/prota_linterna_e.png" id="1_xjxhx"]
+[ext_resource type="Texture2D" uid="uid://1mxyjyc6tlpk" path="res://assets/sprites/characters/prota_linterna_n.png" id="2_5iorw"]
+[ext_resource type="Texture2D" uid="uid://b4o8hwyhk5qor" path="res://assets/sprites/characters/prota_linterna_ne.png" id="3_8rybm"]
+[ext_resource type="Texture2D" uid="uid://bdegdqq5re6b5" path="res://assets/sprites/characters/prota_linterna_nw.png" id="4_ark1r"]
+[ext_resource type="Texture2D" uid="uid://s4ymk6urtppn" path="res://assets/sprites/characters/prota_linterna_s.png" id="5_nk2eg"]
+[ext_resource type="Texture2D" uid="uid://dj8ya1f6mkq0j" path="res://assets/sprites/characters/prota_linterna_se.png" id="6_065v6"]
+[ext_resource type="Texture2D" uid="uid://cdsjxnvk3rle5" path="res://assets/sprites/characters/prota_linterna_sw.png" id="7_uwbkn"]
+[ext_resource type="Texture2D" uid="uid://blhql4iwv6fsq" path="res://assets/sprites/characters/prota_linterna_w.png" id="8_k5mpg"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xjxhx")
+}],
+"loop": 1,
+"name": &"walk_e",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5iorw")
+}],
+"loop": 1,
+"name": &"walk_n",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8rybm")
+}],
+"loop": 1,
+"name": &"walk_ne",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ark1r")
+}],
+"loop": 1,
+"name": &"walk_nw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_nk2eg")
+}],
+"loop": 1,
+"name": &"walk_s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_065v6")
+}],
+"loop": 1,
+"name": &"walk_se",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_uwbkn")
+}],
+"loop": 1,
+"name": &"walk_sw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_k5mpg")
+}],
+"loop": 1,
+"name": &"walk_w",
+"speed": 5.0
+}]
