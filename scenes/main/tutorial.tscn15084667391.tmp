@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://c2xv5ppjbcy5y"]
+
+[ext_resource type="Script" uid="uid://cko02c6xsb1gc" path="res://scripts/levels/tutorial.gd" id="1_1u6hg"]
+[ext_resource type="Texture2D" uid="uid://lt34wurs1jbg" path="res://assets/tilesets/pasto_total.png" id="2_kk7s1"]
+[ext_resource type="Texture2D" uid="uid://pd2kavj647m7" path="res://assets/sprites/ui/tecla_w.png" id="2_m0o6r"]
+[ext_resource type="Texture2D" uid="uid://blw38p4tlxkrs" path="res://assets/sprites/ui/tecla_a.png" id="3_a7cwe"]
+[ext_resource type="PackedScene" uid="uid://dnddxgxcfjhop" path="res://scenes/objects/muneca.tscn" id="3_b7gba"]
+[ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="4_3n60e"]
+[ext_resource type="Texture2D" uid="uid://b7g20x8h3gc86" path="res://assets/sprites/ui/tecla_s.png" id="4_ysykr"]
+[ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="5_fgmiq"]
+[ext_resource type="Texture2D" uid="uid://bh8ijbnskpb7f" path="res://assets/sprites/ui/tecla_d.png" id="5_iml36"]
+[ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="6_2gtw6"]
+[ext_resource type="Texture2D" uid="uid://tncea7pogcqn" path="res://assets/sprites/ui/tecla_esc.png" id="6_apvie"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="7_opm8l"]
+[ext_resource type="Texture2D" uid="uid://ba6ief77hxfrl" path="res://assets/sprites/ui/tecla_tab.png" id="7_wpgl1"]
+[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="8_bny1h"]
+
+[node name="Tutorial" type="Node2D" unique_id=1139991739 node_paths=PackedStringArray("background", "player", "pickup", "pause_menu")]
+script = ExtResource("1_1u6hg")
+background = NodePath("Backroud")
+player = NodePath("player")
+pickup = NodePath("Muneca")
+pause_menu = NodePath("PauseMenu")
+tex_w = ExtResource("2_m0o6r")
+tex_a = ExtResource("3_a7cwe")
+tex_s = ExtResource("4_ysykr")
+tex_d = ExtResource("5_iml36")
+tex_esc = ExtResource("6_apvie")
+tex_tab = ExtResource("7_wpgl1")
+key_size = Vector2(50, 50)
+label_font = ExtResource("8_bny1h")
+label_font_size = 32
+hud_bottom_margin = 100
+
+[node name="Backroud" type="Sprite2D" parent="." unique_id=1746133739]
+position = Vector2(576, 324)
+texture = ExtResource("2_kk7s1")
+
+[node name="Muneca" parent="." unique_id=134117066 instance=ExtResource("3_b7gba")]
+position = Vector2(581, 355)
+
+[node name="player" parent="." unique_id=1088824485 instance=ExtResource("4_3n60e")]
+position = Vector2(577, 355)
+
+[node name="InventoryBar" parent="." unique_id=1376625741 instance=ExtResource("5_fgmiq")]
+
+[node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("6_2gtw6")]
+
+[node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("7_opm8l")]

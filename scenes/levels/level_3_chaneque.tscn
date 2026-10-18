@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="12_5fp2a"]
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="13_5fp2a"]
 [ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="14_vl65c"]
+[ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="16_hudyw"]
 
 [node name="Level3Chaneque" type="Node2D" unique_id=408040604]
 y_sort_enabled = true
@@ -177,7 +178,6 @@ position = Vector2(28, 222)
 
 [node name="ScrollMessage" parent="." unique_id=632223670 instance=ExtResource("6_scroll")]
 message_id = ""
-show_on_ready = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=452656518]
 layer = 5
@@ -932,3 +932,6 @@ position = Vector2(1005, 462)
 
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("14_vl65c")]
 current_level = 3
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=906634103]
+stream = ExtResource("16_hudyw")

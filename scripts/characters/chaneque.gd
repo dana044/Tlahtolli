@@ -30,6 +30,12 @@ signal arrived
 ## Forma de colisión. Se desactiva mientras el Chaneque está oculto.
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
+## Nodo reproductor del sonido del Chaneque.
+@onready var voice_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
+## Temporizador para que hable cada 10 segundos.
+@onready var voice_timer: Timer = $Timer
+
 ## Sufijo de la dirección hacia la que mira (ver [constant Player.DIRECTION_NAMES]).
 var _facing: String = "s"
 
@@ -43,12 +49,17 @@ var _stop_distance: float = 4.0
 var _walking: bool = false
 
 
-## Se registra como interactuable y fija el modo de movimiento top-down.
+## Se registra como interactuable, fija el modo de movimiento top-down
+## y prepara el temporizador de voz.
 func _ready() -> void:
 	add_to_group("interactable")
 	# Modo flotante: vista top-down, sin suelo ni gravedad.
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
-
+	
+	# Configuración del temporizador
+	voice_timer.wait_time = 10.0
+	voice_timer.timeout.connect(_on_voice_timer_timeout)
+	voice_timer.start()
 
 ## Avanza hacia el destino (si lo hay) y actualiza la animación.
 ## [param _delta] es el tiempo del paso de física (no se usa).
@@ -152,3 +163,9 @@ func _update_animation(direction: Vector2) -> void:
 		if frames.has_animation(walk_name) and frames.get_frame_count(walk_name) > 0:
 			sprite.play(walk_name)
 			sprite.pause()
+
+## Se ejecuta cada 10 segundos por el temporizador y reproduce el audio.
+func _on_voice_timer_timeout() -> void:
+	# Verificamos que el audio no esté ya sonando para no superponerlo
+	if not voice_player.playing and voice_player.stream != null:
+		voice_player.play()

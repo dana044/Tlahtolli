@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgtwx6v033eq"
-path="res://.godot/imported/botones.png-2f6539fa4ecf2ec1d7e0d32f091da01d.ctex"
+uid="uid://bh8ijbnskpb7f"
+path="res://.godot/imported/tecla_d.png-f1ae02ad69b38c294e8ccaed7f4e413f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/botones.png"
-dest_files=["res://.godot/imported/botones.png-2f6539fa4ecf2ec1d7e0d32f091da01d.ctex"]
+source_file="res://assets/sprites/ui/tecla_d.png"
+dest_files=["res://.godot/imported/tecla_d.png-f1ae02ad69b38c294e8ccaed7f4e413f.ctex"]
 
 [params]
 

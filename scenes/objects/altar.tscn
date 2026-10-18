@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://buol455uj6gy5" path="res://scripts/objets/altar.gd" id="1_altar"]
 [ext_resource type="Texture2D" uid="uid://cbgsc2xqfk47j" path="res://assets/sprites/objects/altar_chaneque.png" id="2_vc01y"]
+[ext_resource type="Script" uid="uid://deyi3ngpcrnwa" path="res://scripts/ui/interact_prompt.gd" id="3_wajga"]
+[ext_resource type="Texture2D" uid="uid://to8atqso6rmd" path="res://assets/sprites/ui/teclaE.png" id="4_s1do2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_altar"]
 size = Vector2(43, 23)
@@ -16,3 +18,10 @@ texture = ExtResource("2_vc01y")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=652574967]
 position = Vector2(-0.5, 5.5)
 shape = SubResource("RectangleShape2D_altar")
+
+[node name="PromptE" type="Sprite2D" parent="." unique_id=56378355]
+script = ExtResource("3_wajga")
+prompt_texture = ExtResource("4_s1do2")
+prompt_scale = Vector2(0.5, 0.5)
+require_interactable_group = false
+required_items = Array[String](["liston", "cempasuchil", "mandarina"])

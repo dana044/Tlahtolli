@@ -118,6 +118,7 @@ var _leaving: bool = false
 
 
 func _ready() -> void:
+	$Music.play()
 	# El jugador debe estar en su posición inicial antes de que comience
 	# cualquier otra lógica, incluida la caza.
 	player.global_position = spawn_point.global_position

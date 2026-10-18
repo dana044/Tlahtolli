@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bprcfq3vsdris"]
 
 [ext_resource type="SpriteFrames" uid="uid://ojeodw85tshq" path="res://scenes/characters/skins/abuela.tres" id="1_kbov6"]
-[ext_resource type="Script" path="res://scripts/characters/abuela.gd" id="2_abuela"]
+[ext_resource type="Script" uid="uid://c5a3c1flov4dk" path="res://scripts/characters/abuela.gd" id="2_abuela"]
+[ext_resource type="Texture2D" uid="uid://to8atqso6rmd" path="res://assets/sprites/ui/teclaE.png" id="3_6op0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
 size = Vector2(12, 5)
@@ -17,3 +18,8 @@ animation = &"Abuela_a"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1539094975]
 position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_am0s3")
+
+[node name="PromptE" type="Sprite2D" parent="." unique_id=233198237]
+position = Vector2(0, -37)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_6op0l")

@@ -3,14 +3,20 @@
 [ext_resource type="Script" uid="uid://ck7pyg45t7j7f" path="res://scripts/ui/pause_menu.gd" id="1_qo3ou"]
 [ext_resource type="PackedScene" uid="uid://k3ei1dm4ale5" path="res://scenes/ui/image_button.tscn" id="2_sxsxs"]
 [ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="3_o3hrf"]
+[ext_resource type="Texture2D" uid="uid://hxd8gscy7b1v" path="res://assets/sprites/ui/pausa.png" id="4_xgeum"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=653895923 node_paths=PackedStringArray("resume_button", "menu_button", "quit_button")]
+[node name="PauseMenu" type="CanvasLayer" unique_id=653895923 node_paths=PackedStringArray("pause_button", "overlay", "resume_button", "menu_button", "quit_button")]
 process_mode = 3
 layer = 10
 script = ExtResource("1_qo3ou")
+pause_button = NodePath("PauseButton")
+pause_button_size = Vector2(70, 70)
+overlay = NodePath("Control")
 resume_button = NodePath("Control/CenterContainer/VBoxContainer/ResumeButton")
 menu_button = NodePath("Control/CenterContainer/VBoxContainer/MenuButton")
 quit_button = NodePath("Control/CenterContainer/VBoxContainer/QuitButton")
+menu_button_size = Vector2(600, 100)
+menu_font_size = 32
 
 [node name="Control" type="Control" parent="." unique_id=1277635826]
 layout_mode = 3
@@ -48,9 +54,8 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="ResumeButton" parent="Control/CenterContainer/VBoxContainer" unique_id=1175162725 instance=ExtResource("2_sxsxs")]
+custom_minimum_size = Vector2(240, 64)
 layout_mode = 2
-ignore_texture_size = true
-stretch_mode = 5
 label_text = "Continuar"
 font = ExtResource("3_o3hrf")
 font_size = 28
@@ -58,8 +63,6 @@ text_offset = Vector2(0, -2)
 
 [node name="MenuButton" parent="Control/CenterContainer/VBoxContainer" unique_id=1314753063 instance=ExtResource("2_sxsxs")]
 layout_mode = 2
-ignore_texture_size = true
-stretch_mode = 5
 label_text = "Menú"
 font = ExtResource("3_o3hrf")
 font_size = 28
@@ -67,9 +70,12 @@ text_offset = Vector2(0, -2)
 
 [node name="QuitButton" parent="Control/CenterContainer/VBoxContainer" unique_id=1559437243 instance=ExtResource("2_sxsxs")]
 layout_mode = 2
-ignore_texture_size = true
-stretch_mode = 5
 label_text = "Salir"
 font = ExtResource("3_o3hrf")
 font_size = 28
 text_offset = Vector2(0, -2)
+
+[node name="PauseButton" type="TextureButton" parent="." unique_id=1996912282]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("4_xgeum")

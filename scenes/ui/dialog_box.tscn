@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://dwgpbosdre2o" path="res://scripts/ui/dialog_box.gd" id="1_svbij"]
 [ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="2_i22jp"]
 
-[node name="DialogBox" type="CanvasLayer" unique_id=492400023 node_paths=PackedStringArray("speaker_label", "text_label")]
+[node name="DialogBox" type="CanvasLayer" unique_id=492400023 node_paths=PackedStringArray("speaker_label", "text_label", "hint_label")]
 process_mode = 3
 layer = 5
 script = ExtResource("1_svbij")
 speaker_label = NodePath("Panel/MarginContainer/VBoxContainer/SpeakerLabel")
 text_label = NodePath("Panel/MarginContainer/VBoxContainer/TextLabel")
+hint_label = NodePath("Panel/MarginContainer/VBoxContainer/HintLabel")
 
 [node name="Panel" type="Panel" parent="." unique_id=650472131]
 custom_minimum_size = Vector2(900, 140)
@@ -45,3 +46,9 @@ size_flags_vertical = 3
 theme_override_fonts/normal_font = ExtResource("2_i22jp")
 theme_override_font_sizes/normal_font_size = 32
 scroll_active = false
+
+[node name="HintLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=1001647159]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_i22jp")
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 2

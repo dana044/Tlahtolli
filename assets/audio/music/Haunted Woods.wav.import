@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dh410xwx5egfi"
+path="res://.godot/imported/Haunted Woods.wav-5fe5798d2f6ae4f1c0913ed8fe08b002.sample"
+
+[deps]
+
+source_file="res://assets/audio/music/Haunted Woods.wav"
+dest_files=["res://.godot/imported/Haunted Woods.wav-5fe5798d2f6ae4f1c0913ed8fe08b002.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

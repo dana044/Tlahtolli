@@ -168,6 +168,7 @@ var _finished: bool = false
 ## Coloca al jugador, delimita el mapa, registra el checkpoint y arranca la
 ## secuencia inicial (o restaura el estado final si el nivel ya se completó).
 func _ready() -> void:
+	$Music.play()
 	darkness.color = darkness_color
 	chaneque.hide_chaneque()
 
