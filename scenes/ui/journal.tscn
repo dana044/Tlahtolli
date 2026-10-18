@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cemoot8rttc7o" path="res://scripts/ui/journal_ui.gd" id="1_gs82g"]
 [ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="1_qmpw5"]
 [ext_resource type="Texture2D" uid="uid://bd83rd515h8xr" path="res://assets/sprites/ui/scroll_message.png" id="2_gs82g"]
+[ext_resource type="Texture2D" uid="uid://dv4x5r7jkvk1j" path="res://assets/sprites/ui/pista.png" id="4_yv8vu"]
 
 [node name="JournalUI" type="CanvasLayer" unique_id=1229920834 node_paths=PackedStringArray("book", "entries_box", "toast_label")]
 process_mode = 3
@@ -10,22 +11,26 @@ layer = 9
 script = ExtResource("1_gs82g")
 book = NodePath("Book")
 entries_box = NodePath("Book/CenterContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/EntriesBox")
-toast_label = NodePath("ToastLabel")
+toast_label = NodePath("HBoxContainer/ToastLabel")
 journal_font = ExtResource("1_qmpw5")
 title_font_size = 32
-body_font_size = 28
+body_font_size = 32
 
-[node name="ToastLabel" type="Label" parent="." unique_id=1357897858]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -316.0
-offset_top = -105.0
-offset_bottom = -70.0
-grow_horizontal = 0
-grow_vertical = 0
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=690068337]
+custom_minimum_size = Vector2(10, 10)
+offset_left = 13.0
+offset_top = 96.0
+offset_right = 315.0
+offset_bottom = 182.0
+
+[node name="JournalButton" type="TextureButton" parent="HBoxContainer" unique_id=1212157323]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("4_yv8vu")
+
+[node name="ToastLabel" type="Label" parent="HBoxContainer" unique_id=1357897858]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("1_qmpw5")
 theme_override_font_sizes/font_size = 25
 text = "Pistas en el diario (Tab)"

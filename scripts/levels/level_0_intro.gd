@@ -87,6 +87,7 @@ var _leaving: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Music.play()
 	# 1. Ajustes iniciales del jugador
 	# Se usa el método del Player (en lugar de tocar la luz directamente) para
 	# que, además de apagar la linterna, el personaje use la skin sin lámpara.
@@ -200,11 +201,14 @@ func _on_exit_crossed() -> void:
 ## [br]Mientras el cuadro está abierto el juego queda en pausa (lo gestiona el
 ## [DialogueManager]) y las líneas avanzan con Enter / Espacio.
 func _play_dialogue(block_id: String) -> void:
+	# Buscar el nodo del texto en el cuadro global y forzar un tamaño menor
+	var text_label = DialogueManager.dialog_box.find_child("TextLabel")
+	if text_label:
+		text_label.add_theme_font_size_override("normal_font_size", 28) 
 	DialogueManager.play(DIALOGUE_PATH, block_id)
-
-	# Si el bloque no existe o está vacío, el cuadro no se abre y nunca se
-	# emite la señal de fin; se sale para no dejar al jugador bloqueado.
 	if not DialogueManager.is_active():
 		return
-
 	await DialogueManager.dialogue_finished
+ 	# Restaurar el cuadro de diálogo a la normalidad para los siguientes niveles
+	if text_label:
+		text_label.remove_theme_font_size_override("normal_font_size")

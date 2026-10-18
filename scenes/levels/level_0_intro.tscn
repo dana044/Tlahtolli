@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://csr6djppbb3p0" path="res://scenes/objects/pinos.tscn" id="7_txyc1"]
 [ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="8_k3vab"]
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="9_pc4ij"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="13_pc4ij"]
+[ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="14_wunoc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txyc1"]
 texture = ExtResource("4_ellq4")
@@ -167,3 +169,8 @@ scale = Vector2(4, 4)
 [node name="player" parent="." unique_id=1088824485 instance=ExtResource("3_w7jo7")]
 position = Vector2(45, 506)
 scale = Vector2(4, 4)
+
+[node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("13_pc4ij")]
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1282522138]
+stream = ExtResource("14_wunoc")

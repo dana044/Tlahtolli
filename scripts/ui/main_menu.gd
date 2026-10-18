@@ -1,45 +1,75 @@
-## Menú de inicio sin botones.
-## Se avanza al primer nivel presionando una tecla (Espacio por defecto).
+## Menú principal con portada y tres botones: Jugar, Tutorial y Ajustes.
 extends Control
 
-## Primera escena del juego.
-@export_file("*.tscn") var first_scene: String = "res://scenes/ui/test_ui.tscn"
-## Tecla que inicia el juego.
-@export var start_key: Key = KEY_SPACE
-## Label inferior con la instrucción. Asígnalo en el Inspector.
-@export var prompt_label: Label
-## Si es true, el texto de la instrucción parpadea suavemente.
-@export var blink_prompt: bool = true
-## Segundos que dura cada parpadeo.
-@export_range(0.2, 3.0, 0.1) var blink_seconds: float = 1.0
+## Primera escena del juego (la intro con la abuelita).
+@export_file("*.tscn") var first_scene: String = "res://scenes/levels/level_0_intro.tscn"
+## Escena del tutorial.
+@export_file("*.tscn") var tutorial_scene: String = "res://scenes/main/tutorial.tscn"
+## Escena de ajustes. Vacía = el botón aún no hace nada.
+@export_file("*.tscn") var settings_scene: String = ""
 
-var _started: bool = false   # Evita cambiar de escena dos veces.
+## Botones (se asignan en el Inspector). Sirve Button, TextureButton o ImageButton.
+@export var play_button: BaseButton
+@export var tutorial_button: BaseButton
+@export var settings_button: BaseButton
+
+## Tamaño de cada botón en píxeles.
+@export var button_size: Vector2 = Vector2(320, 80)
+## Separación vertical entre botones.
+@export var button_spacing: int = 16
+## Brillo con el que se resalta el botón seleccionado.
+@export var highlight_color: Color = Color(1.3, 1.3, 1.3)
+
+var _busy: bool = false   # Evita cambiar de escena dos veces.
 
 
 func _ready() -> void:
-	if blink_prompt and prompt_label:
-		_start_blink()
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _started:
+	$Music.play()
+	
+	# Avisa con claridad qué campo falta en el Inspector.
+	var missing: Array[String] = []
+	if play_button == null: missing.append("Play Button")
+	if tutorial_button == null: missing.append("Tutorial Button")
+	if settings_button == null: missing.append("Settings Button")
+	if not missing.is_empty():
+		push_error("MainMenu: faltan por asignar en el Inspector: " + ", ".join(missing))
 		return
-	if event is InputEventKey and event.pressed and not event.echo and event.keycode == start_key:
-		_started = true
-		_go_to(first_scene)
+
+	for button in [play_button, tutorial_button, settings_button]:
+		button.custom_minimum_size = button_size
+		button.focus_entered.connect(func(): button.modulate = highlight_color)
+		button.focus_exited.connect(func(): button.modulate = Color.WHITE)
+		button.mouse_entered.connect(button.grab_focus)
+
+	var box := play_button.get_parent()
+	if box is BoxContainer:
+		box.add_theme_constant_override("separation", button_spacing)
+
+	play_button.pressed.connect(func(): _start(first_scene))
+	tutorial_button.pressed.connect(func(): _start(tutorial_scene))
+	settings_button.pressed.connect(_on_settings_pressed)
+
+	# Permite navegar con las flechas y Enter/Espacio desde el inicio.
+	play_button.grab_focus()
 
 
-## Hace que el texto suba y baje de opacidad en bucle.
-func _start_blink() -> void:
-	var tween := create_tween().set_loops()
-	tween.tween_property(prompt_label, "modulate:a", 0.3, blink_seconds)
-	tween.tween_property(prompt_label, "modulate:a", 1.0, blink_seconds)
-
-
-## Cambia de escena solo si existe (evita errores mientras el equipo las termina).
-func _go_to(path: String) -> void:
-	if ResourceLoader.exists(path):
-		get_tree().change_scene_to_file(path)
-	else:
+## Empieza una partida nueva o el tutorial: borra lo que quedó de antes
+## (objetos y pistas) para que nada pase de una partida a otra.
+func _start(path: String) -> void:
+	if _busy:
+		return
+	if not ResourceLoader.exists(path):
 		push_warning("Menú: la escena aún no existe -> " + path)
-		_started = false
+		return
+	_busy = true
+	Inventory.clear()
+	Journal.clear()
+	get_tree().change_scene_to_file(path)
+
+
+## Por ahora no hace nada. Cuando exista la escena de ajustes, escribe su
+## ruta en "Settings Scene" en el Inspector.
+func _on_settings_pressed() -> void:
+	if settings_scene == "" or not ResourceLoader.exists(settings_scene):
+		return
+	get_tree().change_scene_to_file(settings_scene)

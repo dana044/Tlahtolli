@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://6ao23grmp3v7"]
 
 [ext_resource type="Script" uid="uid://ci3ilvg8bgejs" path="res://scripts/ui/main_menu.gd" id="1_5vafy"]
-[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="2_byqcc"]
+[ext_resource type="Texture2D" uid="uid://ckldijjdafqfu" path="res://assets/sprites/ui/portada.png" id="2_byqcc"]
+[ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="2_w6ykx"]
+[ext_resource type="PackedScene" uid="uid://k3ei1dm4ale5" path="res://scenes/ui/image_button.tscn" id="3_w6ykx"]
 
-[node name="MainMenu" type="Control" unique_id=2067183163 node_paths=PackedStringArray("prompt_label")]
+[node name="MainMenu" type="Control" unique_id=2067183163 node_paths=PackedStringArray("play_button", "tutorial_button", "settings_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +13,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5vafy")
-prompt_label = NodePath("PromtLabel")
+play_button = NodePath("ButtonsMargin/Buttons/PlayButton")
+tutorial_button = NodePath("ButtonsMargin/Buttons/TutorialButton")
+settings_button = NodePath("ButtonsMargin/Buttons/SettingsButton")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=319311774]
+stream = ExtResource("2_w6ykx")
 
 [node name="Backround" type="ColorRect" parent="." unique_id=1400348030]
 layout_mode = 1
@@ -22,39 +29,44 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.04, 0.04, 0.04, 1)
 
-[node name="TitleLabel" type="Label" parent="." unique_id=499940011]
+[node name="Cover" type="TextureRect" parent="." unique_id=1094639335]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_byqcc")
-theme_override_font_sizes/font_size = 100
-text = "Tlahtolli"
-horizontal_alignment = 1
-vertical_alignment = 1
+texture = ExtResource("2_byqcc")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="PromtLabel" type="Label" parent="." unique_id=229716843]
+[node name="ButtonsMargin" type="MarginContainer" parent="." unique_id=553780080]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -129.0
-offset_top = -23.0
-offset_right = 129.0
 grow_horizontal = 2
-grow_vertical = 0
-offset_transform_enabled = true
-offset_transform_position = Vector2(0, -40)
-theme_override_fonts/font = ExtResource("2_byqcc")
-theme_override_font_sizes/font_size = 19
-text = "Presiona ESPACIO para comenzar"
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_bottom = 60
+
+[node name="Buttons" type="VBoxContainer" parent="ButtonsMargin" unique_id=668839227]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="PlayButton" parent="ButtonsMargin/Buttons" unique_id=1175162725 instance=ExtResource("3_w6ykx")]
+layout_mode = 2
+label_text = "Jugar"
+font_size = 30
+
+[node name="TutorialButton" parent="ButtonsMargin/Buttons" unique_id=1155530395 instance=ExtResource("3_w6ykx")]
+layout_mode = 2
+label_text = "Tutorial"
+font_size = 30
+
+[node name="SettingsButton" parent="ButtonsMargin/Buttons" unique_id=383215435 instance=ExtResource("3_w6ykx")]
+custom_minimum_size = Vector2(250, 64)
+layout_mode = 2
+label_text = "Ajustes"
+font_size = 30

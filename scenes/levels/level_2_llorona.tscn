@@ -7,10 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="3_yc251"]
 [ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="4_3dx4f"]
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="4_n8dxx"]
-[ext_resource type="PackedScene" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
+[ext_resource type="PackedScene" uid="uid://dnddxgxcfjhop" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
 [ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="6_invbar"]
 [ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="9_3bo8v"]
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="11_n8jnb"]
+[ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="12_n8jnb"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3dx4f"]
 load_path = "res://.godot/imported/casa_abandonada.png-23ae3fd97371bc9d24188e310e63b91d.ctex"
@@ -245,9 +246,9 @@ follow_up_ids = Array[String](["llorona_mision"])
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("9_3bo8v")]
 current_level = 2
 
-[node name="InventoryBar" parent="." unique_id=1686932264 instance=ExtResource("6_invbar")]
-
 [node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("11_n8jnb")]
+
+[node name="InventoryBar" parent="." unique_id=1686932264 instance=ExtResource("6_invbar")]
 
 [node name="VegetacionExtra" type="Node2D" parent="." unique_id=1428292359]
 y_sort_enabled = true
@@ -308,3 +309,7 @@ position = Vector2(1109, 433)
 
 [node name="PinoExtra26" parent="VegetacionExtra" unique_id=1089124019 instance=ExtResource("4_3dx4f")]
 position = Vector2(126, 626)
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=2135819859]
+stream = ExtResource("12_n8jnb")
+volume_db = -5.0

@@ -1,11 +1,19 @@
 [gd_scene format=3 uid="uid://k3ei1dm4ale5"]
 
-[ext_resource type="Texture2D" uid="uid://dgtwx6v033eq" path="res://assets/sprites/ui/botones.png" id="1_fvsb0"]
+[ext_resource type="Texture2D" uid="uid://c17ylltq3ek3u" path="res://assets/sprites/ui/boton.png" id="1_fvsb0"]
 [ext_resource type="Script" uid="uid://donseol3yalmi" path="res://scripts/ui/image_button.gd" id="2_vjth5"]
+[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="3_vjth5"]
 
 [node name="ImageButton" type="TextureButton" unique_id=1175162725]
-custom_minimum_size = Vector2(600, 64)
-offset_right = 40.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(200, 64)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = ExtResource("1_fvsb0")
+ignore_texture_size = true
+stretch_mode = 5
 script = ExtResource("2_vjth5")
+font = ExtResource("3_vjth5")
+font_size = 32

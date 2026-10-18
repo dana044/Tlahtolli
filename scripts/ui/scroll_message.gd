@@ -1,8 +1,8 @@
-class_name ScrollMessage
-
 ## Pergamino con mensajes que aparecen arriba a la derecha.
 ## Puede mostrar uno solo o una cadena (message_id + follow_up_ids).
-## Desde código: $ScrollMessage.show_message("id")
+## Respeta la pausa: con el juego pausado, el mensaje se congela y los
+## siguientes no salen hasta reanudar.
+class_name ScrollMessage
 extends CanvasLayer
 
 ## Se emite cuando termina de mostrarse un mensaje.
@@ -16,7 +16,8 @@ signal sequence_finished
 @export var message_id: String = ""
 ## Mensajes que salen después del primero, en orden.
 @export var follow_up_ids: Array[String] = []
-## Si es true, la cadena empieza sola al cargar la escena.
+## Si es true, la cadena empieza sola al cargar la escena. Si el nivel la
+## lanza por código (play_configured_sequence), déjalo en false.
 @export var show_on_ready: bool = true
 ## Segundos de espera antes del primer mensaje.
 @export_range(0.0, 10.0, 0.1) var start_delay: float = 0.5
@@ -36,17 +37,18 @@ var _messages: Dictionary = {}
 var _tween: Tween
 var _token: int = 0   # Sirve para cancelar una cadena en curso.
 
+
 func _ready() -> void:
 	_load_messages()
 	banner.modulate.a = 0.0
 	banner.hide()
 	if show_on_ready:
-		await get_tree().create_timer(start_delay).timeout
+		# El 'false' hace que el temporizador se detenga con la pausa.
+		await get_tree().create_timer(start_delay, false).timeout
 		play_configured_sequence()
 
 
 ## Muestra message_id y luego los follow_up_ids, tal como están en el Inspector.
-## La puede llamar el nivel cuando quiera iniciar la secuencia.
 func play_configured_sequence() -> void:
 	if message_id == "":
 		return
@@ -63,7 +65,7 @@ func show_sequence(ids: Array[String]) -> void:
 		await show_message(id)
 		if my_token != _token:
 			return
-		await get_tree().create_timer(gap_seconds).timeout
+		await get_tree().create_timer(gap_seconds, false).timeout
 		if my_token != _token:
 			return
 	sequence_finished.emit()
@@ -80,8 +82,8 @@ func show_message(id: String, seconds: float = -1.0) -> void:
 	if _tween:
 		_tween.kill()
 	banner.show()
-	# TWEEN_PAUSE_PROCESS: funciona aunque el juego esté en pausa.
-	_tween = create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	# Tween normal: se detiene cuando el árbol está en pausa.
+	_tween = create_tween()
 	_tween.tween_property(banner, "modulate:a", 1.0, fade_seconds)
 	_tween.tween_interval(duration)
 	_tween.tween_property(banner, "modulate:a", 0.0, fade_seconds)
