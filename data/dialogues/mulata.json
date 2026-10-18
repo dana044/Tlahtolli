@@ -1,20 +1,20 @@
 {
   "mulata_inicio": [
-    {"speaker": "Mulata", "text": "Hace tiempo que nadie pasa por aquí… Me acusaron sin razón y los muros ya me saben de memoria."},
-    {"speaker": "Mulata", "text": "Hay tres hojas en el suelo. Léelas todas y responde con la cabeza."},
-    {"speaker": "Mulata", "text": "Con cada respuesta correcta, mi dibujo avanza."},
-    {"speaker": "Protagonista", "text": "¿Qué dibujo?"},
-    {"speaker": "Mulata", "text": "Uno que me llevará lejos de aquí."}
+	{"speaker": "Mulata", "text": "Hace tiempo que nadie pasa por aquí… Me acusaron sin razón y los muros ya me saben de memoria."},
+	{"speaker": "Mulata", "text": "Hay tres hojas en el suelo. Léelas todas y responde con la cabeza."},
+	{"speaker": "Mulata", "text": "Con cada respuesta correcta, mi dibujo avanza."},
+	{"speaker": "Protagonista", "text": "¿Qué dibujo?"},
+	{"speaker": "Mulata", "text": "Uno que me llevará lejos de aquí."}
   ],
   "mulata_hoja_incompleta": [
-    {"speaker": "Mulata", "text": "Aún faltan hojas. Ninguna se queda sin leer."}
+	{"speaker": "Mulata", "text": "Aún faltan hojas. Ninguna se queda sin leer."}
   ],
   "mulata_error": [
-    {"speaker": "Mulata", "text": "No es esa… Piénsalo otra vez. La paciencia también dibuja."}
+	{"speaker": "Mulata", "text": "No es esa… Piénsalo otra vez. La paciencia también dibuja."}
   ],
   "mulata_final": [
-    {"speaker": "Mulata", "text": "Mira, el barco está completo. Ya sé que puedo irme."},
-    {"speaker": "Mulata", "text": "Toma mi carboncillo. No es magia por sí solo: es lo que hagas con él."},
-    {"speaker": "Protagonista", "text": "Gracias. Buen viaje."}
+	{"speaker": "Mulata", "text": "Mira, el barco está completo. Ya sé que puedo irme."},
+	{"speaker": "Mulata", "text": "Toma mi carboncillo. No es magia por sí solo: es lo que hagas con él."},
+	{"speaker": "Protagonista", "text": "Gracias. Buen viaje."}
   ]
 }

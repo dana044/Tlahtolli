@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dl6hvyd7jo4uo"]
+
+[ext_resource type="Script" uid="uid://c0wrq3gn8fg1m" path="res://scripts/levels/level_1_mulata.gd" id="1_t8w26"]
+[ext_resource type="Texture2D" uid="uid://lt34wurs1jbg" path="res://assets/tilesets/pasto_total.png" id="1_y5dso"]
+[ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="2_iuot1"]
+
+[node name="Level1Mulata" type="Node2D" unique_id=2089911950]
+script = ExtResource("1_t8w26")
+
+[node name="Fondo" type="Sprite2D" parent="." unique_id=1314775442]
+z_index = -10
+texture = ExtResource("1_y5dso")
+centered = false
+
+[node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1036527872]
+color = Color(0.469135, 0.4698878, 0.5834571, 1)
+
+[node name="StartPoint" type="Marker2D" parent="." unique_id=1871673138]
+position = Vector2(50, 511)
+
+[node name="player" parent="." unique_id=1088824485 instance=ExtResource("2_iuot1")]
+position = Vector2(50, 414)

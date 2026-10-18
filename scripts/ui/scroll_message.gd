@@ -90,6 +90,17 @@ func show_message(id: String, seconds: float = -1.0) -> void:
 	message_finished.emit()
 
 
+## NUEVO: muestra un texto suelto, sin buscarlo en messages.json. Sirve para
+## textos que ya viven en otro archivo de datos (por ejemplo, el mensaje de
+## éxito de cada acertijo en riddles.json o la descripción de un objeto).
+## Si 'seconds' es negativo usa display_seconds.
+func show_text(text: String, seconds: float = -1.0) -> void:
+	# Se guarda con un id reservado para reutilizar show_message() tal cual.
+	var temp_id := "__texto_directo__"
+	_messages[temp_id] = text
+	await show_message(temp_id, seconds)
+
+
 ## Oculta todo de inmediato y cancela la cadena.
 func hide_message() -> void:
 	_token += 1

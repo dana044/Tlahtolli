@@ -34,11 +34,13 @@ texture_region_size = Vector2i(32, 32)
 texture = ExtResource("6_i48h8")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -0.15421677, 16, -0.15421677, 16, 16, -16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kls6a"]
 texture = ExtResource("7_rcucp")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rcucp"]
 texture = ExtResource("5_i48h8")

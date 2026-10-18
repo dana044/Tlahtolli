@@ -1,0 +1,106 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/riddle_panel.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bd83rd515h8xr" path="res://assets/sprites/ui/scroll_message.png" id="2_scroll"]
+[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="3_font"]
+
+[node name="RiddlePanel" type="CanvasLayer"]
+layer = 4
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Center" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scroll" type="NinePatchRect" parent="Center"]
+custom_minimum_size = Vector2(820, 460)
+layout_mode = 2
+texture = ExtResource("2_scroll")
+patch_margin_left = 40
+patch_margin_top = 20
+patch_margin_right = 40
+patch_margin_bottom = 20
+
+[node name="Margin" type="MarginContainer" parent="Center/Scroll"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="Center/Scroll/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Center/Scroll/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 28
+text = "Tema"
+horizontal_alignment = 1
+
+[node name="RiddleLabel" type="Label" parent="Center/Scroll/Margin/VBox"]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 30
+text = "Texto del acertijo"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Option1" type="Button" parent="Center/Scroll/Margin/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.23137255, 0.13725491, 0.078431375, 0.5)
+theme_override_colors/font_focus_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_pressed_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 28
+text = "A) Opción 1"
+
+[node name="Option2" type="Button" parent="Center/Scroll/Margin/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.23137255, 0.13725491, 0.078431375, 0.5)
+theme_override_colors/font_focus_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_pressed_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 28
+text = "B) Opción 2"
+
+[node name="Option3" type="Button" parent="Center/Scroll/Margin/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.23137255, 0.13725491, 0.078431375, 0.5)
+theme_override_colors/font_focus_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_hover_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_pressed_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 28
+text = "C) Opción 3"

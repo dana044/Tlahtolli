@@ -1,38 +1,38 @@
 {
   "riddle_1": {
-    "theme": "La leyenda",
-    "boat_part": "casco",
-    "text": "No soy pluma ni pincel; vengo del fuego y quedo negro en la piel. Con mis trazos hubo quien se fue por el mar.",
-    "options": [
-      "El carbón",
-      "La tinta",
-      "La pintura"
-    ],
-    "correct": 0,
-    "success": "El casco del barco aparece en la pared."
+	"theme": "La leyenda",
+	"boat_part": "casco",
+	"text": "No soy pluma ni pincel; vengo del fuego y quedo negro en la piel. Con mis trazos hubo quien se fue por el mar.",
+	"options": [
+	  "El carbón",
+	  "La tinta",
+	  "La pintura"
+	],
+	"correct": 0,
+	"success": "El casco del barco aparece en la pared."
   },
   "riddle_2": {
-    "theme": "La historia de Córdoba",
-    "boat_part": "mástil",
-    "text": "Fui esclavizado y me hice libre. Encabecé a quienes huyeron a las montañas y mi nombre aún está en un pueblo veracruzano.",
-    "options": [
-      "Hidalgo",
-      "Yanga",
-      "Morelos"
-    ],
-    "correct": 1,
-    "success": "Un mástil se alza sobre el casco."
+	"theme": "La huida de la prisión",
+	"boat_part": "mástil",
+	"text": "El carcelero me miró sorprendido y preguntó: ‘¿Qué le falta a tu barco?’. Yo le respondí con astucia antes de abordar y desaparecer en la neblina. ¿Qué fue lo único que le faltaba a mi dibujo?",
+	"options": [
+	  "Un capitán",
+	  "Navegar",
+	  "El mar"
+	],
+	"correct": 1,
+	"success": "Un mástil se alza sobre el casco."
   },
   "riddle_3": {
-    "theme": "La cultura",
-    "boat_part": "vela",
-    "text": "Crezco en la sierra, mi grano es oscuro y despierto a todos por la mañana. En los portales de Córdoba soy el rey.",
-    "options": [
-      "El cacao",
-      "El café",
-      "La vainilla"
-    ],
-    "correct": 1,
-    "success": "La vela se despliega."
+	"theme": "La cultura",
+	"boat_part": "vela",
+	"text": "Crezco en la sierra, mi grano es oscuro y despierto a todos por la mañana. En los portales de Córdoba soy el rey.",
+	"options": [
+	  "El cacao",
+	  "El café",
+	  "La vainilla"
+	],
+	"correct": 1,
+	"success": "La vela se despliega."
   }
 }

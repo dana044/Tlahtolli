@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://cwe6qyqpbqgaa"]
+
+[ext_resource type="Texture2D" uid="uid://p44x3viqrqku" path="res://assets/sprites/characters/mulata_e.png" id="1_dk3l1"]
+[ext_resource type="Script" uid="uid://dgwdbx0ikqdya" path="res://scripts/characters/mulata.gd" id="1_vxrxm"]
+[ext_resource type="Texture2D" uid="uid://ebxg1cww1g3n" path="res://assets/sprites/characters/mulata_n.png" id="2_vxrxm"]
+[ext_resource type="Texture2D" uid="uid://r40uhpj083id" path="res://assets/sprites/characters/mulata_ne.png" id="3_u7ydq"]
+[ext_resource type="Texture2D" uid="uid://14s6t4aihdd0" path="res://assets/sprites/characters/mulata_nw.png" id="4_iksld"]
+[ext_resource type="Texture2D" uid="uid://beaqm1uf40t5d" path="res://assets/sprites/characters/mulata_s.png" id="5_5mjul"]
+[ext_resource type="Texture2D" uid="uid://ditmbot7mx8dv" path="res://assets/sprites/characters/mulata_se.png" id="6_ncop7"]
+[ext_resource type="Texture2D" uid="uid://d27tcagjscy86" path="res://assets/sprites/characters/mulata_sw.png" id="7_g3c66"]
+[ext_resource type="Texture2D" uid="uid://d08ifevcos63s" path="res://assets/sprites/characters/mulata_w.png" id="8_oh6xp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1a5f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dk3l1")
+}],
+"loop": 1,
+"name": &"walk_e",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vxrxm")
+}],
+"loop": 1,
+"name": &"walk_n",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_u7ydq")
+}],
+"loop": 1,
+"name": &"walk_ne",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_iksld")
+}],
+"loop": 1,
+"name": &"walk_nw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5mjul")
+}],
+"loop": 1,
+"name": &"walk_s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ncop7")
+}],
+"loop": 1,
+"name": &"walk_se",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_g3c66")
+}],
+"loop": 1,
+"name": &"walk_sw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_oh6xp")
+}],
+"loop": 1,
+"name": &"walk_w",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(16, 7)
+
+[node name="Mulata" type="CharacterBody2D" unique_id=1484122849]
+script = ExtResource("1_vxrxm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1256152537]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_h1a5f")
+animation = &"walk_s"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1525350775]
+position = Vector2(-1, -3.5)
+shape = SubResource("RectangleShape2D_am0s3")

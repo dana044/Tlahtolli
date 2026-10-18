@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bxej4ifw04nue"]
+
+[ext_resource type="Script" uid="uid://0wnnclitjbna" path="res://scripts/objets/riddle_paper.gd" id="1_p2w2t"]
+[ext_resource type="Texture2D" uid="uid://djftafudqdgio" path="res://assets/sprites/ui/icons/icon_hoja.png" id="2_44l6m"]
+
+[node name="Hoja" type="Node2D" unique_id=1483825072]
+script = ExtResource("1_p2w2t")
+metadata/_custom_type_script = "uid://by77at4b1y7h8"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=964508168]
+position = Vector2(0, -8)
+texture = ExtResource("2_44l6m")
