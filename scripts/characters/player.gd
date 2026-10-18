@@ -83,6 +83,22 @@ const AUTO_WALK_ARRIVAL: float = 4.0
 #endregion
 
 
+#region Apariencia
+
+## Skin (recurso [SpriteFrames]) del personaje SIN linterna. Se usa cuando la
+## linterna está apagada (ver [method set_lantern_enabled]).
+## Debe tener las mismas animaciones que [member skin_lantern].
+@export var skin_normal: SpriteFrames = preload("res://scenes/characters/skins/prota.tres")
+
+## Skin (recurso [SpriteFrames]) del personaje CON linterna en la mano. Se usa
+## únicamente mientras la linterna está encendida (ver
+## [method set_lantern_enabled]).
+## Debe tener las mismas animaciones que [member skin_normal].
+@export var skin_lantern: SpriteFrames = preload("res://scenes/characters/skins/prota_lampara.tres")
+
+#endregion
+
+
 #region Interacción
 
 ## Distancia máxima, en píxeles, a la que el jugador puede interactuar con un
@@ -176,6 +192,11 @@ func _ready() -> void:
 	if lantern:
 		_lantern_base_scale = lantern.texture_scale
 		_lantern_base_energy = lantern.energy
+
+	# La skin parte coherente con el estado de la luz en la escena, incluso si
+	# el nivel no llama a set_lantern_enabled(). Sin nodo de linterna, el
+	# personaje usa la skin normal.
+	_update_skin(lantern != null and lantern.visible)
 
 
 ## Actualiza el movimiento del personaje en cada paso de física.
@@ -272,9 +293,41 @@ func set_world_bounds(bounds: Rect2) -> void:
 
 ## Enciende o apaga la linterna. Cada nivel decide su estado inicial.
 ## No tiene efecto si la escena no incluye el nodo [code]LanternLight[/code].
+## [br]Además cambia la skin del personaje: con la linterna encendida usa
+## [member skin_lantern] y con la linterna apagada usa [member skin_normal].
+## Así skin y luz nunca quedan desincronizadas.
 func set_lantern_enabled(enabled: bool) -> void:
 	if lantern:
 		lantern.visible = enabled
+		_update_skin(enabled)
+
+
+## Asigna al [AnimatedSprite2D] la skin que corresponde al estado de la
+## linterna. Conserva la animación, el fotograma y el estado de reproducción
+## actuales para que el cambio no se note (ni parpadee ni cambie la
+## orientación del personaje).
+## [param with_lantern] es [code]true[/code] para usar [member skin_lantern]
+## y [code]false[/code] para usar [member skin_normal].
+## [br]No hace nada si falta el recurso de la skin o si ya es la activa.
+func _update_skin(with_lantern: bool) -> void:
+	var frames: SpriteFrames = skin_lantern if with_lantern else skin_normal
+	if sprite == null or frames == null or sprite.sprite_frames == frames:
+		return
+
+	# Se guarda el estado de la animación antes de cambiar el recurso.
+	var current_animation: StringName = sprite.animation
+	var current_frame: int = sprite.frame
+	var was_playing: bool = sprite.is_playing()
+
+	sprite.sprite_frames = frames
+
+	# Ambas skins comparten nombres de animación; si por error alguna no tiene
+	# la actual, Godot elige la primera disponible y no se restaura nada.
+	if frames.has_animation(current_animation):
+		sprite.animation = current_animation
+		sprite.frame = mini(current_frame, frames.get_frame_count(current_animation) - 1)
+		if was_playing:
+			sprite.play(current_animation)
 
 
 ## Atenúa o restaura la linterna de forma gradual.

@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://dc2br6ra7rw6f" path="res://scripts/characters/player.gd" id="1_yewv4"]
 [ext_resource type="SpriteFrames" uid="uid://bkhlh3jgcm85r" path="res://scenes/characters/skins/prota_lampara.tres" id="2_yewv4"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dyp2m"]
-radius = 9.0
-height = 18.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i48h8"]
+size = Vector2(12, 7.812502)
 
 [sub_resource type="Gradient" id="Gradient_yewv4"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -24,11 +23,12 @@ script = ExtResource("1_yewv4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276208741]
 position = Vector2(0, -13)
 sprite_frames = ExtResource("2_yewv4")
-animation = &"walk_w"
+animation = &"walk_s"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1946720363]
-position = Vector2(0, -9)
-shape = SubResource("CapsuleShape2D_dyp2m")
+position = Vector2(0, -2.5)
+scale = Vector2(1, 0.63999987)
+shape = SubResource("RectangleShape2D_i48h8")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1963291744]
 position = Vector2(0, -13)

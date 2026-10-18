@@ -8,10 +8,10 @@
 process_mode = 3
 layer = 9
 script = ExtResource("1_gs82g")
-journal_font = ExtResource("1_qmpw5")
 book = NodePath("Book")
 entries_box = NodePath("Book/CenterContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/EntriesBox")
 toast_label = NodePath("ToastLabel")
+journal_font = ExtResource("1_qmpw5")
 title_font_size = 32
 body_font_size = 28
 

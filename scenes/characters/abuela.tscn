@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bprcfq3vsdris"]
+
+[ext_resource type="SpriteFrames" uid="uid://ojeodw85tshq" path="res://scenes/characters/skins/abuela.tres" id="1_kbov6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(12, 10)
+
+[node name="Abuela" type="CharacterBody2D" unique_id=1520478841]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=834881087]
+position = Vector2(0, -13)
+sprite_frames = ExtResource("1_kbov6")
+animation = &"Abuela_a"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1539094975]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_am0s3")
