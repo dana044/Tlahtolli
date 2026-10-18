@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="3_yc251"]
 [ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="4_3dx4f"]
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="4_n8dxx"]
-[ext_resource type="PackedScene" uid="uid://dnddxgxcfjhop" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
+[ext_resource type="PackedScene" path="res://scenes/objects/muneca.tscn" id="5_muneca"]
 [ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="6_invbar"]
 [ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="9_3bo8v"]
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="11_n8jnb"]
@@ -248,3 +248,63 @@ current_level = 2
 [node name="InventoryBar" parent="." unique_id=1686932264 instance=ExtResource("6_invbar")]
 
 [node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("11_n8jnb")]
+
+[node name="VegetacionExtra" type="Node2D" parent="." unique_id=1428292359]
+y_sort_enabled = true
+
+[node name="ArbustoExtra47" parent="VegetacionExtra" unique_id=1950907203 instance=ExtResource("4_n8dxx")]
+position = Vector2(303, 348)
+
+[node name="ArbustoExtra48" parent="VegetacionExtra" unique_id=1435970472 instance=ExtResource("4_n8dxx")]
+position = Vector2(284, 356)
+
+[node name="ArbustoExtra49" parent="VegetacionExtra" unique_id=1585619986 instance=ExtResource("4_n8dxx")]
+position = Vector2(465, 598)
+
+[node name="ArbustoExtra52" parent="VegetacionExtra" unique_id=1427866884 instance=ExtResource("4_n8dxx")]
+position = Vector2(369, 370)
+
+[node name="ArbustoExtra56" parent="VegetacionExtra" unique_id=1049818055 instance=ExtResource("4_n8dxx")]
+position = Vector2(730, 612)
+
+[node name="ArbustoExtra57" parent="VegetacionExtra" unique_id=1203947372 instance=ExtResource("4_n8dxx")]
+position = Vector2(742, 606)
+
+[node name="ArbustoExtra59" parent="VegetacionExtra" unique_id=1989379278 instance=ExtResource("4_n8dxx")]
+position = Vector2(642, 546)
+
+[node name="ArbustoExtra60" parent="VegetacionExtra" unique_id=1510084391 instance=ExtResource("4_n8dxx")]
+position = Vector2(627, 547)
+
+[node name="ArbustoExtra62" parent="VegetacionExtra" unique_id=1822468959 instance=ExtResource("4_n8dxx")]
+position = Vector2(974, 582)
+
+[node name="ArbustoExtra63" parent="VegetacionExtra" unique_id=1706538441 instance=ExtResource("4_n8dxx")]
+position = Vector2(981, 593)
+
+[node name="ArbustoExtra66" parent="VegetacionExtra" unique_id=1537775850 instance=ExtResource("4_n8dxx")]
+position = Vector2(98, 146)
+
+[node name="ArbustoExtra68" parent="VegetacionExtra" unique_id=1583739552 instance=ExtResource("4_n8dxx")]
+position = Vector2(563, 615)
+
+[node name="ArbustoExtra70" parent="VegetacionExtra" unique_id=1403774397 instance=ExtResource("4_n8dxx")]
+position = Vector2(180, 476)
+
+[node name="ArbustoExtra71" parent="VegetacionExtra" unique_id=1662175666 instance=ExtResource("4_n8dxx")]
+position = Vector2(248, 599)
+
+[node name="ArbustoExtra72" parent="VegetacionExtra" unique_id=1157895502 instance=ExtResource("4_n8dxx")]
+position = Vector2(1037, 481)
+
+[node name="PinoExtra19" parent="VegetacionExtra" unique_id=1673036690 instance=ExtResource("4_3dx4f")]
+position = Vector2(878, 398)
+
+[node name="PinoExtra20" parent="VegetacionExtra" unique_id=1723380245 instance=ExtResource("4_3dx4f")]
+position = Vector2(908, 625)
+
+[node name="PinoExtra24" parent="VegetacionExtra" unique_id=1940943925 instance=ExtResource("4_3dx4f")]
+position = Vector2(1109, 433)
+
+[node name="PinoExtra26" parent="VegetacionExtra" unique_id=1089124019 instance=ExtResource("4_3dx4f")]
+position = Vector2(126, 626)
