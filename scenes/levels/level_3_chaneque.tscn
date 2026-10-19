@@ -177,7 +177,8 @@ position = Vector2(1034, 549)
 position = Vector2(28, 222)
 
 [node name="ScrollMessage" parent="." unique_id=632223670 instance=ExtResource("6_scroll")]
-message_id = ""
+message_id = "chaneque_mensaje_inicio"
+follow_up_ids = Array[String](["chaneque_mision"])
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=452656518]
 layer = 5
