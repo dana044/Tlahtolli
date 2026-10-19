@@ -26,9 +26,6 @@ z_index = -10
 texture = ExtResource("2_2r2fg")
 centered = false
 
-[node name="Oscuridad" type="CanvasModulate" parent="." unique_id=488248458]
-color = Color(0.2470588, 0.2470588, 0.3254902, 1)
-
 [node name="StartPoint" type="Marker2D" parent="." unique_id=1560189027]
 position = Vector2(27, 221)
 
@@ -936,3 +933,6 @@ current_level = 3
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=906634103]
 stream = ExtResource("16_hudyw")
+
+[node name="Oscuridad" type="CanvasModulate" parent="." unique_id=488248458]
+color = Color(0.027549954, 0.02754723, 0.047924392, 1)

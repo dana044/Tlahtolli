@@ -8,7 +8,7 @@
 layer = 8
 script = ExtResource("1_e8c4e")
 message_id = "llorona_mensaje_inicio"
-display_seconds = 5.0
+display_seconds = 3.0
 banner = NodePath("Banner")
 message_label = NodePath("Banner/MarginContainer/MessageLabel")
 

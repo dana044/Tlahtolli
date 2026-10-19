@@ -1,10 +1,8 @@
-## Interfaz del diario de pistas. Se abre con la acción "open_journal" (Tab).
-## Muestra solo las pistas que corresponden al nivel actual y avisa cuando
-## llega una nueva.
+## Interfaz del diario de pistas. Se abre con la acción "open_journal" (Tab)
+## o con el botón "?". Muestra solo las pistas que corresponden al nivel
+## actual y avisa cuando llega una nueva.
 extends CanvasLayer
 
-## Color de la letra para todas las entradas del diario.
-@export var font_color: Color = Color("3b2314")
 ## Panel completo del diario. Asígnalo en el Inspector.
 @export var book: Control
 ## Contenedor donde se crean las entradas. Asígnalo en el Inspector.
@@ -14,11 +12,15 @@ extends CanvasLayer
 ## Acción que abre/cierra el diario.
 @export var toggle_action: StringName = &"open_journal"
 
+@export_group("Nivel")
 ## Nivel en el que está esta instancia del diario (1 = Mulata, 2 = Llorona,
 ## 3 = Chaneque). Solo se muestran las pistas cuyo "level" en journal.json
 ## sea menor o igual a este número. Se cambia en el Inspector de cada nivel.
 @export_range(1, 3) var current_level: int = 1
-
+## Si es true, al entrar al nivel se desbloquean las pistas que le
+## corresponden, sin importar si el jugador pasó por la intro. Sirve para
+## probar un nivel suelto con F6 o como respaldo. No muestra el aviso.
+@export var auto_unlock_level_clues: bool = false
 ## Si es true, las pistas del nivel aún no descubiertas salen como "???".
 @export var show_locked_entries: bool = true
 ## Título de una pista bloqueada.
@@ -26,6 +28,20 @@ extends CanvasLayer
 ## Texto de una pista bloqueada.
 @export var locked_text: String = "Aún no conozco esta pista."
 
+@export_group("Botón de pistas (?)")
+## Botón que abre el diario. Asígnalo en el Inspector.
+@export var journal_button: TextureButton
+## Contenedor que agrupa el botón y el aviso (el HBoxContainer). Asígnalo en
+## el Inspector: es el que se coloca a la izquierda, a media altura.
+@export var button_row: Control
+## Tamaño del botón en píxeles.
+@export var journal_button_size: Vector2 = Vector2(70, 70)
+## Separación respecto al borde izquierdo de la pantalla.
+@export var journal_button_margin: int = 12
+
+@export_group("Apariencia")
+## Color de la letra para todas las entradas del diario.
+@export var font_color: Color = Color("3b2314")
 ## Tipografía del diario. Si está vacía, usa la fuente por defecto del proyecto.
 @export var journal_font: Font
 ## Tamaño de letra del título de cada pista.
@@ -39,11 +55,50 @@ var _toast_tween: Tween
 
 
 func _ready() -> void:
-	_apply_font()
+	# Avisa con claridad qué campo falta en el Inspector.
+	var missing: Array[String] = []
+	if book == null: missing.append("Book")
+	if entries_box == null: missing.append("Entries Box")
+	if toast_label == null: missing.append("Toast Label")
+	if not missing.is_empty():
+		push_error("JournalUI: faltan por asignar en el Inspector: " + ", ".join(missing))
+		return
+
+	_setup_journal_button()
+	_apply_theme()
 	book.hide()
 	toast_label.hide()
 	toast_label.modulate.a = 0.0
+
+	# Va antes de conectar la señal, para que no salga el aviso de "nueva pista".
+	if auto_unlock_level_clues:
+		for entry in Journal.entries:
+			if _is_in_current_level(entry):
+				Journal.unlock(entry["id"])
+
 	Journal.clue_unlocked.connect(_on_clue_unlocked)
+
+
+## Coloca el botón "?" en el borde izquierdo, a media altura, con el tamaño
+## indicado en journal_button_size.
+func _setup_journal_button() -> void:
+	if journal_button == null:
+		return
+	# Sin foco, para que Espacio/Enter (que avanzan diálogos) no lo activen.
+	journal_button.focus_mode = Control.FOCUS_NONE
+	journal_button.ignore_texture_size = true
+	journal_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	journal_button.custom_minimum_size = journal_button_size
+	# Evita que el contenedor estire el botón más allá de su tamaño.
+	journal_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	journal_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	journal_button.pressed.connect(open)
+
+## El botón solo se ve con el juego corriendo (no en pausa, diálogo ni diario).
+func _process(_delta: float) -> void:
+	if journal_button == null:
+		return
+	journal_button.visible = not get_tree().paused
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -74,12 +129,12 @@ func close() -> void:
 	Journal.is_open = false
 
 
-## Aplica la tipografía a todo el diario con un Theme heredado por los hijos.
-func _apply_font() -> void:
-	if journal_font == null:
-		return
+## Aplica color de letra y, si hay, la tipografía a todo el diario con un
+## Theme heredado por los hijos. El color se aplica siempre, tenga o no fuente.
+func _apply_theme() -> void:
 	var diary_theme := Theme.new()
-	diary_theme.default_font = journal_font
+	if journal_font != null:
+		diary_theme.default_font = journal_font
 	diary_theme.set_color("font_color", "Label", font_color)
 	book.theme = diary_theme
 

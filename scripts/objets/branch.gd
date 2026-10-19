@@ -160,7 +160,6 @@ func _find_break_sound() -> AudioStream:
 
 	if not _warned_no_sound:
 		_warned_no_sound = true
-		push_warning("Branch: no hay sonido de rama en %s; se usa un crujido provisional." % SFX_DIR)
 	return _get_placeholder_crack()
 
 
