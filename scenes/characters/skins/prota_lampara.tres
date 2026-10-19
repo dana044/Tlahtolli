@@ -1,19 +1,38 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://bkhlh3jgcm85r"]
 
-[ext_resource type="Texture2D" uid="uid://cv3vbqb2c40nh" path="res://assets/sprites/characters/prota_linterna_e.png" id="1_xjxhx"]
-[ext_resource type="Texture2D" uid="uid://1mxyjyc6tlpk" path="res://assets/sprites/characters/prota_linterna_n.png" id="2_5iorw"]
-[ext_resource type="Texture2D" uid="uid://b4o8hwyhk5qor" path="res://assets/sprites/characters/prota_linterna_ne.png" id="3_8rybm"]
-[ext_resource type="Texture2D" uid="uid://bdegdqq5re6b5" path="res://assets/sprites/characters/prota_linterna_nw.png" id="4_ark1r"]
-[ext_resource type="Texture2D" uid="uid://s4ymk6urtppn" path="res://assets/sprites/characters/prota_linterna_s.png" id="5_nk2eg"]
-[ext_resource type="Texture2D" uid="uid://dj8ya1f6mkq0j" path="res://assets/sprites/characters/prota_linterna_se.png" id="6_065v6"]
-[ext_resource type="Texture2D" uid="uid://cdsjxnvk3rle5" path="res://assets/sprites/characters/prota_linterna_sw.png" id="7_uwbkn"]
-[ext_resource type="Texture2D" uid="uid://blhql4iwv6fsq" path="res://assets/sprites/characters/prota_linterna_w.png" id="8_k5mpg"]
+[ext_resource type="Texture2D" uid="uid://da7qqyq60m6if" path="res://assets/sprites/characters/personaje_linterna_e2.png" id="2_ctqw5"]
+[ext_resource type="Texture2D" uid="uid://bpgvne5xqsps1" path="res://assets/sprites/characters/personaje_linterna_e3.png" id="3_nawru"]
+[ext_resource type="Texture2D" uid="uid://eft6ka8bigta" path="res://assets/sprites/characters/personaje_linterna_e4.png" id="4_vvyph"]
+[ext_resource type="Texture2D" uid="uid://c3hslc38cqakj" path="res://assets/sprites/characters/personaje_linterna_n1.png" id="5_rnilr"]
+[ext_resource type="Texture2D" uid="uid://bbjyb018s31p5" path="res://assets/sprites/characters/personaje_linterna_n2.png" id="6_hdv73"]
+[ext_resource type="Texture2D" uid="uid://c536tq2fmfu60" path="res://assets/sprites/characters/personaje_linterna_n3.png" id="7_cvuft"]
+[ext_resource type="Texture2D" uid="uid://134drwbvnlk7" path="res://assets/sprites/characters/personaje_linterna_ne.png" id="8_nawru"]
+[ext_resource type="Texture2D" uid="uid://14huvwvjqbny" path="res://assets/sprites/characters/personaje_linterna_n4.png" id="8_oorb0"]
+[ext_resource type="Texture2D" uid="uid://dg5fmb57lak2p" path="res://assets/sprites/characters/personaje_linterna_s1.png" id="9_cn1cr"]
+[ext_resource type="Texture2D" uid="uid://cdtsq5wf3prqt" path="res://assets/sprites/characters/personaje_linterna_nw.png" id="9_vvyph"]
+[ext_resource type="Texture2D" uid="uid://bvr5rjq536jro" path="res://assets/sprites/characters/personaje_linterna_s2.png" id="10_0l53a"]
+[ext_resource type="Texture2D" uid="uid://d2whi7j83shh3" path="res://assets/sprites/characters/personaje_linterna_s3.png" id="11_u22qy"]
+[ext_resource type="Texture2D" uid="uid://csb0r1va4qmud" path="res://assets/sprites/characters/personaje_linterna_s4.png" id="12_f6pe7"]
+[ext_resource type="Texture2D" uid="uid://cphckh5oxrbdb" path="res://assets/sprites/characters/personaje_linterna_w2.png" id="14_0qr17"]
+[ext_resource type="Texture2D" uid="uid://cst5wc0422e52" path="res://assets/sprites/characters/personaje_linterna_se.png" id="14_rnilr"]
+[ext_resource type="Texture2D" uid="uid://c53vf32vcttkj" path="res://assets/sprites/characters/personaje_linterna_sw.png" id="15_hdv73"]
+[ext_resource type="Texture2D" uid="uid://b2uyphyypyvtc" path="res://assets/sprites/characters/personaje_linterna_w3.png" id="15_t4erx"]
+[ext_resource type="Texture2D" uid="uid://cdphal0y8cdaj" path="res://assets/sprites/characters/personaje_linterna_w4.png" id="16_631cl"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_xjxhx")
+"texture": ExtResource("3_nawru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ctqw5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nawru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vvyph")
 }],
 "loop": 1,
 "name": &"walk_e",
@@ -21,7 +40,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_5iorw")
+"texture": ExtResource("5_rnilr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hdv73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cvuft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_oorb0")
 }],
 "loop": 1,
 "name": &"walk_n",
@@ -29,7 +57,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_8rybm")
+"texture": ExtResource("8_nawru")
 }],
 "loop": 1,
 "name": &"walk_ne",
@@ -37,7 +65,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_ark1r")
+"texture": ExtResource("9_vvyph")
 }],
 "loop": 1,
 "name": &"walk_nw",
@@ -45,7 +73,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_nk2eg")
+"texture": ExtResource("9_cn1cr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_0l53a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_u22qy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_f6pe7")
 }],
 "loop": 1,
 "name": &"walk_s",
@@ -53,7 +90,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_065v6")
+"texture": ExtResource("14_rnilr")
 }],
 "loop": 1,
 "name": &"walk_se",
@@ -61,7 +98,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_uwbkn")
+"texture": ExtResource("15_hdv73")
 }],
 "loop": 1,
 "name": &"walk_sw",
@@ -69,7 +106,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_k5mpg")
+"texture": ExtResource("15_t4erx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_0qr17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_t4erx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_631cl")
 }],
 "loop": 1,
 "name": &"walk_w",

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv3vbqb2c40nh"
-path="res://.godot/imported/prota_linterna_e.png-25f297234cae723c63ad192accf342cf.ctex"
+uid="uid://b2uyphyypyvtc"
+path="res://.godot/imported/personaje_linterna_w3.png-1df7eaad16a0aa2dddfd5bfcada9f212.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/prota_linterna_e.png"
-dest_files=["res://.godot/imported/prota_linterna_e.png-25f297234cae723c63ad192accf342cf.ctex"]
+source_file="res://assets/sprites/characters/personaje_linterna_w3.png"
+dest_files=["res://.godot/imported/personaje_linterna_w3.png-1df7eaad16a0aa2dddfd5bfcada9f212.ctex"]
 
 [params]
 

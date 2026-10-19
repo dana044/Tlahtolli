@@ -27,7 +27,8 @@ tile_set = ExtResource("10_tileset")
 script = ExtResource("11_floor")
 
 [node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1917725185]
-color = Color(0.469135, 0.4698878, 0.5834571, 1)
+visible = false
+color = Color(0.27313358, 0.27260202, 0.35697216, 1)
 
 [node name="StartPoint" type="Marker2D" parent="." unique_id=2135181202]
 position = Vector2(50, 511)
@@ -70,18 +71,14 @@ monitorable = false
 shape = SubResource("RectangleShape2D_salida")
 
 [node name="RiddlePanel" parent="." unique_id=428024416 instance=ExtResource("6_panel")]
-visible = false
 
 [node name="ScrollMessage" parent="." unique_id=1658279487 instance=ExtResource("7_scroll")]
-visible = false
 message_id = ""
 show_on_ready = false
 
 [node name="InventoryBar" parent="." unique_id=210236398 instance=ExtResource("9_inventory")]
-visible = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=239755745]
-visible = false
 
 [node name="ContadorLabel" type="Label" parent="HUD" unique_id=200877241]
 offset_left = 16.0

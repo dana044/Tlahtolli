@@ -38,6 +38,10 @@ const LANTERN_MIN_SCALE_FACTOR: float = 0.05
 ## que avanza el personaje en un paso de física para no pasarse de largo.
 const AUTO_WALK_ARRIVAL: float = 4.0
 
+## Lado, en píxeles, de la textura de cono generada por código para la
+## linterna. Al ser una luz suave, 128 basta y se genera al instante.
+const LANTERN_TEXTURE_SIZE: int = 128
+
 
 #region Movimiento
 
@@ -95,6 +99,27 @@ const AUTO_WALK_ARRIVAL: float = 4.0
 ## [method set_lantern_enabled]).
 ## Debe tener las mismas animaciones que [member skin_normal].
 @export var skin_lantern: SpriteFrames = preload("res://scenes/characters/skins/prota_lampara.tres")
+
+#endregion
+
+
+#region Linterna
+
+## Ángulo total del cono de luz, en grados. Valores bajos dan un haz estrecho
+## (tipo foco); valores altos dan una luz más abierta.
+@export_range(20.0, 180.0, 1.0) var lantern_cone_angle: float = 90.0
+
+## Suavidad de los bordes laterales del cono, como fracción de su ángulo.
+## [code]0[/code] es un borde duro y [code]1[/code] es muy difuso.
+@export_range(0.0, 1.0, 0.05) var lantern_cone_softness: float = 0.5
+
+## Radio del pequeño halo que rodea siempre al personaje, como fracción del
+## radio total de la luz. [code]0[/code] elimina el halo y deja solo el cono.
+@export_range(0.0, 0.5, 0.01) var lantern_halo_radius: float = 0.12
+
+## Rapidez con la que el haz gira hacia la nueva orientación. Valores altos
+## hacen que siga al personaje casi al instante.
+@export var lantern_turn_speed: float = 12.0
 
 #endregion
 
@@ -177,21 +202,18 @@ var _edge_gap: Rect2 = Rect2()
 ## La sincronización es necesaria porque los setters de las propiedades
 ## exportadas se ejecutan antes de que [member camera] esté disponible.
 func _ready() -> void:
-	# Otros nodos (como la Llorona) localizan al jugador mediante este grupo.
 	add_to_group("player")
-
-	# El modo flotante es el adecuado para vista top-down: no existe suelo ni
-	# gravedad. El modo por defecto (grounded) está pensado para plataformas.
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 
 	camera.position_smoothing_enabled = camera_smoothing_enabled
 	camera.position_smoothing_speed = camera_smoothing_speed
 
-	# Se recuerdan los valores de la linterna tal como se diseñaron en la
-	# escena, para poder atenuarla y restaurarla después.
 	if lantern:
 		_lantern_base_scale = lantern.texture_scale
 		_lantern_base_energy = lantern.energy
+
+		lantern.texture = _build_cone_texture()
+		lantern.rotation = _facing_angle()
 
 	# La skin parte coherente con el estado de la luz en la escena, incluso si
 	# el nivel no llama a set_lantern_enabled(). Sin nodo de linterna, el
@@ -236,6 +258,7 @@ func _physics_process(delta: float) -> void:
 			global_position = global_position.clamp(walkable.position, walkable.end)
 
 	_update_animation(direction, moving)
+	_update_lantern_aim(delta)
 
 	if can_move and Input.is_action_just_pressed("interact"):
 		_try_interact()
@@ -264,6 +287,63 @@ func _update_animation(direction: Vector2, moving: bool) -> void:
 		# Sin animación de reposo, se congela la animación de caminar
 		# en el fotograma actual.
 		sprite.pause()
+
+
+## Devuelve el ángulo, en radianes, de la orientación actual del personaje.
+## Usa [member _facing] para que la luz coincida siempre con el sprite:
+## este = 0, sureste = 45°, sur = 90°, etc. (el eje Y de Godot crece hacia
+## abajo, por lo que los ángulos positivos giran en sentido horario).
+func _facing_angle() -> float:
+	var index: int = DIRECTION_NAMES.find(_facing)
+	return index * (PI / 4.0)
+
+
+## Gira suavemente la linterna hacia la orientación del personaje. Se usa
+## [method @GlobalScope.lerp_angle] para tomar siempre el giro más corto
+## (por ejemplo, de noreste a este sin dar la vuelta completa).
+## [param delta] es el tiempo del paso de física, en segundos.
+func _update_lantern_aim(delta: float) -> void:
+	if lantern == null:
+		return
+
+	# Factor independiente de los FPS: el giro dura lo mismo a 30 o a 144.
+	var weight: float = 1.0 - exp(-lantern_turn_speed * delta)
+	lantern.rotation = lerp_angle(lantern.rotation, _facing_angle(), weight)
+
+
+## Genera por código la textura de la linterna: un cono que apunta hacia el
+## este (ángulo 0), que es la dirección a la que mira una luz sin rotar, más
+## un pequeño halo alrededor del personaje. La intensidad cae con la
+## distancia al centro y hacia los lados del cono.
+## [br]El origen del cono es el centro de la textura, que coincide con la
+## posición del nodo [code]LanternLight[/code].
+## Devuelve la textura lista para asignarse a [member PointLight2D.texture].
+func _build_cone_texture() -> ImageTexture:
+	var size: int = LANTERN_TEXTURE_SIZE
+	var half: float = size / 2.0
+	var half_cone: float = deg_to_rad(lantern_cone_angle) / 2.0
+	# Zona de degradado lateral; el mínimo evita un smoothstep con bordes iguales.
+	var soft: float = maxf(half_cone * lantern_cone_softness, 0.001)
+	var image: Image = Image.create(size, size, false, Image.FORMAT_RGBA8)
+
+	for y in size:
+		for x in size:
+			var offset: Vector2 = Vector2(x + 0.5 - half, y + 0.5 - half)
+			# Distancia normalizada: 0 en el centro y 1 en el borde de la textura.
+			var dist: float = offset.length() / half
+			var radial: float = 1.0 - smoothstep(0.0, 1.0, dist)
+			# Separación respecto al eje del cono (el este), en radianes.
+			var angle: float = absf(offset.angle())
+			var angular: float = 1.0 - smoothstep(half_cone - soft, half_cone, angle)
+			var value: float = radial * angular
+
+			if lantern_halo_radius > 0.0:
+				var halo: float = 1.0 - smoothstep(0.0, lantern_halo_radius, dist)
+				value = maxf(value, halo)
+
+			image.set_pixel(x, y, Color(value, value, value, 1.0))
+
+	return ImageTexture.create_from_image(image)
 
 
 ## Restringe al jugador y a la cámara a la región [param bounds], en

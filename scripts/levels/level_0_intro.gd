@@ -97,9 +97,13 @@ func _ready() -> void:
 	# 2. Calcular los límites basados en el mapa
 	var tilemap = $TileMap 
 	var camera = $player/Camera2D 
-	
+		
 	var map_rect = tilemap.get_used_rect()
 	var tile_size = tilemap.tile_set.tile_size
+	
+	# Velocidad del jugador
+	if player:
+		player.speed = 290.0
 	
 	# Convertir a píxeles
 	limite_izquierdo = map_rect.position.x * tile_size.x
@@ -117,6 +121,8 @@ func _ready() -> void:
 	# El rango de interacción se amplía para la escala de este nivel.
 	player.interact_range = player_interact_range
 	abuela.interacted.connect(_on_abuela_interacted)
+	
+	
 	
 	# La salida se crea siempre; si la conversación ya se escuchó (por ejemplo,
 	# al recargar el nivel) queda abierta desde el inicio.
