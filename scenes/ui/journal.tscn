@@ -26,7 +26,6 @@ offset_bottom = 182.0
 [node name="JournalButton" type="TextureButton" parent="HBoxContainer" unique_id=1212157323]
 process_mode = 3
 layout_mode = 2
-size_flags_vertical = 4
 texture_normal = ExtResource("4_yv8vu")
 
 [node name="ToastLabel" type="Label" parent="HBoxContainer" unique_id=1357897858]

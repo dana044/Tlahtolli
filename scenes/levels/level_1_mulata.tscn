@@ -12,6 +12,8 @@
 [ext_resource type="TileSet" uid="uid://b0kxyyhbbnr1m" path="res://assets/tilesets/tileset_piedra.tres" id="10_tileset"]
 [ext_resource type="Script" uid="uid://dikoukusyfmck" path="res://scripts/levels/stone_floor.gd" id="11_floor"]
 [ext_resource type="Texture2D" uid="uid://c541ecld70v2h" path="res://assets/tilesets/Pared.png" id="12_pared"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="12_vy8vh"]
+[ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="13_1jpxo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_salida"]
 size = Vector2(40, 80)
@@ -27,7 +29,6 @@ tile_set = ExtResource("10_tileset")
 script = ExtResource("11_floor")
 
 [node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1917725185]
-visible = false
 color = Color(0.27313358, 0.27260202, 0.35697216, 1)
 
 [node name="StartPoint" type="Marker2D" parent="." unique_id=2135181202]
@@ -72,19 +73,26 @@ shape = SubResource("RectangleShape2D_salida")
 
 [node name="RiddlePanel" parent="." unique_id=428024416 instance=ExtResource("6_panel")]
 
-[node name="ScrollMessage" parent="." unique_id=1658279487 instance=ExtResource("7_scroll")]
-message_id = ""
-show_on_ready = false
-
 [node name="InventoryBar" parent="." unique_id=210236398 instance=ExtResource("9_inventory")]
+
+[node name="ScrollMessage" parent="." unique_id=233710266 instance=ExtResource("7_scroll")]
+message_id = "mulata_mensaje_inicio"
+follow_up_ids = Array[String](["mulata_mision"])
+
+[node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("12_vy8vh")]
+
+[node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("13_1jpxo")]
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=239755745]
 
 [node name="ContadorLabel" type="Label" parent="HUD" unique_id=200877241]
-offset_left = 16.0
-offset_top = 12.0
-offset_right = 216.0
-offset_bottom = 45.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_right = 100.0
+offset_bottom = 33.0
+grow_horizontal = 2
 theme_override_fonts/font = ExtResource("8_font")
 theme_override_font_sizes/font_size = 32
 text = "Hojas: 0/3"
@@ -97,3 +105,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1009221920]

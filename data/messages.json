@@ -1,7 +1,10 @@
 {
+  "mulata_mensaje_inicio": "Ella no espera un rescate… dibuja su propia salida.",
+  "mulata_mision": "Misión: Resuelve los acertijos de las hojas",
   "llorona_mensaje_inicio": "Si escuchas el llanto, no lo sigas. Ella no busca compañía… busca a sus hijos.",
   "llorona_mision": "Misión: Encuentra la muñeca",  
   "chaneque_mensaje_inicio": "En el monte, hasta el silencio tiene dueño.",
+  "chaneque_mision": "Misión: Encuentra el cempasúchil, la mandarina y el listón rojo",
   "ofrenda_efecto": "Las leyendas fueron escuchadas.",
   "item_liston": "El listón rojo se usa en varias tradiciones populares como símbolo de protección.",
   "item_cempasuchil": "El cempasúchil es la flor de las ofrendas de Día de Muertos; su color y aroma guían a las almas.",

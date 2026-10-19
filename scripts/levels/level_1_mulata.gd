@@ -113,6 +113,7 @@ var _leaving: bool = false
 
 
 func _ready() -> void:
+	$Music.play() 
 	# El jugador debe estar en su posición inicial antes de cualquier lógica.
 	player.global_position = start_point.global_position
 	player.set_lantern_enabled(lantern_enabled)

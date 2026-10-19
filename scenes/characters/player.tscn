@@ -41,4 +41,4 @@ scale = Vector2(0.33007815, 0.33007815)
 color = Color(1, 0.9309246, 0.7977378, 1)
 energy = 1.4
 texture = SubResource("GradientTexture2D_am0s3")
-texture_scale = 2.0
+texture_scale = 5.0

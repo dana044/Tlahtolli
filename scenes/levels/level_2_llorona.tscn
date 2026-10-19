@@ -240,7 +240,7 @@ teleport_interval = 5.0
 [node name="Muneca" parent="." unique_id=167098197 instance=ExtResource("5_muneca")]
 position = Vector2(930, 262)
 
-[node name="ScrollMessaje" parent="." unique_id=233710266 instance=ExtResource("3_yc251")]
+[node name="ScrollMessage" parent="." unique_id=233710266 instance=ExtResource("3_yc251")]
 follow_up_ids = Array[String](["llorona_mision"])
 
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("9_3bo8v")]
@@ -312,4 +312,3 @@ position = Vector2(126, 626)
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=2135819859]
 stream = ExtResource("12_n8jnb")
-volume_db = -5.0

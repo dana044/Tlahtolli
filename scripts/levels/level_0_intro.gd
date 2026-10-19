@@ -201,20 +201,17 @@ func _on_exit_crossed() -> void:
 		_leaving = false
 
 
-## Reproduce el bloque [param block_id] de [constant DIALOGUE_PATH] con el
-## cuadro de diálogo del juego y espera a que el jugador lo cierre. Puede
-## esperarse con [code]await[/code].
+## Reproduce el bloque [param key] de [constant DIALOGUE_PATH] con el cuadro
+## de diálogo del juego y espera a que el jugador lo cierre. Puede esperarse
+## con [code]await[/code].
 ## [br]Mientras el cuadro está abierto el juego queda en pausa (lo gestiona el
 ## [DialogueManager]) y las líneas avanzan con Enter / Espacio.
-func _play_dialogue(block_id: String) -> void:
-	# Buscar el nodo del texto en el cuadro global y forzar un tamaño menor
-	var text_label = DialogueManager.dialog_box.find_child("TextLabel")
-	if text_label:
-		text_label.add_theme_font_size_override("normal_font_size", 28) 
-	DialogueManager.play(DIALOGUE_PATH, block_id)
+func _play_dialogue(key: String) -> void:
+	DialogueManager.play(DIALOGUE_PATH, key)
+
+	# Si el bloque no existe o está vacío, el cuadro no se abre y nunca se
+	# emite la señal de fin; se sale para no dejar al jugador bloqueado.
 	if not DialogueManager.is_active():
 		return
+
 	await DialogueManager.dialogue_finished
- 	# Restaurar el cuadro de diálogo a la normalidad para los siguientes niveles
-	if text_label:
-		text_label.remove_theme_font_size_override("normal_font_size")
