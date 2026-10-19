@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dlxxg0u2t2kao"]
 
 [ext_resource type="Script" uid="uid://by77at4b1y7h8" path="res://scripts/objets/item_pickup.gd" id="1_g5v83"]
-[ext_resource type="Texture2D" uid="uid://cue1sljxf1ckb" path="res://assets/sprites/objects/Carboncillo.png" id="2_dic6n"]
+[ext_resource type="Texture2D" uid="uid://cue1sljxf1ckb" path="res://assets/sprites/ui/icons/icon_carboncillo.png" id="2_dic6n"]
 
 [node name="Carboncillo" type="Node2D" unique_id=1767179531]
 script = ExtResource("1_g5v83")

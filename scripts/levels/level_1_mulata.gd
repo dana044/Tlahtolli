@@ -16,6 +16,8 @@
 ## ZonaSalida (Area2D)        RiddlePanel (RiddlePanel)
 ## ScrollMessage (ScrollMessage)
 ## HUD (CanvasLayer) con ContadorLabel (Label) y Destello (ColorRect)
+## InventoryBar (InventoryBar)  <- instancia de inventory_bar.tscn; se
+## actualiza sola mediante las señales del autoload [Inventory]
 ## [/codeblock]
 extends Node2D
 

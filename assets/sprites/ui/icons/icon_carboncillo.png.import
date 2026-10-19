@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cue1sljxf1ckb"
-path="res://.godot/imported/Carboncillo.png-aff793789daeb8d58534c53dfde42a8c.ctex"
+path="res://.godot/imported/icon_carboncillo.png-7e41b7ef52a7ae68a9055be2b630a9ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/objects/Carboncillo.png"
-dest_files=["res://.godot/imported/Carboncillo.png-aff793789daeb8d58534c53dfde42a8c.ctex"]
+source_file="res://assets/sprites/ui/icons/icon_carboncillo.png"
+dest_files=["res://.godot/imported/icon_carboncillo.png-7e41b7ef52a7ae68a9055be2b630a9ee.ctex"]
 
 [params]
 

@@ -1,0 +1,26 @@
+[gd_resource type="TileSet" format=3 uid="uid://b0kxyyhbbnr1m"]
+
+[ext_resource type="Texture2D" uid="uid://d2hh321umxxfb" path="res://assets/tilesets/MosaicoPiedra1.png" id="1_piedra1"]
+[ext_resource type="Texture2D" uid="uid://d0negvxw6o0yg" path="res://assets/tilesets/MosaicoPiedra2.png" id="2_piedra2"]
+[ext_resource type="Texture2D" uid="uid://duugp1g76pl53" path="res://assets/tilesets/MosaicoPiedra3.png" id="3_piedra3"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_piedra1"]
+texture = ExtResource("1_piedra1")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_piedra2"]
+texture = ExtResource("2_piedra2")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_piedra3"]
+texture = ExtResource("3_piedra3")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_piedra1")
+sources/1 = SubResource("TileSetAtlasSource_piedra2")
+sources/2 = SubResource("TileSetAtlasSource_piedra3")

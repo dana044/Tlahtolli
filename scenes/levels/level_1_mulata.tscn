@@ -1,7 +1,6 @@
-[gd_scene format=3 uid="uid://b1r4d15b2fas7"]
+[gd_scene format=3 uid="uid://uf1njyvshnv4"]
 
 [ext_resource type="Script" uid="uid://c0wrq3gn8fg1m" path="res://scripts/levels/level_1_mulata.gd" id="1_t8w26"]
-[ext_resource type="Texture2D" uid="uid://lt34wurs1jbg" path="res://assets/tilesets/pasto_total.png" id="1_y5dso"]
 [ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="2_iuot1"]
 [ext_resource type="PackedScene" uid="uid://cwe6qyqpbqgaa" path="res://scenes/characters/mulata.tscn" id="3_mulata"]
 [ext_resource type="Script" uid="uid://baf08lqywh8x2" path="res://scripts/objets/boat_drawing.gd" id="4_boat"]
@@ -9,6 +8,10 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/riddle_panel.tscn" id="6_panel"]
 [ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="7_scroll"]
 [ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="8_font"]
+[ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="9_inventory"]
+[ext_resource type="TileSet" uid="uid://b0kxyyhbbnr1m" path="res://assets/tilesets/tileset_piedra.tres" id="10_tileset"]
+[ext_resource type="Script" uid="uid://dikoukusyfmck" path="res://scripts/levels/stone_floor.gd" id="11_floor"]
+[ext_resource type="Texture2D" uid="uid://c541ecld70v2h" path="res://assets/tilesets/Pared.png" id="12_pared"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_salida"]
 size = Vector2(40, 80)
@@ -17,10 +20,11 @@ size = Vector2(40, 80)
 y_sort_enabled = true
 script = ExtResource("1_t8w26")
 
-[node name="Fondo" type="Sprite2D" parent="." unique_id=106621262]
+[node name="Piso" type="TileMapLayer" parent="." unique_id=732910215]
 z_index = -10
-texture = ExtResource("1_y5dso")
-centered = false
+texture_filter = 1
+tile_set = ExtResource("10_tileset")
+script = ExtResource("11_floor")
 
 [node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1917725185]
 color = Color(0.469135, 0.4698878, 0.5834571, 1)
@@ -32,10 +36,18 @@ position = Vector2(50, 511)
 position = Vector2(50, 414)
 
 [node name="Mulata" parent="." unique_id=476911881 instance=ExtResource("3_mulata")]
-position = Vector2(900, 300)
+position = Vector2(995, 243)
+
+[node name="Pared" type="Sprite2D" parent="." unique_id=964340418]
+z_index = -5
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(995, 197)
+texture = ExtResource("12_pared")
+region_rect = Rect2(0, 0, 288, 192)
 
 [node name="BarcoPared" type="Node2D" parent="." unique_id=70647435]
-position = Vector2(900, 270)
+position = Vector2(995, 213)
 script = ExtResource("4_boat")
 
 [node name="Hojas" type="Node2D" parent="." unique_id=770619785]
@@ -58,12 +70,18 @@ monitorable = false
 shape = SubResource("RectangleShape2D_salida")
 
 [node name="RiddlePanel" parent="." unique_id=428024416 instance=ExtResource("6_panel")]
+visible = false
 
 [node name="ScrollMessage" parent="." unique_id=1658279487 instance=ExtResource("7_scroll")]
+visible = false
 message_id = ""
 show_on_ready = false
 
+[node name="InventoryBar" parent="." unique_id=210236398 instance=ExtResource("9_inventory")]
+visible = false
+
 [node name="HUD" type="CanvasLayer" parent="." unique_id=239755745]
+visible = false
 
 [node name="ContadorLabel" type="Label" parent="HUD" unique_id=200877241]
 offset_left = 16.0
