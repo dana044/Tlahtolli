@@ -107,3 +107,4 @@ max_distance = 300.0
 script = ExtResource("11_r11sn")
 prompt_distance = 80.0
 prompt_offset = Vector2(0, -48)
+prompt_scale = Vector2(0.5, 0.5)
