@@ -72,18 +72,24 @@ monitorable = false
 shape = SubResource("RectangleShape2D_salida")
 
 [node name="RiddlePanel" parent="." unique_id=428024416 instance=ExtResource("6_panel")]
+visible = false
 
 [node name="InventoryBar" parent="." unique_id=210236398 instance=ExtResource("9_inventory")]
+visible = false
 
 [node name="ScrollMessage" parent="." unique_id=233710266 instance=ExtResource("7_scroll")]
+visible = false
 message_id = "mulata_mensaje_inicio"
 follow_up_ids = Array[String](["mulata_mision"])
 
 [node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("12_vy8vh")]
+visible = false
 
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("13_1jpxo")]
+visible = false
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=239755745]
+visible = false
 
 [node name="ContadorLabel" type="Label" parent="HUD" unique_id=200877241]
 anchors_preset = 5
@@ -96,6 +102,7 @@ grow_horizontal = 2
 theme_override_fonts/font = ExtResource("8_font")
 theme_override_font_sizes/font_size = 32
 text = "Hojas: 0/3"
+metadata/_edit_use_anchors_ = true
 
 [node name="Destello" type="ColorRect" parent="HUD" unique_id=1950199623]
 modulate = Color(1, 1, 1, 0)
@@ -105,5 +112,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1009221920]
+visible = false

@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://kkof200jiakh" path="res://assets/sprites/characters/llorona_e.png" id="10_rmhn1"]
 [ext_resource type="Script" uid="uid://deyi3ngpcrnwa" path="res://scripts/ui/interact_prompt.gd" id="11_r11sn"]
 [ext_resource type="Texture2D" uid="uid://c3hdgmjwu5itb" path="res://assets/sprites/characters/llorona_se.png" id="11_wsw2w"]
-[ext_resource type="Texture2D" uid="uid://to8atqso6rmd" path="res://assets/sprites/ui/teclaE.png" id="12_lydgw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_am0s3"]
 animations = [{
@@ -80,8 +79,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_imlf8"]
-radius = 34.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1iys"]
+size = Vector2(24, 44)
 
 [node name="Llorona" type="Area2D" unique_id=1089438462]
 collision_layer = 8
@@ -93,8 +92,8 @@ sprite_frames = SubResource("SpriteFrames_am0s3")
 animation = &"walk_s"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1066881365]
-position = Vector2(1, -23)
-shape = SubResource("CircleShape2D_imlf8")
+position = Vector2(1, -22)
+shape = SubResource("RectangleShape2D_v1iys")
 
 [node name="Timer" type="Timer" parent="." unique_id=954833486]
 
@@ -106,6 +105,5 @@ max_distance = 300.0
 
 [node name="PromptE" type="Sprite2D" parent="." unique_id=875414103]
 script = ExtResource("11_r11sn")
-prompt_texture = ExtResource("12_lydgw")
 prompt_distance = 80.0
 prompt_offset = Vector2(0, -48)

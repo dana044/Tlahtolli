@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://vidgk0sprdfp"]
 
-[ext_resource type="Texture2D" uid="uid://bkf77ee0jueep" path="res://assets/sprites/objects/Farol.png" id="1_427sa"]
+[ext_resource type="Texture2D" uid="uid://cdo7lnoxfrkhq" path="res://assets/sprites/objects/Farol.png" id="1_427sa"]
 
 [sub_resource type="Gradient" id="Gradient_dylyq"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)

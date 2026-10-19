@@ -12,6 +12,9 @@
   "mulata_error": [
 	{"speaker": "Mulata", "text": "No es esa… Piénsalo otra vez. La paciencia también dibuja."}
   ],
+  "mulata_hacia_pared": [
+	{"speaker": "Mulata", "text": "Las tres hojas ya hablaron. Ven conmigo a la pared de piedra: ahí termino mi dibujo."}
+  ],
   "mulata_final": [
 	{"speaker": "Mulata", "text": "Mira, el barco está completo. Ya sé que puedo irme."},
 	{"speaker": "Mulata", "text": "Toma mi carboncillo. No es magia por sí solo: es lo que hagas con él."},

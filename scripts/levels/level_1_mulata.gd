@@ -60,6 +60,21 @@ extends Node2D
 ## entregar.
 @export var debug_log: bool = true
 
+## NUEVO: punto al que guían las flechas una vez resueltas las tres hojas, en
+## coordenadas globales: el lugar frente a la pared de piedra (arriba a la
+## derecha) donde el jugador debe llegar para que ocurra el final. Ajústalo
+## en el Inspector si el jugador no puede pisar ese punto del mapa.
+@export var finale_point: Vector2 = Vector2(995, 275)
+
+## NUEVO: distancia, en píxeles, a [member finale_point] a partir de la cual
+## se considera que el jugador llegó a la pared y comienza el final.
+@export var finale_radius: float = 48.0
+
+## NUEVO: lugar, en coordenadas globales, donde la Mulata se coloca junto al
+## dibujo de la pared durante el final. Por defecto es el sitio donde estaba
+## en la escena antes de acompañar al jugador.
+@export var mulata_finale_point: Vector2 = Vector2(995, 243)
+
 
 ## Archivo con los diálogos de la Mulata.
 const DIALOGUE_PATH: String = "res://data/dialogues/mulata.json"
@@ -111,6 +126,14 @@ var _exit: LevelExit
 ## Indica si ya se inició el cambio de nivel. Evita cambiarlo dos veces.
 var _leaving: bool = false
 
+## NUEVO: flechas que guían al jugador hasta la pared de piedra. Se crean por
+## código en [method _setup_guide_arrows].
+var _arrows: GuideArrows
+
+## NUEVO: indica si las flechas están activas y el nivel espera a que el
+## jugador llegue a [member finale_point].
+var _guiding: bool = false
+
 
 func _ready() -> void:
 	$Music.play() 
@@ -138,6 +161,11 @@ func _ready() -> void:
 	_setup_exit()
 	_update_counter()
 	print("Interactuables: ", get_tree().get_nodes_in_group("interactable"))
+
+	# NUEVO: las flechas guía, la Mulata acompañante y el mensaje de inicio.
+	_setup_guide_arrows()
+	_start_companion()
+	_play_intro()
 
 
 ## Conecta cada hoja del nodo [code]Hojas[/code]. Las que ya estaban
@@ -189,6 +217,113 @@ func _setup_exit() -> void:
 		_exit.enable(false)
 
 
+## NUEVO: crea por código las flechas que guían hacia la pared de piedra. Van
+## dentro de su propia [CanvasLayer] para que la oscuridad del nivel
+## ([code]Oscuridad[/code]) no las apague. Si ya estaban resueltas las tres
+## hojas pero el nivel no se completó (por ejemplo, al recargar), se
+## reactivan.
+func _setup_guide_arrows() -> void:
+	var layer: CanvasLayer = CanvasLayer.new()
+	layer.name = "CapaFlechasGuia"
+	add_child(layer)
+
+	_arrows = GuideArrows.new()
+	_arrows.name = "FlechasPared"
+	layer.add_child(_arrows)
+
+	if _all_solved() and not GameState.has_flag(FLAG_LEVEL_DONE):
+		_start_guide_to_wall()
+
+
+## NUEVO: hace que la Mulata acompañe al jugador desde el inicio. Si el nivel
+## ya estaba completo no hace nada: ella ya se fue.
+func _start_companion() -> void:
+	if GameState.has_flag(FLAG_LEVEL_DONE):
+		return
+	mulata.start_following(player)
+
+
+## NUEVO: secuencia de inicio del nivel, literalmente al comenzar. Si es la
+## primera vez: bloquea al jugador, muestra el mensaje de inicio del
+## [ScrollMessage], después el diálogo [code]mulata_inicio[/code] y por último
+## la misión. Si ya la vio (por ejemplo, al recargar), solo muestra los
+## mensajes del pergamino, sin bloquear.
+## [br]No espera la señal ni el [Tween] del [ScrollMessage]: si otro mensaje
+## lo interrumpe, ese [Tween] se cancela y la espera no terminaría nunca,
+## dejando al jugador bloqueado. En su lugar espera un tiempo equivalente a
+## lo que dura el mensaje.
+## [br]Funciona con [code]Show On Ready[/code] activo (el [ScrollMessage] se
+## lanza solo) o desactivado (lo lanza el nivel).
+func _play_intro() -> void:
+	if GameState.has_flag(FLAG_LEVEL_DONE):
+		return
+
+	var launches_itself: bool = scroll_message.show_on_ready
+
+	if GameState.has_flag(FLAG_INTRO_SEEN):
+		if not launches_itself:
+			scroll_message.play_configured_sequence()
+		return
+
+	_busy = true
+	player.can_move = false
+	_log("Introducción: inicio")
+
+	# Un fotograma de espera para que toda la escena esté lista.
+	await get_tree().process_frame
+
+	# Tiempo que tarda en verse y desvanecerse el mensaje de inicio.
+	var banner_wait: float = 0.0
+	if not scroll_message.message_id.is_empty():
+		banner_wait = scroll_message.display_seconds + scroll_message.fade_seconds * 2.0
+		if launches_itself:
+			banner_wait += scroll_message.start_delay
+		else:
+			# Sin await: ver la documentación de esta función.
+			scroll_message.show_message(scroll_message.message_id)
+
+	await get_tree().create_timer(banner_wait).timeout
+
+	_log("Introducción: diálogo de la Mulata")
+	await _play_dialogue("mulata_inicio")
+	GameState.set_flag(FLAG_INTRO_SEEN)
+	_log("Introducción: terminada")
+
+	# La misión sale al terminar el diálogo (sin await: no bloquea).
+	if not launches_itself:
+		scroll_message.show_sequence(scroll_message.follow_up_ids)
+	_release_player()
+
+
+## NUEVO: activa las flechas hacia [member finale_point] y deja al nivel
+## esperando la llegada del jugador (ver [method _check_finale_arrival]).
+func _start_guide_to_wall() -> void:
+	_guiding = true
+	_arrows.activate(player, finale_point)
+	_log("Flechas hacia la pared activadas")
+
+
+## NUEVO: comprueba si el jugador llegó a la pared de piedra. Al llegar lo
+## bloquea, apaga las flechas, la Mulata camina hasta el dibujo y comienza el
+## final del nivel. Se llama en cada paso de física.
+func _check_finale_arrival() -> void:
+	if not _guiding or _busy or _leaving:
+		return
+	if player.global_position.distance_to(finale_point) > finale_radius:
+		return
+
+	# Las banderas se marcan antes de cualquier await para no repetir el final.
+	_guiding = false
+	_busy = true
+	player.can_move = false
+	_arrows.deactivate()
+	_log("El jugador llegó a la pared")
+
+	await mulata.walk_to(mulata_finale_point)
+	await _play_finale()
+	_release_player()
+
+
 ## El jugador leyó una hoja: abre el pergamino con su acertijo. El jugador no
 ## puede moverse mientras el pergamino está abierto.
 ## [param riddle_id] es el id del acertijo de la hoja.
@@ -235,6 +370,11 @@ func _on_riddle_answered(riddle_id: String, is_correct: bool) -> void:
 
 	if _all_solved() and finale_auto_start:
 		await _play_finale()
+	elif _all_solved():
+		# NUEVO: con las tres hojas resueltas, la Mulata invita al jugador a
+		# ir a la pared y aparecen las flechas que lo guían hasta allá.
+		await _play_dialogue("mulata_hacia_pared")
+		_start_guide_to_wall()
 
 	_release_player()
 
@@ -248,7 +388,12 @@ func _on_mulata_interacted() -> void:
 	player.can_move = false
 
 	if _all_solved():
-		await _play_finale()
+		# NUEVO: el final ocurre junto a la pared de piedra, no donde esté la
+		# Mulata (ahora siempre está junto al jugador). Si el jugador le habla
+		# con las tres hojas resueltas, ella lo invita otra vez a ir allá y se
+		# reactivan las flechas.
+		await _play_dialogue("mulata_hacia_pared")
+		_start_guide_to_wall()
 	elif not GameState.has_flag(FLAG_INTRO_SEEN):
 		await _play_dialogue("mulata_inicio")
 		GameState.set_flag(FLAG_INTRO_SEEN)
@@ -405,6 +550,9 @@ func _log(message: String) -> void:
 		print("[Nivel1] ", message)
 
 func _physics_process(_delta: float) -> void:
+	# NUEVO: detecta la llegada del jugador a la pared de piedra.
+	_check_finale_arrival()
+
 	if Input.is_action_just_pressed("interact"):
 		print("E pulsada. can_move=", player.can_move)
 		for n in get_tree().get_nodes_in_group("interactable"):
