@@ -61,6 +61,11 @@ const FALLBACK_SCENE: String = "res://scenes/main/main_menu.tscn"
 ## Duración, en segundos, del fundido a negro hacia los créditos.
 const CREDITS_FADE_TIME: float = 1.0
 
+## Duración, en segundos, del fundido de entrada al llegar desde el nivel 3.
+## El nivel 3 termina con un fundido a negro; sin este fundido de regreso la
+## pantalla se quedaría negra al cambiar de escena.
+const ARRIVAL_FADE_TIME: float = 0.7
+
 ## Id (en [code]messages.json[/code]) de la misión que aparece al terminar
 ## la ofrenda: hablar con la abuelita.
 const MSG_MISSION_ABUELA: String = "final_mision2"
@@ -124,7 +129,7 @@ const MESSAGES_PATH: String = "res://data/messages.json"
 @export var arrows_stop_distance: float = 90.0
 ## Escena de créditos que se muestra al terminar de hablar con la
 ## abuelita. Cámbiala cuando tu compañero/a entregue la suya.
-@export_file("*.tscn") var credits_scene: String = "res://scenes/main/creditos.tscn"
+@export_file("*.tscn") var credits_scene: String = "res://scenes/main/credits.tscn"
 ## Si es true, antes de los créditos se muestra la pantalla de cierre
 ## "Lo que aprendiste" (tres datos, uno por leyenda).
 @export var show_learned_screen: bool = true
@@ -135,9 +140,16 @@ const MESSAGES_PATH: String = "res://data/messages.json"
 @export var debug_give_items: bool = false
 
 
+## Jugador del nivel.
 @onready var player: Player = $Player
+
+## Punto donde aparece el jugador al llegar al final.
 @onready var start_point: Marker2D = $StartPoint
+
+## Oscurecedor del mapa; se disuelve al terminar la ofrenda.
 @onready var darkness: CanvasModulate = $Oscuridad
+
+## Altar donde se entregan la moneda, el medallón y el carboncillo.
 @onready var altar: AltarFinal = $AltarFinal
 
 ## Pergamino con mensajes. Es [code]null[/code] si la escena no lo incluye.
@@ -178,7 +190,15 @@ var _personas: Array[PersonaInteract] = []
 var _ending: bool = false
 
 
+## Aclara la pantalla que dejó en negro el nivel 3, coloca al jugador,
+## delimita el mapa y prepara el altar, la salida, las flechas, los
+## habitantes y la abuelita. Si la ofrenda ya estaba entregada, restaura el
+## estado final.
 func _ready() -> void:
+	# Aclara la pantalla: el nivel 3 hizo un fundido a negro antes de cambiar
+	# de escena. No se espera (sin await) para que el nivel sea jugable ya.
+	SceneManager.fade_in(ARRIVAL_FADE_TIME)
+
 	darkness.color = darkness_color
 
 	# el mapa empieza a oscuras aunque en el editor se haya ocultado el

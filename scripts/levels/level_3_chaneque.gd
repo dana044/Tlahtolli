@@ -4,8 +4,11 @@
 ## jugador. Cada rama que se pisa hace ruido: enoja al Chaneque y atenúa la
 ## linterna. A la cuarta, la luz se apaga y el jugador regresa al checkpoint.
 ## Hay que juntar tres ofrendas (listón, cempasúchil y mandarina) y entregarlas
-## en el altar; entonces regresa la luz natural, aparece el Chaneque y, al
-## hablar con él, entrega la moneda de oro.
+## en el altar; entonces la linterna recupera su luz completa (el bosque sigue
+## oscuro), aparece el Chaneque y, al
+## hablar con él, entrega la moneda de oro. Después se abre una salida en el
+## borde derecho del mapa, a la altura del altar, señalada con flechas; al
+## cruzarla termina el nivel.
 ## [br][br]Igual que en el nivel de la Llorona, este script es el director de
 ## la escena: Player, ramas, altar y Chaneque no se conocen entre sí; solo el
 ## nivel conecta sus señales.
@@ -15,7 +18,8 @@
 extends Node2D
 
 
-## Se emite cuando el jugador recibe la moneda y el nivel queda completo.
+## Se emite cuando el jugador cruza la salida del borde derecho, ya con la
+## moneda, y el nivel queda completo.
 ## Úsala para pasar al siguiente nivel o a la escena final.
 signal level_completed
 
@@ -46,6 +50,49 @@ const MSG_MISSING_OFFERINGS: String = "altar_faltan_ofrendas"
 ## (por ejemplo [code]item_liston[/code]).
 const MSG_ITEM_PREFIX: String = "item_"
 
+## Bandera de [GameState] que deja el nivel 2 al cruzar la salida: el jugador
+## llega caminando desde la izquierda. Se consume (se apaga) al iniciar. Debe
+## coincidir con [code]FLAG_WALKING_INTO_LEVEL_3[/code] de
+## [code]level_2_llorona.gd[/code].
+const FLAG_WALKING_IN: String = "entrando_nivel_3"
+
+## Cuánto se extiende, en píxeles, la zona de paso de entrada hacia fuera del
+## borde izquierdo del mapa.
+const ENTRY_GAP_OUTSIDE: float = 60.0
+
+## Margen extra, en píxeles, que la zona de paso de entrada se prolonga hacia
+## dentro del mapa más allá del punto al que camina el jugador.
+const ENTRY_GAP_INSIDE_MARGIN: float = 20.0
+
+## Mitad del alto, en píxeles, de la zona de paso de entrada.
+const ENTRY_GAP_HALF_HEIGHT: float = 40.0
+
+## Cuánto se extiende, en píxeles, la zona de paso de la salida hacia fuera del
+## borde derecho del mapa.
+const EXIT_GAP_OUTSIDE: float = 60.0
+
+## Cuánto se extiende, en píxeles, la zona de paso de la salida hacia dentro del
+## mapa, antes del borde derecho.
+const EXIT_GAP_INSIDE: float = 60.0
+
+## Mitad del alto, en píxeles, de la zona de paso de la salida.
+const EXIT_GAP_HALF_HEIGHT: float = 40.0
+
+## Duración del fundido a negro al cruzar la salida, en segundos.
+const EXIT_FADE_TIME: float = 0.7
+
+## Qué tan cerca del borde derecho, en píxeles, debe estar el centro del jugador
+## para contar como cruce. Es un margen de tolerancia por si el límite del mapa
+## lo detiene un poco antes del borde.
+const EXIT_TRIGGER_MARGIN: float = 24.0
+
+## Mitad del alto, en píxeles, de la franja donde cuenta el cruce, centrada en
+## la altura de la salida.
+const EXIT_TRIGGER_HALF_HEIGHT: float = 60.0
+
+## Escena a la que lleva la salida del nivel.
+const NEXT_LEVEL_PATH: String = "res://scenes/levels/level_4_final.tscn"
+
 
 ## Región jugable del nivel, en coordenadas globales (posición y tamaño).
 ## Limita el movimiento del jugador y la cámara. Si se deja en cero, se
@@ -75,9 +122,6 @@ const MSG_ITEM_PREFIX: String = "item_"
 ## la rama del tutorial.
 @export var tutorial_delay: float = 3.0
 
-## Duración del regreso a la luz natural al entregar las ofrendas, en segundos.
-@export var daylight_time: float = 2.5
-
 ## Escala de las imágenes de las ofrendas en el mapa.
 @export var offering_scale: float = 1.0
 
@@ -96,11 +140,15 @@ const MSG_ITEM_PREFIX: String = "item_"
 ## entrar, medida desde el borde izquierdo.
 @export var entry_walk_distance: float = 80.0
 
-## Zona de paso hacia el nivel final (ajusta los valores si tu flecha está en otra posición).
-@export var exit_gate_rect: Rect2 = Rect2(1092, 231, 100, 80)
+## Ajuste vertical, en píxeles, de la salida respecto a la altura del altar.
+## Con [code]0[/code] queda justo a la altura del origen del altar; si el
+## origen del altar no está en su centro, sube o baja la salida con este valor.
+@export var exit_y_offset: float = 0.0
 
-## Coordenada X donde está la salida.
-@export var exit_trigger_x: float = 1140.0
+## Si es [code]true[/code], dibuja la zona de paso de la salida (verde) y la
+## línea de cruce (roja) para ajustarla a simple vista. Desactívalo al terminar.
+@export var debug_exit: bool = false
+
 
 ## Jugador del nivel.
 @onready var player: Player = $Player
@@ -135,7 +183,6 @@ const MSG_ITEM_PREFIX: String = "item_"
 ## por nombre de método porque su script no declara [code]class_name[/code].
 @onready var scroll_message: CanvasLayer = $ScrollMessage
 
-@onready var transition_icon: Sprite2D = $TransitionIcon
 
 ## Todas las ramas del nivel.
 var _branches: Array[Branch] = []
@@ -152,6 +199,28 @@ var _busy: bool = false
 
 ## Indica que el nivel ya terminó.
 var _finished: bool = false
+
+## Salida del nivel por el borde derecho, a la altura del altar. Se crea por
+## código y se abre al recibir la moneda.
+var _exit: LevelExit
+
+## Flechas animadas que guían al jugador hacia la salida.
+var _guide_arrows: GuideArrows
+
+## Evita procesar el cruce de la salida más de una vez.
+var _exit_triggered: bool = false
+
+## Indica si la salida ya está abierta.
+var _exit_open: bool = false
+
+## Coordenada X del borde derecho del mapa.
+var _exit_right_edge: float = 0.0
+
+## Coordenada Y, central, de la salida.
+var _exit_y: float = 0.0
+
+## Segundos acumulados para limitar los avisos de depuración.
+var _debug_timer: float = 0.0
 
 
 ## Coloca al jugador, delimita el mapa, registra el checkpoint y arranca la
@@ -170,6 +239,7 @@ func _ready() -> void:
 	GameState.set_checkpoint(start_point.global_position)
 
 	_setup_branches()
+	_setup_exit()
 	altar.interacted.connect(_on_altar_interacted)
 	chaneque.interacted.connect(_on_chaneque_interacted)
 
@@ -183,15 +253,38 @@ func _ready() -> void:
 
 	# Si el jugador viene del nivel de la Llorona, entra caminando por la
 	# izquierda antes de que comience la secuencia inicial.
-	if transition_icon != null:
-		transition_icon.scale = Vector2(2.0, 2.0)
-		transition_icon.global_position = Vector2(exit_trigger_x - 50, exit_gate_rect.position.y - 80)
-		transition_icon.z_index = 50
-		
+	if GameState.has_flag(FLAG_WALKING_IN):
+		GameState.set_flag(FLAG_WALKING_IN, false)
+		await _walk_in_from_left()
+
 	_start_level()
 
 
 #region Inicio y tutorial
+
+## Entrada desde el nivel 2: el jugador aparece con medio cuerpo fuera del
+## borde izquierdo, a la altura [member entry_y], y camina solo
+## [member entry_walk_distance] píxeles hacia dentro, como si continuara el
+## paseo del mapa anterior. Se abre una zona de paso en el borde para que el
+## límite del mapa no lo detenga. Puede esperarse con [code]await[/code]:
+## termina cuando el jugador llega a su destino.
+func _walk_in_from_left() -> void:
+	_lock_player(true)
+
+	var left_edge: float = _world_left_edge()
+	var destination: Vector2 = Vector2(left_edge + entry_walk_distance, entry_y)
+	player.set_edge_gap(Rect2(
+			left_edge - ENTRY_GAP_OUTSIDE, entry_y - ENTRY_GAP_HALF_HEIGHT,
+			ENTRY_GAP_OUTSIDE + entry_walk_distance + ENTRY_GAP_INSIDE_MARGIN,
+			ENTRY_GAP_HALF_HEIGHT * 2.0))
+
+	# El centro del personaje queda justo en el borde: medio cuerpo visible.
+	player.teleport_to(Vector2(left_edge, entry_y))
+	SceneManager.fade_in(arrival_fade_time)
+
+	await player.walk_to(destination)
+	player.clear_edge_gap()
+
 
 ## Secuencia inicial: mensaje de bienvenida, rama del tutorial y diálogo.
 ## La primera atenuación de la luz es solo una demostración: no cuenta en el
@@ -218,16 +311,17 @@ func _start_level() -> void:
 	_gameplay_active = true
 
 
-## Deja el nivel como queda al terminarlo: luz natural, altar entregado,
+## Deja el nivel como queda al terminarlo: oscuridad original, altar entregado,
 ## Chaneque sin interacción y ramas inactivas.
 func _apply_completed_state() -> void:
 	_finished = true
-	darkness.visible = false
+	player.set_lantern_intensity(light_levels[0], 0.0)
 	altar.mark_delivered()
 	altar.place_offerings(_offering_icons(), offering_scale, false)
 	chaneque.set_interactable(false)
 	for branch in _branches:
 		branch.set_active(false)
+	_open_exit(false)
 
 #endregion
 
@@ -340,7 +434,8 @@ func _has_all_offerings() -> bool:
 
 
 ## El jugador interactuó con el altar. Con las tres ofrendas las entrega,
-## regresa la luz natural y aparece el Chaneque.
+## la linterna recupera su luz y aparece el Chaneque. La oscuridad del mapa
+## se mantiene.
 func _on_altar_interacted() -> void:
 	if _busy or _finished:
 		return
@@ -362,7 +457,9 @@ func _on_altar_interacted() -> void:
 		branch.set_active(false)
 	await altar.place_offerings(icons, offering_scale)
 
-	await _restore_daylight()
+	# La linterna vuelve a su intensidad inicial; el mapa sigue oscuro.
+	player.set_lantern_intensity(light_levels[0], 0.5)
+	await get_tree().create_timer(0.5).timeout
 
 	# El Chaneque aparece, mira al jugador y se le acerca.
 	chaneque.face_towards(player.global_position)
@@ -373,19 +470,6 @@ func _on_altar_interacted() -> void:
 	_busy = false
 
 
-## Quita la oscuridad del mapa y devuelve la linterna a su estado original.
-func _restore_daylight() -> void:
-	player.set_lantern_intensity(light_levels[0], 0.5)
-
-	var tween: Tween = create_tween()
-	tween.tween_property(darkness, "color", Color.WHITE, daylight_time)
-	await tween.finished
-
-	# Sin CanvasModulate: el mapa queda con su luz natural.
-	darkness.visible = false
-
-
-## El jugador habló con el Chaneque: diálogo final y moneda de oro.
 ## El jugador habló con el Chaneque: diálogo final y moneda de oro.
 func _on_chaneque_interacted() -> void:
 	if _busy or _finished:
@@ -404,11 +488,101 @@ func _on_chaneque_interacted() -> void:
 
 	_lock_player(false)
 	_busy = false
-	
-	if transition_icon != null:
-		transition_icon.visible = true
-		
+
+	# El nivel se da por terminado cuando el jugador cruza la salida.
+	_open_exit(true)
+
+#endregion
+
+
+#region Salida
+
+## Crea la salida del nivel y las flechas guía, ambas cerradas. La salida es
+## una zona de paso en el borde derecho del mapa, centrada en la altura del
+## altar. Se abren con [method _open_exit].
+func _setup_exit() -> void:
+	var right_edge: float = _world_right_edge()
+	var exit_y: float = altar.global_position.y + exit_y_offset
+	_exit_right_edge = right_edge
+	_exit_y = exit_y
+
+	_exit = LevelExit.new()
+	_exit.gate_rect = Rect2(
+			right_edge - EXIT_GAP_INSIDE, exit_y - EXIT_GAP_HALF_HEIGHT,
+			EXIT_GAP_INSIDE + EXIT_GAP_OUTSIDE, EXIT_GAP_HALF_HEIGHT * 2.0)
+	_exit.trigger_x = right_edge
+	_exit.arrow_target = Vector2(right_edge, exit_y)
+	_exit.debug_draw = debug_exit
+	add_child(_exit)
+	_exit.player_crossed.connect(_on_exit_crossed)
+
+	# Las flechas van en una CanvasLayer para que la oscuridad no las apague.
+	var arrows_layer: CanvasLayer = CanvasLayer.new()
+	add_child(arrows_layer)
+	_guide_arrows = GuideArrows.new()
+	arrows_layer.add_child(_guide_arrows)
+
+
+## Abre la salida: aparece la flecha del borde y las flechas guía parten del
+## jugador hacia ella.
+## [param animated] indica si la flecha aparece con fundido
+## ([code]true[/code]) o de golpe ([code]false[/code], al recargar el nivel).
+func _open_exit(animated: bool) -> void:
+	_exit.enable(animated)
+	_exit_open = true
+	print("Level3: salida abierta. gate_rect=", _exit.gate_rect, " trigger_x=", _exit.trigger_x)
+	_guide_arrows.activate(player, _exit.arrow_target)
+
+
+## Detecta el cruce de la salida por su cuenta, sin depender de [LevelExit]:
+## basta con que el jugador llegue al borde derecho dentro de la franja de la
+## salida. Con [member debug_exit] imprime cada segundo dónde está el jugador.
+## [param delta] es el tiempo transcurrido desde el paso anterior, en segundos.
+func _physics_process(delta: float) -> void:
+	if not _exit_open or _exit_triggered:
+		return
+
+	var pos: Vector2 = player.global_position
+
+	if debug_exit:
+		_debug_timer += delta
+		if _debug_timer >= 1.0:
+			_debug_timer = 0.0
+			print("Level3 debug: jugador=", pos, " borde_x=", _exit_right_edge,
+					" salida_y=", _exit_y)
+
+	var near_edge: bool = pos.x >= _exit_right_edge - EXIT_TRIGGER_MARGIN
+	var in_strip: bool = absf(pos.y - _exit_y) <= EXIT_TRIGGER_HALF_HEIGHT
+	if near_edge and in_strip:
+		_on_exit_crossed()
+
+
+## El jugador cruzó la salida: apaga las flechas, hace un fundido a negro y
+## da el nivel por completado y pasa al nivel final.
+func _on_exit_crossed() -> void:
+	if _exit_triggered:
+		return
+	_exit_triggered = true
+
+	print("Level3: el jugador cruzó la salida; cargando ", NEXT_LEVEL_PATH)
+	_guide_arrows.deactivate()
+	_lock_player(true)
+	await SceneManager.fade_out(EXIT_FADE_TIME)
 	level_completed.emit()
+
+	if not ResourceLoader.exists(NEXT_LEVEL_PATH):
+		push_error("Level3: no existe la escena '%s'." % NEXT_LEVEL_PATH)
+		# Red de seguridad: se aclara la pantalla y se libera al jugador para
+		# que no se quede atrapado en negro.
+		await SceneManager.fade_in(EXIT_FADE_TIME)
+		_lock_player(false)
+		return
+
+	var error: Error = get_tree().change_scene_to_file(NEXT_LEVEL_PATH)
+	if error != OK:
+		push_error("Level3: no se pudo cargar '%s' (error %d)." % [NEXT_LEVEL_PATH, error])
+		await SceneManager.fade_in(EXIT_FADE_TIME)
+		_lock_player(false)
 
 #endregion
 
@@ -428,6 +602,25 @@ func _setup_world_bounds() -> void:
 	var top_left: Vector2 = background.to_global(rect.position)
 	var size: Vector2 = rect.size * background.global_scale.abs()
 	player.set_world_bounds(Rect2(top_left, size))
+
+
+## Devuelve la coordenada X del borde izquierdo del mapa: la de
+## [member map_bounds] si tiene área o, si no, la de la imagen de fondo.
+func _world_left_edge() -> float:
+	if map_bounds.has_area():
+		return map_bounds.position.x
+	return background.global_position.x
+
+
+## Devuelve la coordenada X del borde derecho del mapa: la de
+## [member map_bounds] si tiene área o, si no, la de la imagen de fondo.
+func _world_right_edge() -> float:
+	if map_bounds.has_area():
+		return map_bounds.end.x
+	if background.texture == null:
+		return background.global_position.x
+	var rect: Rect2 = background.get_rect()
+	return background.to_global(rect.position).x + rect.size.x * absf(background.global_scale.x)
 
 
 ## Reproduce el bloque [param block_id] de [constant DIALOGUE_PATH] con el

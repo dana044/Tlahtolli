@@ -167,9 +167,6 @@ position = Vector2(433, 46)
 
 [node name="Altar" parent="." unique_id=1304170713 instance=ExtResource("5_altar")]
 position = Vector2(975, 559)
-placeholder_size = null
-offering_offsets = null
-offering_delay = null
 
 [node name="Chaneque" parent="." unique_id=308015040 instance=ExtResource("3_chaneque")]
 position = Vector2(1034, 549)

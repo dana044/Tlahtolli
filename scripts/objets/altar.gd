@@ -1,3 +1,4 @@
+## @author Citlaly Morales Viveros (Cliente / Programadora XP)
 ## Altar donde se entregan las ofrendas al Chaneque.
 ##
 ## Es un [StaticBody2D] sólido que el jugador no puede atravesar. Se registra
