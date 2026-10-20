@@ -36,7 +36,7 @@ signal picked_up(item_id: String)
 @export var prompt_distance: float = 40.0
 
 ## Posición de la imagen respecto al objeto. Queda centrada sobre este punto.
-@export var prompt_offset: Vector2 = Vector2(0, -24)
+@export var prompt_offset: Vector2 = Vector2(0, -30)
 
 ## Escala de la imagen en pantalla (1 = tamaño original). No se ve afectada
 ## por la escala del objeto.

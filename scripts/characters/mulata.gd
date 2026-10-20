@@ -4,7 +4,7 @@
 ## [code]interactable[/code] (el que consulta [method Player._try_interact]) y
 ## el aviso con la imagen de la tecla E. No se "recoge": al interactuar solo
 ## emite [signal interacted] y el nivel decide qué diálogo reproducir.
-## [br][br]NUEVO: además puede acompañar al jugador. Con [method start_following]
+## [br][br]: además puede acompañar al jugador. Con [method start_following]
 ## recorre el mismo camino que él (como los compañeros de Pokémon), a una
 ## distancia fija y con su sprite de ocho direcciones. Atraviesa al jugador y
 ## cualquier obstáculo: se mueve por posición, sin física. Con
@@ -19,68 +19,68 @@ extends ItemPickup
 ## Se emite cada vez que el jugador interactúa con la Mulata.
 signal interacted
 
-## NUEVO: se emite cuando la Mulata llega al destino de [method walk_to].
+## Se emite cuando la Mulata llega al destino de [method walk_to].
 signal arrived
 
 
-## NUEVO: separación, en píxeles, entre dos puntos consecutivos del rastro
+## Separación, en píxeles, entre dos puntos consecutivos del rastro
 ## que deja el jugador. Valores bajos siguen el camino con más fidelidad.
 const TRAIL_STEP: float = 3.0
 
-## NUEVO: máximo de puntos del rastro. Evita que crezca sin límite si la
+## Máximo de puntos del rastro. Evita que crezca sin límite si la
 ## Mulata se queda atrás por mucho tiempo.
 const MAX_TRAIL_POINTS: int = 1024
 
-## NUEVO: distancia, en píxeles, a la que [method walk_to] da por llegada a
+## Distancia, en píxeles, a la que [method walk_to] da por llegada a
 ## la Mulata. Es mayor que cero para no depender de la precisión decimal.
 const ARRIVAL_DISTANCE: float = 1.0
 
 
 @export_group("Seguimiento")
 
-## NUEVO: distancia, medida a lo largo del camino recorrido, que la Mulata
+## Distancia, medida a lo largo del camino recorrido, que la Mulata
 ## mantiene detrás del jugador, en píxeles.
 @export var follow_distance: float = 28.0
 
-## NUEVO: velocidad de la Mulata, en píxeles por segundo. Debe ser algo mayor
+## Velocidad de la Mulata, en píxeles por segundo. Debe ser algo mayor
 ## que [member Player.speed] (140) para que pueda alcanzar al jugador.
 @export var follow_speed: float = 150.0
 
-## NUEVO: si la Mulata queda más lejos que esto (por ejemplo, tras una
+## Si la Mulata queda más lejos que esto (por ejemplo, tras una
 ## pausa), acelera para alcanzar al jugador. En píxeles de camino.
 @export var catch_up_distance: float = 64.0
 
-## NUEVO: multiplicador de [member follow_speed] mientras alcanza al jugador.
+## Multiplicador de [member follow_speed] mientras alcanza al jugador.
 @export var catch_up_multiplier: float = 1.6
 
 
-## NUEVO: nodo al que sigue (el jugador). [code]null[/code] si no sigue a nadie.
+## Nodo al que sigue (el jugador). [code]null[/code] si no sigue a nadie.
 var _target: Node2D
 
-## NUEVO: camino recorrido por el jugador que la Mulata aún no ha pisado, del
+## Camino recorrido por el jugador que la Mulata aún no ha pisado, del
 ## punto más antiguo al más reciente.
 var _trail: Array[Vector2] = []
 
-## NUEVO: último punto del jugador guardado en [member _trail].
+## Último punto del jugador guardado en [member _trail].
 var _last_recorded: Vector2 = Vector2.ZERO
 
-## NUEVO: indica si está siguiendo al jugador.
+## Indica si está siguiendo al jugador.
 var _following: bool = false
 
-## NUEVO: indica si camina hacia [member _walk_target] (ver [method walk_to]).
+## Indica si camina hacia [member _walk_target] (ver [method walk_to]).
 var _walking: bool = false
 
-## NUEVO: destino, en coordenadas globales, de la caminata de [method walk_to].
+## Destino, en coordenadas globales, de la caminata de [method walk_to].
 var _walk_target: Vector2 = Vector2.ZERO
 
-## NUEVO: sufijo de la dirección hacia la que mira (e, se, s, sw, w, nw, n, ne).
+## Sufijo de la dirección hacia la que mira (e, se, s, sw, w, nw, n, ne).
 var _facing: String = "s"
 
-## NUEVO: sprite animado con las ocho direcciones ([code]walk_<dirección>[/code]).
+## Sprite animado con las ocho direcciones ([code]walk_<dirección>[/code]).
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
-## NUEVO: prepara a la Mulata como compañera: desactiva sus colisiones para
+## Prepara a la Mulata como compañera: desactiva sus colisiones para
 ## que atraviese al jugador y los muros.
 ## [br]Las colisiones se ponen con [method Object.set] porque este script
 ## hereda de [ItemPickup] (un [Node2D]), pero el nodo de la escena es un
@@ -89,6 +89,8 @@ var _facing: String = "s"
 ## siempre visible; si estorba, desactiva [code]Show Prompt[/code] en el
 ## Inspector.
 func _ready() -> void:
+	prompt_scale = Vector2(0.5, 0.5)
+	prompt_offset = Vector2(0, -43)
 	super()
 	set(&"collision_layer", 0)
 	set(&"collision_mask", 0)
@@ -100,7 +102,7 @@ func interact(_by: Node2D) -> void:
 	if _collected:
 		return
 
-	# NUEVO: la Mulata siempre está cerca del jugador, así que sería la más
+	# La Mulata siempre está cerca del jugador, así que sería la más
 	# cercana y le ganaría a las hojas. Si hay otro objeto al alcance, la
 	# interacción se le cede a ese objeto.
 	var other: Node2D = _find_other_interactable(_by)
@@ -111,7 +113,7 @@ func interact(_by: Node2D) -> void:
 	interacted.emit()
 
 
-## NUEVO: busca el objeto interactuable más cercano al jugador, distinto de la
+## Busca el objeto interactuable más cercano al jugador, distinto de la
 ## Mulata, que esté dentro de su alcance. Aplica el mismo criterio que
 ## [method Player._try_interact]: nodos visibles del grupo
 ## [code]interactable[/code] con el método [code]interact[/code].
@@ -139,7 +141,7 @@ func _find_other_interactable(by: Node2D) -> Node2D:
 	return closest
 
 
-## NUEVO: la Mulata empieza a acompañar al jugador. Se coloca justo detrás de
+## La Mulata empieza a acompañar al jugador. Se coloca justo detrás de
 ## él y conserva la interacción con E.
 ## [param target] es el nodo al que seguirá (el jugador).
 func start_following(target: Node2D) -> void:
@@ -155,13 +157,13 @@ func start_following(target: Node2D) -> void:
 	_update_facing(Vector2.RIGHT)
 
 
-## NUEVO: la Mulata deja de seguir al jugador y olvida el rastro.
+## La Mulata deja de seguir al jugador y olvida el rastro.
 func stop_following() -> void:
 	_following = false
 	_trail.clear()
 
 
-## NUEVO: la Mulata camina en línea recta hasta [param destination], sin
+## La Mulata camina en línea recta hasta [param destination], sin
 ## colisiones y dejando de seguir al jugador. Puede esperarse con
 ## [code]await[/code]: termina al llegar (ver [signal arrived]).
 ## [param destination] es el destino en coordenadas globales.
@@ -172,7 +174,7 @@ func walk_to(destination: Vector2) -> void:
 	await arrived
 
 
-## NUEVO: mueve a la Mulata en cada paso de física, siguiendo al jugador o
+## Mueve a la Mulata en cada paso de física, siguiendo al jugador o
 ## caminando a su destino. Con el juego en pausa (diálogos) no se ejecuta.
 ## [param delta] es el tiempo transcurrido desde el paso anterior, en segundos.
 func _physics_process(delta: float) -> void:
@@ -182,7 +184,7 @@ func _physics_process(delta: float) -> void:
 		_step_follow(delta)
 
 
-## NUEVO: un paso de seguimiento. Guarda el camino del jugador y recorre ese
+## Un paso de seguimiento. Guarda el camino del jugador y recorre ese
 ## mismo camino hasta quedar a [member follow_distance] de él; si ya está a
 ## esa distancia, se queda quieta.
 ## [param delta] es el tiempo del paso de física, en segundos.
@@ -226,7 +228,7 @@ func _step_follow(delta: float) -> void:
 		_update_facing(moved)
 
 
-## NUEVO: un paso de la caminata de [method walk_to]. Al llegar, emite
+## Un paso de la caminata de [method walk_to]. Al llegar, emite
 ## [signal arrived].
 ## [param delta] es el tiempo del paso de física, en segundos.
 func _step_walk(delta: float) -> void:
@@ -242,7 +244,7 @@ func _step_walk(delta: float) -> void:
 	global_position += to_target.normalized() * step
 
 
-## NUEVO: longitud del camino que separa a la Mulata del último punto del
+## Longitud del camino que separa a la Mulata del último punto del
 ## rastro: de su posición al primer punto pendiente y de ahí al más reciente.
 ## Devuelve [code]0.0[/code] si no hay rastro.
 func _remaining_path() -> float:
@@ -254,7 +256,7 @@ func _remaining_path() -> float:
 	return length
 
 
-## NUEVO: orienta el sprite hacia [param direction] usando las ocho
+## Orienta el sprite hacia [param direction] usando las ocho
 ## animaciones [code]walk_<dirección>[/code]. Usa los mismos sufijos y el
 ## mismo redondeo a sectores de 45° que el [Player].
 ## [param direction] es el vector de movimiento (no hace falta normalizarlo).
@@ -277,7 +279,7 @@ func fade_away(duration: float = 1.0) -> void:
 	# _collected oculta el aviso de la tecla (ver ItemPickup._process).
 	_collected = true
 	remove_from_group("interactable")
-	# NUEVO: una vez desvanecida ya no debe seguir al jugador ni moverse.
+	# Una vez desvanecida ya no debe seguir al jugador ni moverse.
 	stop_following()
 
 	if duration <= 0.0:

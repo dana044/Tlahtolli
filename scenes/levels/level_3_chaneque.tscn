@@ -930,9 +930,11 @@ position = Vector2(1005, 462)
 
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("14_vl65c")]
 current_level = 3
+mission_id = "chaneque_mision"
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=906634103]
 stream = ExtResource("16_hudyw")
+volume_db = 1.0
 
 [node name="Oscuridad" type="CanvasModulate" parent="." unique_id=488248458]
 color = Color(0.027549954, 0.02754723, 0.047924392, 1)

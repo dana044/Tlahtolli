@@ -5,10 +5,12 @@
   "llorona_mision": "Misión: Encuentra la muñeca",  
   "chaneque_mensaje_inicio": "En el monte, hasta el silencio tiene dueño.",
   "chaneque_mision": "Misión: Encuentra el cempasúchil, la mandarina y el listón rojo",
+  "chaneque_mision2": "Misión: Entrega los objetos en el altar",
   "ofrenda_efecto": "Las leyendas fueron escuchadas.",
   "item_liston": "El listón rojo se usa en varias tradiciones populares como símbolo de protección.",
   "item_cempasuchil": "El cempasúchil es la flor de las ofrendas de Día de Muertos; su color y aroma guían a las almas.",
   "item_mandarina": "La mandarina es una de las frutas típicas de las ofrendas.",
   "item_moneda": "Según la tradición, los chaneques cuidan la naturaleza y piden respeto a quien entra en ella.",
-  "altar_faltan_ofrendas": "Aún faltan ofrendas para el altar."
+  "final_mensaje": "Lo que el arte, el llanto y el monte te dieron, ahora debe descansar en el altar.",
+  "final_mision": "Misión: Coloca las tres reliquias en el altar para devolver la luz."
 }

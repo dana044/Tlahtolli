@@ -11,7 +11,7 @@
 ## nivel conecta sus señales.
 ## [br][br]Estructura de la escena esperada (ver [code]level_3_chaneque.tscn[/code]):
 ## [code]Player, StartPoint, Fondo, Oscuridad, Ramas, Ofrendas, Altar, Chaneque,
-## ScrollMessage[/code].
+## ScrollMessage, JournalUI[/code].
 extends Node2D
 
 
@@ -45,6 +45,16 @@ const MSG_MISSING_OFFERINGS: String = "altar_faltan_ofrendas"
 ## [code]messages.json[/code]: el id es este prefijo + el id del objeto
 ## (por ejemplo [code]item_liston[/code]).
 const MSG_ITEM_PREFIX: String = "item_"
+
+## Número de este nivel en el diario de pistas (1 = Mulata, 2 = Llorona,
+## 3 = Chaneque). Con él, el diario muestra las pistas que corresponden.
+const JOURNAL_LEVEL: int = 3
+
+## Misión al entrar al nivel: encontrar las tres ofrendas.
+const MISSION_FIND_OFFERINGS: String = "chaneque_mision"
+
+## Misión cuando ya se tienen las tres ofrendas: entregarlas en el altar.
+const MISSION_GO_TO_ALTAR: String = "chaneque_mision2"
 
 ## Bandera de [GameState] que deja el nivel 2 al cruzar la salida: el jugador
 ## llega caminando desde la izquierda. Se consume (se apaga) al iniciar. Debe
@@ -143,9 +153,12 @@ const ENTRY_GAP_HALF_HEIGHT: float = 40.0
 ## Chaneque (oculto hasta entregar las ofrendas).
 @onready var chaneque: Chaneque = $Chaneque
 
-## Pergamino con mensajes (escena [code]scroll_message.tscn[/code]). Se usa
-## por nombre de método porque su script no declara [code]class_name[/code].
-@onready var scroll_message: CanvasLayer = $ScrollMessage
+## Pergamino con mensajes (escena [code]scroll_message.tscn[/code]).
+@onready var scroll_message: ScrollMessage = $ScrollMessage
+
+## Diario del nivel (pistas y misión mostrada). Es [code]null[/code] si la
+## escena no incluye un nodo [code]JournalUI[/code].
+@onready var journal_ui: JournalUI = get_node_or_null("JournalUI")
 
 
 ## Todas las ramas del nivel.
@@ -180,6 +193,10 @@ func _ready() -> void:
 
 	# El inicio del nivel es el único checkpoint.
 	GameState.set_checkpoint(start_point.global_position)
+
+	# Va antes del posible regreso anticipado de abajo, para que el diario y la
+	# misión también estén bien al recargar un nivel ya completado.
+	_setup_journal()
 
 	_setup_branches()
 	altar.interacted.connect(_on_altar_interacted)
@@ -352,10 +369,13 @@ func _spawn_offerings() -> void:
 		offerings_root.add_child(pickup)
 
 
-## Muestra la frase de contexto cultural del objeto recién recogido.
+## Muestra la frase de contexto cultural del objeto recién recogido y, si ya
+## están las tres ofrendas, cambia la misión a llevarlas al altar.
 ## [param item_id] es el id del objeto recogido.
 func _on_offering_picked(item_id: String) -> void:
 	_show_message(MSG_ITEM_PREFIX + item_id)
+	if _has_all_offerings():
+		_set_mission(MISSION_GO_TO_ALTAR)
 
 
 ## Devuelve las imágenes de las tres ofrendas, en el orden de [constant OFFERINGS].
@@ -395,6 +415,9 @@ func _on_altar_interacted() -> void:
 	altar.mark_delivered()
 	for branch in _branches:
 		branch.set_active(false)
+
+	# Entregadas las ofrendas, ya no queda ninguna misión por mostrar.
+	_set_mission("")
 	await altar.place_offerings(icons, offering_scale)
 
 	await _restore_daylight()
@@ -439,6 +462,36 @@ func _on_chaneque_interacted() -> void:
 	_lock_player(false)
 	_busy = false
 	level_completed.emit()
+
+#endregion
+
+
+#region Diario y misión
+
+## Le dice al diario en qué nivel está (así muestra las pistas que
+## corresponden, sin depender de lo guardado en el Inspector) y pone la
+## misión que toca según el avance: ninguna si el nivel ya se completó, la
+## de entregar en el altar si ya se tienen las ofrendas, o la de buscarlas.
+func _setup_journal() -> void:
+	if journal_ui == null:
+		push_warning("Level3: no hay un nodo 'JournalUI'; no habrá pistas ni misión.")
+		return
+	journal_ui.set_level(JOURNAL_LEVEL, true)
+
+	if GameState.has_flag(COMPLETED_FLAG):
+		journal_ui.set_mission("")
+	elif _has_all_offerings():
+		journal_ui.set_mission(MISSION_GO_TO_ALTAR)
+	else:
+		journal_ui.set_mission(MISSION_FIND_OFFERINGS)
+
+
+## Cambia la misión mostrada a la izquierda de la pantalla. Con un id vacío
+## la oculta.
+## [param mission_id] es el id en [code]messages.json[/code].
+func _set_mission(mission_id: String) -> void:
+	if journal_ui != null:
+		journal_ui.set_mission(mission_id)
 
 #endregion
 
@@ -495,6 +548,6 @@ func _lock_player(locked: bool) -> void:
 ## [param message_id] es el id del mensaje (por ejemplo
 ## [code]chaneque_mensaje_inicio[/code] o [code]item_liston[/code]).
 func _show_message(message_id: String) -> void:
-	scroll_message.call("show_message", message_id)
+	scroll_message.show_message(message_id)
 
 #endregion

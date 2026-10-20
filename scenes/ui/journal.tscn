@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bd83rd515h8xr" path="res://assets/sprites/ui/scroll_message.png" id="2_gs82g"]
 [ext_resource type="Texture2D" uid="uid://kx0hqmyp1key" path="res://assets/sprites/ui/pistas.png" id="3_yv8vu"]
 
-[node name="JournalUI" type="CanvasLayer" unique_id=1229920834 node_paths=PackedStringArray("book", "entries_box", "toast_label", "journal_button", "button_row")]
+[node name="JournalUI" type="CanvasLayer" unique_id=1229920834 node_paths=PackedStringArray("book", "entries_box", "toast_label", "journal_button", "button_row", "mission_label")]
 process_mode = 3
 layer = 9
 script = ExtResource("1_gs82g")
@@ -14,6 +14,7 @@ entries_box = NodePath("Book/CenterContainer/Panel/MarginContainer/VBoxContainer
 toast_label = NodePath("HBoxContainer/ToastLabel")
 journal_button = NodePath("HBoxContainer/JournalButton")
 button_row = NodePath("HBoxContainer")
+mission_label = NodePath("MissionLabel")
 journal_font = ExtResource("1_qmpw5")
 title_font_size = 32
 body_font_size = 32
@@ -110,3 +111,7 @@ theme_override_colors/font_color = Color(0.23137255, 0.13725491, 0.078431375, 1)
 theme_override_fonts/font = ExtResource("1_qmpw5")
 theme_override_font_sizes/font_size = 28
 text = "Tab para cerrar"
+
+[node name="MissionLabel" type="Label" parent="." unique_id=883949942]
+offset_right = 40.0
+offset_bottom = 23.0

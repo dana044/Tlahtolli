@@ -129,7 +129,7 @@ func _ready() -> void:
 	_setup_exit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Limitar matemáticamente la posición X e Y del jugador
 	$player.position.x = clamp($player.position.x, limite_izquierdo, limite_derecho)
 	$player.position.y = clamp($player.position.y, limite_superior, limite_inferior)

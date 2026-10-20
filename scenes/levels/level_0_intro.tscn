@@ -189,3 +189,4 @@ scale = Vector2(4, 4)
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1282522138]
 stream = ExtResource("14_wunoc")
+volume_db = 1.0
