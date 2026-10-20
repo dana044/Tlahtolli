@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://db8n3d202upwt" path="res://assets/sprites/objects/celda_abierta.png" id="1_1m6ki"]
 [ext_resource type="PackedScene" uid="uid://mgglwdty0jnj" path="res://scenes/objects/antorcha.tscn" id="2_hf0xo"]
-[ext_resource type="Script" path="res://scripts/objets/celda_puerta.gd" id="3_puerta"]
-[ext_resource type="Script" path="res://scripts/ui/interact_prompt.gd" id="4_prompt"]
+[ext_resource type="Script" uid="uid://dqbvpwjfaud2u" path="res://scripts/objets/celda_puerta.gd" id="3_puerta"]
+[ext_resource type="Script" uid="uid://deyi3ngpcrnwa" path="res://scripts/ui/interact_prompt.gd" id="4_prompt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
 size = Vector2(246, 127)
@@ -25,6 +25,6 @@ position = Vector2(-60, -60)
 [node name="Antorcha2" parent="." unique_id=1333405074 instance=ExtResource("2_hf0xo")]
 position = Vector2(60, -60)
 
-[node name="InteractPrompt" type="Sprite2D" parent="."]
+[node name="InteractPrompt" type="Sprite2D" parent="." unique_id=891226694]
 script = ExtResource("4_prompt")
 prompt_offset = Vector2(0, -20)

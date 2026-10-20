@@ -172,6 +172,7 @@ var _ending: bool = false
 
 
 func _ready() -> void:
+	$Music.play()
 	darkness.color = darkness_color
 
 	# el mapa empieza a oscuras aunque en el editor se haya ocultado el

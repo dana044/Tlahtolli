@@ -1,17 +1,17 @@
-## Menú principal con portada y tres botones: Jugar, Tutorial y Ajustes.
+## Menú principal con portada y tres botones: Jugar, Tutorial y Creditos.
 extends Control
 
 ## Primera escena del juego (la intro con la abuelita).
 @export_file("*.tscn") var first_scene: String = "res://scenes/levels/level_0_intro.tscn"
 ## Escena del tutorial.
 @export_file("*.tscn") var tutorial_scene: String = "res://scenes/main/tutorial.tscn"
-## Escena de ajustes. Vacía = el botón aún no hace nada.
-@export_file("*.tscn") var settings_scene: String = ""
+## Escena de los créditos.
+@export_file("*.tscn") var credits_scene: String = "res://scenes/main/credits.tscn"
 
 ## Botones (se asignan en el Inspector). Sirve Button, TextureButton o ImageButton.
 @export var play_button: BaseButton
 @export var tutorial_button: BaseButton
-@export var settings_button: BaseButton
+@export var credit_button: BaseButton
 
 ## Tamaño de cada botón en píxeles.
 @export var button_size: Vector2 = Vector2(320, 80)
@@ -30,12 +30,12 @@ func _ready() -> void:
 	var missing: Array[String] = []
 	if play_button == null: missing.append("Play Button")
 	if tutorial_button == null: missing.append("Tutorial Button")
-	if settings_button == null: missing.append("Settings Button")
+	if credit_button == null: missing.append("Credit Button")
 	if not missing.is_empty():
 		push_error("MainMenu: faltan por asignar en el Inspector: " + ", ".join(missing))
 		return
 
-	for button in [play_button, tutorial_button, settings_button]:
+	for button in [play_button, tutorial_button, credit_button]:
 		button.custom_minimum_size = button_size
 		button.focus_entered.connect(func(): button.modulate = highlight_color)
 		button.focus_exited.connect(func(): button.modulate = Color.WHITE)
@@ -47,7 +47,7 @@ func _ready() -> void:
 
 	play_button.pressed.connect(func(): _start(first_scene))
 	tutorial_button.pressed.connect(func(): _start(tutorial_scene))
-	settings_button.pressed.connect(_on_settings_pressed)
+	credit_button.pressed.connect(func(): _start(credits_scene))
 
 	# Permite navegar con las flechas y Enter/Espacio desde el inicio.
 	play_button.grab_focus()
@@ -65,11 +65,3 @@ func _start(path: String) -> void:
 	Inventory.clear()
 	Journal.clear()
 	get_tree().change_scene_to_file(path)
-
-
-## Por ahora no hace nada. Cuando exista la escena de ajustes, escribe su
-## ruta en "Settings Scene" en el Inspector.
-func _on_settings_pressed() -> void:
-	if settings_scene == "" or not ResourceLoader.exists(settings_scene):
-		return
-	get_tree().change_scene_to_file(settings_scene)

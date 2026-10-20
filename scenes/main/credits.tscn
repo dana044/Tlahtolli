@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://bcykwsonsvqx3"]
+
+[ext_resource type="Script" uid="uid://mubhvcicta1s" path="res://scripts/ui/credits.gd" id="1_uubpu"]
+[ext_resource type="FontFile" uid="uid://cky3itq1ffirg" path="res://assets/fonts/VT323-Regular.ttf" id="2_1k345"]
+[ext_resource type="Texture2D" uid="uid://b8uwd5li5ovb3" path="res://assets/sprites/ui/portada_creditos.png" id="2_e3alb"]
+[ext_resource type="PackedScene" uid="uid://k3ei1dm4ale5" path="res://scenes/ui/image_button.tscn" id="3_1k345"]
+[ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="4_prxba"]
+
+[node name="Credits" type="Control" unique_id=110979932 node_paths=PackedStringArray("content_box", "exit_button", "music_player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uubpu")
+content_box = NodePath("ContentMargin/Content")
+exit_button = NodePath("ButtonsMargin/Buttons/ExitButton")
+music_player = NodePath("Music")
+font = ExtResource("2_1k345")
+music_volume_db = 1.0
+
+[node name="Background" type="ColorRect" parent="." unique_id=516384665]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.019607844, 0, 0.043137256, 1)
+
+[node name="Cover" type="TextureRect" parent="." unique_id=1478001646]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e3alb")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1234671643]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3137255)
+
+[node name="ContentMargin" type="MarginContainer" parent="." unique_id=1004534735]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_bottom = 150
+
+[node name="Content" type="VBoxContainer" parent="ContentMargin" unique_id=1872638049]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ButtonsMargin" type="MarginContainer" parent="." unique_id=593199215]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 40
+
+[node name="Buttons" type="VBoxContainer" parent="ButtonsMargin" unique_id=1680537047]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="ExitButton" parent="ButtonsMargin/Buttons" unique_id=1175162725 instance=ExtResource("3_1k345")]
+layout_mode = 2
+label_text = "Salir"
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1050418179]
+stream = ExtResource("4_prxba")
+volume_db = 1.0
