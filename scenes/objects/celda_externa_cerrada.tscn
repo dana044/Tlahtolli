@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cafpkfe3wtp1j"]
+
+[ext_resource type="Texture2D" uid="uid://c20nbb6bvelok" path="res://assets/sprites/objects/celda_cerrada.png" id="1_3k3k7"]
+[ext_resource type="PackedScene" uid="uid://mgglwdty0jnj" path="res://scenes/objects/antorcha.tscn" id="2_p45st"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(246, 127)
+
+[node name="CeldaCerrada" type="CharacterBody2D" unique_id=1821739561]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1309657449]
+position = Vector2(0, -64)
+texture = ExtResource("1_3k3k7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=49577704]
+position = Vector2(0, -64.5)
+shape = SubResource("RectangleShape2D_am0s3")
+
+[node name="Antorcha" parent="." unique_id=1210262118 instance=ExtResource("2_p45st")]
+position = Vector2(-60, -60)
+
+[node name="Antorcha2" parent="." unique_id=1128935996 instance=ExtResource("2_p45st")]
+position = Vector2(60, -60)

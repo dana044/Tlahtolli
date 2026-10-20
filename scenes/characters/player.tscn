@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bsvx6q0a2bfos"]
 
 [ext_resource type="Script" uid="uid://dc2br6ra7rw6f" path="res://scripts/characters/player.gd" id="1_yewv4"]
-[ext_resource type="SpriteFrames" uid="uid://bkhlh3jgcm85r" path="res://scenes/characters/skins/prota_lampara.tres" id="2_yewv4"]
+[ext_resource type="SpriteFrames" uid="uid://caucmtnfe5pc1" path="res://scenes/characters/skins/prota.tres" id="2_yewv4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i48h8"]
 size = Vector2(12, 7.812502)
@@ -23,7 +23,7 @@ script = ExtResource("1_yewv4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276208741]
 position = Vector2(0, -13)
 sprite_frames = ExtResource("2_yewv4")
-animation = &"walk_se"
+animation = &"walk_e"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1946720363]
 position = Vector2(0, -2.5)

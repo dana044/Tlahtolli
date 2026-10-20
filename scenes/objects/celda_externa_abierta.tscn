@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c4atsjsgbjl7o"]
+
+[ext_resource type="Texture2D" uid="uid://db8n3d202upwt" path="res://assets/sprites/objects/celda_abierta.png" id="1_1m6ki"]
+[ext_resource type="PackedScene" uid="uid://mgglwdty0jnj" path="res://scenes/objects/antorcha.tscn" id="2_hf0xo"]
+[ext_resource type="Script" path="res://scripts/objets/celda_puerta.gd" id="3_puerta"]
+[ext_resource type="Script" path="res://scripts/ui/interact_prompt.gd" id="4_prompt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(246, 127)
+
+[node name="CeldaAbierta" type="CharacterBody2D" unique_id=622741141]
+script = ExtResource("3_puerta")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1309657449]
+position = Vector2(0, -64)
+texture = ExtResource("1_1m6ki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=49577704]
+position = Vector2(0, -64.5)
+shape = SubResource("RectangleShape2D_am0s3")
+
+[node name="Antorcha" parent="." unique_id=1210262118 instance=ExtResource("2_hf0xo")]
+position = Vector2(-60, -60)
+
+[node name="Antorcha2" parent="." unique_id=1333405074 instance=ExtResource("2_hf0xo")]
+position = Vector2(60, -60)
+
+[node name="InteractPrompt" type="Sprite2D" parent="."]
+script = ExtResource("4_prompt")
+prompt_offset = Vector2(0, -20)

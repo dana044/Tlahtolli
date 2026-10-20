@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cwp2mmkf2qyvf"]
+
+[ext_resource type="Texture2D" uid="uid://dx57g856mi1og" path="res://assets/sprites/objects/Cama.png" id="1_2pitb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(44, 20)
+
+[node name="Cama" type="StaticBody2D" unique_id=1693743871]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1083709585]
+texture = ExtResource("1_2pitb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=395939444]
+position = Vector2(1, 6)
+shape = SubResource("RectangleShape2D_am0s3")

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://0wenf4acngtj"]
+
+[ext_resource type="Texture2D" uid="uid://cwutb2liymxcl" path="res://assets/tilesets/Pared.png" id="1_unadt"]
+[ext_resource type="PackedScene" uid="uid://mgglwdty0jnj" path="res://scenes/objects/antorcha.tscn" id="2_wvb4q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(178, 128)
+
+[node name="pared" type="CharacterBody2D" unique_id=1839979908]
+
+[node name="Pared" type="Sprite2D" parent="." unique_id=1100132900]
+z_index = -5
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_unadt")
+region_rect = Rect2(0, 0, 288, 192)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1819321335]
+shape = SubResource("RectangleShape2D_am0s3")
+
+[node name="Antorcha" parent="." unique_id=1210262118 instance=ExtResource("2_wvb4q")]
+position = Vector2(3, -29)

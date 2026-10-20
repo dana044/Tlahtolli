@@ -8,6 +8,16 @@
 ## [br][br]El progreso se guarda en [GameState] con banderas, así que no se
 ## pierde al recargar el nivel y un acertijo no puede resolverse dos veces
 ## para duplicar el avance. Las hojas pueden resolverse en cualquier orden.
+## [br][br]las puertas de las celdas ([CeldaPuerta]) cambian a la escena
+## de interior; al volver, este nivel se recarga con ese progreso intacto y
+## coloca al jugador frente a la puerta por la que entró.
+## [br][br]las hojas de acertijo ya no están en este mapa: están dentro
+## de las celdas 3, 5 y 8 ([code]interior_celdas.gd[/code]), que resuelve el
+## acertijo y guarda el progreso en [GameState]. Al volver, este nivel
+## muestra con animación la parte del barco ganada y, si ya están las tres
+## hojas, la Mulata invita a ir a la pared y aparecen las flechas
+## ([method _play_pending_rewards]). El nodo [code]Hojas[/code] se conserva
+## (vacío) por si se agrega alguna hoja suelta en el mapa.
 ## [br][br]Nodos que el nivel espera (los nombres deben coincidir):
 ## [codeblock]
 ## player (Player)            StartPoint (Marker2D)
@@ -45,7 +55,16 @@ extends Node2D
 ## tamaño). Es el hueco del borde derecho por el que el jugador puede salir
 ## del mapa; debe extenderse hacia fuera. Su centro vertical debe coincidir
 ## con la altura del punto de reaparición del nivel 2.
-@export var exit_gate_rect: Rect2 = Rect2(1092, 191, 100, 80)
+## [br]el paso ahora va de y = 129 a y = 217 (antes de 191 a 271), para
+## que coincida con la salida real ([code]ZonaSalida[/code]).
+@export var exit_gate_rect: Rect2 = Rect2(1092, 129, 100, 88)
+
+## punto global al que apunta la flecha de salida: el centro de la
+## zona de salida real ([code]ZonaSalida[/code]). Con [code]Vector2.ZERO[/code]
+## la flecha usa el centro de [member exit_gate_rect]. Ojo: el jugador solo
+## puede cruzar dentro de [member exit_gate_rect]; si la flecha queda fuera de
+## su altura, ajusta ese rectángulo para que la incluya.
+@export var exit_arrow_target: Vector2 = Vector2(1120, 172)
 
 ## Coordenada X a partir de la cual se cambia de nivel (el centro del
 ## personaje ya cruzó el borde derecho del mapa).
@@ -60,20 +79,29 @@ extends Node2D
 ## entregar.
 @export var debug_log: bool = true
 
-## NUEVO: punto al que guían las flechas una vez resueltas las tres hojas, en
+## punto al que guían las flechas una vez resueltas las tres hojas, en
 ## coordenadas globales: el lugar frente a la pared de piedra (arriba a la
 ## derecha) donde el jugador debe llegar para que ocurra el final. Ajústalo
 ## en el Inspector si el jugador no puede pisar ese punto del mapa.
-@export var finale_point: Vector2 = Vector2(995, 275)
+## [br]ahora es la salida real ([code]ZonaSalida[/code], en
+## (1120, 172)), no el punto de la pared (995, 275) que había antes; así las
+## flechas apuntan a la salida. Si quieres volver al punto anterior, cambia
+## este valor en el Inspector.
+@export var finale_point: Vector2 = Vector2(1120, 172)
 
-## NUEVO: distancia, en píxeles, a [member finale_point] a partir de la cual
+## distancia, en píxeles, a [member finale_point] a partir de la cual
 ## se considera que el jugador llegó a la pared y comienza el final.
 @export var finale_radius: float = 48.0
 
-## NUEVO: lugar, en coordenadas globales, donde la Mulata se coloca junto al
+## lugar, en coordenadas globales, donde la Mulata se coloca junto al
 ## dibujo de la pared durante el final. Por defecto es el sitio donde estaba
 ## en la escena antes de acompañar al jugador.
 @export var mulata_finale_point: Vector2 = Vector2(995, 243)
+
+## duración, en segundos, del fundido que aclara la pantalla al volver
+## de una celda. Debe ser parecida al fundido con el que se entró (el de la
+## propiedad [code]fade_time[/code] de [CeldaPuerta]).
+@export var cell_fade_in_time: float = 0.4
 
 
 ## Archivo con los diálogos de la Mulata.
@@ -97,6 +125,11 @@ const FLAG_LEVEL_DONE: String = "mulata_nivel_completo"
 ## Prefijo de las banderas de acertijos resueltos. Se le añade el id del
 ## acertijo (por ejemplo, [code]mulata_acertijo_riddle_1[/code]).
 const FLAG_RIDDLE_PREFIX: String = "mulata_acertijo_"
+
+## prefijo de las banderas de acertijos resueltos dentro de una celda
+## cuya recompensa (parte del barco y diálogo) aún no se mostró. La marca
+## [code]interior_celdas.gd[/code] y la consume [method _play_pending_rewards].
+const FLAG_PENDING_PREFIX: String = "mulata_pendiente_"
 
 
 @onready var player: Player = $player
@@ -126,13 +159,17 @@ var _exit: LevelExit
 ## Indica si ya se inició el cambio de nivel. Evita cambiarlo dos veces.
 var _leaving: bool = false
 
-## NUEVO: flechas que guían al jugador hasta la pared de piedra. Se crean por
+## flechas que guían al jugador hasta la pared de piedra. Se crean por
 ## código en [method _setup_guide_arrows].
 var _arrows: GuideArrows
 
-## NUEVO: indica si las flechas están activas y el nivel espera a que el
+## indica si las flechas están activas y el nivel espera a que el
 ## jugador llegue a [member finale_point].
 var _guiding: bool = false
+
+## indica si el nivel se cargó porque el jugador salió de una celda. En
+## ese caso reaparece frente a la puerta y no se repite la introducción.
+var _returning_from_cell: bool = false
 
 
 func _ready() -> void:
@@ -144,6 +181,15 @@ func _ready() -> void:
 	# Los mismos límites del mapa se aplican al jugador y a la cámara.
 	player.set_world_bounds(map_bounds)
 	GameState.set_checkpoint(start_point.global_position)
+
+	# si el jugador vuelve de una celda, reaparece donde estaba frente a
+	# la puerta (en vez de en el punto de inicio) y la pantalla se aclara.
+	_returning_from_cell = GameState.is_returning_from_cell()
+	if _returning_from_cell:
+		player.teleport_to(GameState.get_cell_return_position())
+		GameState.clear_cell_visit()
+		# Sin await: el nivel sigue cargándose mientras la pantalla se aclara.
+		SceneManager.fade_in(cell_fade_in_time)
 
 	# El destello parte invisible, aunque la escena lo deje distinto.
 	flash.modulate.a = 0.0
@@ -162,10 +208,13 @@ func _ready() -> void:
 	_update_counter()
 	print("Interactuables: ", get_tree().get_nodes_in_group("interactable"))
 
-	# NUEVO: las flechas guía, la Mulata acompañante y el mensaje de inicio.
+	# las flechas guía, la Mulata acompañante y el mensaje de inicio.
 	_setup_guide_arrows()
 	_start_companion()
 	_play_intro()
+	# si el jugador resolvió un acertijo dentro de una celda, aquí se
+	# muestra su recompensa al volver.
+	_play_pending_rewards()
 
 
 ## Conecta cada hoja del nodo [code]Hojas[/code]. Las que ya estaban
@@ -197,7 +246,8 @@ func _restore_progress() -> void:
 		return
 
 	for id: String in _riddles.keys():
-		if _is_solved(id):
+		# lo resuelto en una celda y aún pendiente se anima después.
+		if _is_solved(id) and not GameState.has_flag(FLAG_PENDING_PREFIX + id):
 			var riddle: Dictionary = _riddles[id]
 			boat.show_part(String(riddle.get("boat_part", "")), false)
 
@@ -210,14 +260,20 @@ func _setup_exit() -> void:
 	_exit.name = "SalidaNivel2"
 	_exit.gate_rect = exit_gate_rect
 	_exit.trigger_x = exit_trigger_x
+	# la flecha apunta a la salida real, no al centro del hueco.
+	_exit.arrow_target = exit_arrow_target
 	add_child(_exit)
 	_exit.player_crossed.connect(_on_exit_crossed)
+	# deja en la consola dónde queda la flecha de salida, para comprobar
+	# que se está usando esta versión del script.
+	_log("Salida: flecha en %s, destino %s, zona de paso %s"
+			% [exit_arrow_target + _exit.arrow_offset, exit_arrow_target, exit_gate_rect])
 
 	if GameState.has_flag(FLAG_LEVEL_DONE):
 		_exit.enable(false)
 
 
-## NUEVO: crea por código las flechas que guían hacia la pared de piedra. Van
+## crea por código las flechas que guían hacia la pared de piedra. Van
 ## dentro de su propia [CanvasLayer] para que la oscuridad del nivel
 ## ([code]Oscuridad[/code]) no las apague. Si ya estaban resueltas las tres
 ## hojas pero el nivel no se completó (por ejemplo, al recargar), se
@@ -231,19 +287,26 @@ func _setup_guide_arrows() -> void:
 	_arrows.name = "FlechasPared"
 	layer.add_child(_arrows)
 
-	if _all_solved() and not GameState.has_flag(FLAG_LEVEL_DONE):
+	# si queda una recompensa pendiente, las flechas salen cuando
+	# termina (ver [method _play_pending_rewards]).
+	if _all_solved() and not GameState.has_flag(FLAG_LEVEL_DONE) \
+			and not _has_pending_rewards():
 		_start_guide_to_wall()
 
 
-## NUEVO: hace que la Mulata acompañe al jugador desde el inicio. Si el nivel
+## hace que la Mulata acompañe al jugador desde el inicio. Si el nivel
 ## ya estaba completo no hace nada: ella ya se fue.
 func _start_companion() -> void:
 	if GameState.has_flag(FLAG_LEVEL_DONE):
 		return
+	# al volver de una celda la Mulata aparece junto al jugador, en vez
+	# de cruzar todo el mapa desde su lugar original.
+	if _returning_from_cell:
+		mulata.global_position = player.global_position + Vector2(-16.0, 0.0)
 	mulata.start_following(player)
 
 
-## NUEVO: secuencia de inicio del nivel, literalmente al comenzar. Si es la
+## secuencia de inicio del nivel, literalmente al comenzar. Si es la
 ## primera vez: bloquea al jugador, muestra el mensaje de inicio del
 ## [ScrollMessage], después el diálogo [code]mulata_inicio[/code] y por último
 ## la misión. Si ya la vio (por ejemplo, al recargar), solo muestra los
@@ -256,6 +319,12 @@ func _start_companion() -> void:
 ## lanza solo) o desactivado (lo lanza el nivel).
 func _play_intro() -> void:
 	if GameState.has_flag(FLAG_LEVEL_DONE):
+		return
+
+	# al volver de una celda no se repiten los mensajes del pergamino.
+	# (Si el [ScrollMessage] tiene [code]Show On Ready[/code] activo, se lanza
+	# solo y este script no puede detenerlo: desactívalo en el Inspector.)
+	if _returning_from_cell:
 		return
 
 	var launches_itself: bool = scroll_message.show_on_ready
@@ -295,15 +364,17 @@ func _play_intro() -> void:
 	_release_player()
 
 
-## NUEVO: activa las flechas hacia [member finale_point] y deja al nivel
+## activa las flechas hacia [member finale_point] y deja al nivel
 ## esperando la llegada del jugador (ver [method _check_finale_arrival]).
 func _start_guide_to_wall() -> void:
 	_guiding = true
 	_arrows.activate(player, finale_point)
 	_log("Flechas hacia la pared activadas")
+	# deja en la consola hacia dónde apuntan las flechas.
+	_log("Destino de las flechas: %s" % finale_point)
 
 
-## NUEVO: comprueba si el jugador llegó a la pared de piedra. Al llegar lo
+## comprueba si el jugador llegó a la pared de piedra. Al llegar lo
 ## bloquea, apaga las flechas, la Mulata camina hasta el dibujo y comienza el
 ## final del nivel. Se llama en cada paso de física.
 func _check_finale_arrival() -> void:
@@ -321,6 +392,47 @@ func _check_finale_arrival() -> void:
 
 	await mulata.walk_to(mulata_finale_point)
 	await _play_finale()
+	_release_player()
+
+
+## indica si hay acertijos resueltos dentro de una celda cuya
+## recompensa aún no se mostró.
+func _has_pending_rewards() -> bool:
+	for id: String in _riddles.keys():
+		if GameState.has_flag(FLAG_PENDING_PREFIX + id):
+			return true
+	return false
+
+
+## muestra, al volver de una celda, la recompensa de los acertijos
+## resueltos allí: la parte del barco aparece en la pared con su animación y,
+## si ya están las tres hojas, la Mulata invita al jugador a ir a la pared y
+## se encienden las flechas (lo mismo que antes ocurría al resolver el
+## acertijo en el mapa). Mientras dura, el jugador no puede moverse.
+func _play_pending_rewards() -> void:
+	if not _has_pending_rewards():
+		return
+
+	_busy = true
+	player.can_move = false
+
+	# Se espera a que la pantalla termine de aclararse y a que la escena esté
+	# lista, para que el jugador vea aparecer el dibujo.
+	await get_tree().create_timer(cell_fade_in_time + 0.1).timeout
+
+	for id: String in _riddles.keys():
+		if not GameState.has_flag(FLAG_PENDING_PREFIX + id):
+			continue
+		# La bandera se limpia antes del await para no repetir la animación.
+		GameState.set_flag(FLAG_PENDING_PREFIX + id, false)
+		var riddle: Dictionary = _riddles[id]
+		_log("Recompensa pendiente: " + id)
+		await boat.show_part(String(riddle.get("boat_part", "")))
+
+	if _all_solved() and not GameState.has_flag(FLAG_LEVEL_DONE):
+		await _play_dialogue("mulata_hacia_pared")
+		_start_guide_to_wall()
+
 	_release_player()
 
 
@@ -371,7 +483,7 @@ func _on_riddle_answered(riddle_id: String, is_correct: bool) -> void:
 	if _all_solved() and finale_auto_start:
 		await _play_finale()
 	elif _all_solved():
-		# NUEVO: con las tres hojas resueltas, la Mulata invita al jugador a
+		# con las tres hojas resueltas, la Mulata invita al jugador a
 		# ir a la pared y aparecen las flechas que lo guían hasta allá.
 		await _play_dialogue("mulata_hacia_pared")
 		_start_guide_to_wall()
@@ -388,7 +500,7 @@ func _on_mulata_interacted() -> void:
 	player.can_move = false
 
 	if _all_solved():
-		# NUEVO: el final ocurre junto a la pared de piedra, no donde esté la
+		# el final ocurre junto a la pared de piedra, no donde esté la
 		# Mulata (ahora siempre está junto al jugador). Si el jugador le habla
 		# con las tres hojas resueltas, ella lo invita otra vez a ir allá y se
 		# reactivan las flechas.
@@ -550,7 +662,7 @@ func _log(message: String) -> void:
 		print("[Nivel1] ", message)
 
 func _physics_process(_delta: float) -> void:
-	# NUEVO: detecta la llegada del jugador a la pared de piedra.
+	# detecta la llegada del jugador a la pared de piedra.
 	_check_finale_arrival()
 
 	if Input.is_action_just_pressed("interact"):

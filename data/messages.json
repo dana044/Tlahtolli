@@ -10,5 +10,13 @@
   "item_cempasuchil": "El cempasúchil es la flor de las ofrendas de Día de Muertos; su color y aroma guían a las almas.",
   "item_mandarina": "La mandarina es una de las frutas típicas de las ofrendas.",
   "item_moneda": "Según la tradición, los chaneques cuidan la naturaleza y piden respeto a quien entra en ella.",
-  "altar_faltan_ofrendas": "Aún faltan ofrendas para el altar."
+  "altar_faltan_ofrendas": "Aún faltan ofrendas para el altar.",
+  "celda_nota_1": "Este no es.",
+  "celda_nota_2": "Hola… ¿buscas algo?",
+  "celda_nota_3": "Adiós.",
+  "celda_nota_4": "Aquí no hay nada.",
+  "celda_nota_5": "Sigue buscando.",
+  "celda_nota_6": "Hola, preso.",
+  "celda_nota_7": "Tampoco es este.",
+  "celda_nota_8": "Adiós, amigo."
 }

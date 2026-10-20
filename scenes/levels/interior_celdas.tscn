@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cfah3d8qgcxc5"]
+
+[ext_resource type="Script" uid="uid://d34osn52c2rvm" path="res://scripts/levels/interior_celdas.gd" id="1_interior"]
+[ext_resource type="PackedScene" uid="uid://b34fwvleam5ct" path="res://scenes/objects/celda.tscn" id="2_celdas"]
+[ext_resource type="Script" uid="uid://d1haxph3btu5p" path="res://scripts/objets/celda_salida.gd" id="3_salida"]
+[ext_resource type="Script" uid="uid://deyi3ngpcrnwa" path="res://scripts/ui/interact_prompt.gd" id="4_prompt"]
+[ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="6_inventory"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="7_pause"]
+[ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="8_journal"]
+[ext_resource type="PackedScene" path="res://scenes/ui/riddle_panel.tscn" id="9_panel"]
+[ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="10_scroll"]
+
+[node name="InteriorCeldas" type="Node2D" unique_id=694297967]
+y_sort_enabled = true
+position = Vector2(40, 181)
+script = ExtResource("1_interior")
+
+[node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1753106048]
+color = Color(0.09207655, 0.09201489, 0.13029653, 1)
+
+[node name="Celdas" parent="." unique_id=326182928 instance=ExtResource("2_celdas")]
+
+[node name="PuertaSalida" type="Node2D" parent="." unique_id=778782953]
+script = ExtResource("3_salida")
+
+[node name="InteractPrompt" type="Sprite2D" parent="PuertaSalida" unique_id=1209968414]
+script = ExtResource("4_prompt")
+
+[node name="player" parent="." unique_id=822428583 instance=ExtResource("5_player")]
+position = Vector2(-271, 118)
+
+[node name="InventoryBar" parent="." unique_id=498015425 instance=ExtResource("6_inventory")]
+
+[node name="PauseMenu" parent="." unique_id=930806271 instance=ExtResource("7_pause")]
+
+[node name="JournalUI" parent="." unique_id=1609984219 instance=ExtResource("8_journal")]
+
+[node name="RiddlePanel" parent="." unique_id=499982952 instance=ExtResource("9_panel")]
+
+[node name="ScrollMessage" parent="." unique_id=529144303 instance=ExtResource("10_scroll")]
+message_id = ""
+show_on_ready = false

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://mgglwdty0jnj"]
+
+[ext_resource type="Script" uid="uid://0152euchxgt4" path="res://scripts/objets/antorcha.gd" id="1_hofiy"]
+[ext_resource type="Texture2D" uid="uid://boa1welqa87r8" path="res://assets/sprites/objects/antorcha1.png" id="1_r477q"]
+[ext_resource type="Texture2D" uid="uid://2ie17chpt7uo" path="res://assets/sprites/objects/antorcha2.png" id="2_lx07p"]
+[ext_resource type="Texture2D" uid="uid://dbi6tudtlnbsk" path="res://assets/sprites/objects/antorcha3.png" id="3_hofiy"]
+[ext_resource type="Texture2D" uid="uid://bbspayowt6xxm" path="res://assets/sprites/objects/antorcha4.png" id="4_tgvfg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_am0s3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_r477q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lx07p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hofiy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tgvfg")
+}],
+"loop": 1,
+"name": &"movimiento",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_yewv4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r477q"]
+gradient = SubResource("Gradient_yewv4")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Antorcha" type="Area2D" unique_id=1210262118]
+script = ExtResource("1_hofiy")
+
+[node name="Antorcha" type="AnimatedSprite2D" parent="." unique_id=1287056849]
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_am0s3")
+animation = &"movimiento"
+frame_progress = 0.08951577
+
+[node name="Luz" type="PointLight2D" parent="." unique_id=91028135]
+position = Vector2(1, -13)
+scale = Vector2(0.33007815, 0.33007815)
+color = Color(1, 0.9309246, 0.7977378, 1)
+texture = SubResource("GradientTexture2D_r477q")

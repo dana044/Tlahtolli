@@ -53,6 +53,13 @@ const ARROW_Z_INDEX: int = 100
 ## antes del borde.
 @export var arrow_offset: Vector2 = Vector2(-55.0, 0.0)
 
+## punto global al que apunta la flecha (por ejemplo, el centro de la
+## zona de salida real). La flecha se coloca en este punto más
+## [member arrow_offset]. Con [constant Vector2.ZERO] (por defecto) se usa el
+## comportamiento anterior: [member trigger_x] y el centro vertical de
+## [member gate_rect].
+@export var arrow_target: Vector2 = Vector2.ZERO
+
 ## Multiplicador de brillo de la flecha. Compensa el [CanvasModulate] oscuro de
 ## los niveles, que apagaría una flecha del color original. Con [code]1.0[/code]
 ## se ve tal cual; en un nivel oscuro funcionan valores de 3.0 a 4.0.
@@ -184,7 +191,11 @@ func disable() -> void:
 
 
 ## Devuelve el punto global donde se centra la flecha, sin contar el latido.
+## [br]si [member arrow_target] está definido, la flecha se coloca ahí
+## en vez de usar [member trigger_x] y el centro de [member gate_rect].
 func _arrow_anchor() -> Vector2:
+	if arrow_target != Vector2.ZERO:
+		return arrow_target + arrow_offset
 	return Vector2(trigger_x, gate_rect.get_center().y) + arrow_offset
 
 

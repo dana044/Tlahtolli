@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://b34fwvleam5ct"]
+[gd_scene format=4 uid="uid://b34fwvleam5ct"]
+
+[ext_resource type="TileSet" uid="uid://b0kxyyhbbnr1m" path="res://assets/tilesets/tileset_piedra.tres" id="1_0bh30"]
+[ext_resource type="Texture2D" uid="uid://cwutb2liymxcl" path="res://assets/tilesets/Pared.png" id="1_a20xi"]
+[ext_resource type="PackedScene" uid="uid://0wenf4acngtj" path="res://scenes/objects/pared.tscn" id="1_r5h62"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_am0s3"]
 b = Vector2(0, 128)
@@ -12,14 +16,47 @@ b = Vector2(0, 128)
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_1okoa"]
 b = Vector2(245, 0)
 
-[node name="Celda" type="Node2D" unique_id=1704488304]
+[node name="Celda_interna" type="Node2D" unique_id=1704488304]
+y_sort_enabled = true
+position = Vector2(31, 171)
 
-[node name="celda_1" type="Node2D" parent="." unique_id=534352202]
+[node name="celda_1" type="StaticBody2D" parent="." unique_id=761922032]
+
+[node name="Pared1" type="Sprite2D" parent="celda_1" unique_id=499961613]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_1" unique_id=90334210]
+position = Vector2(309, 40)
+rotation = 4.712389
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_1" unique_id=19527447]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_1" unique_id=2022025087]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_1" unique_id=783885515]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_1" unique_id=1839979908 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_1" unique_id=341892154 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_1" unique_id=1237810114 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="StartPoint" type="Marker2D" parent="celda_1" unique_id=1307932]
+position = Vector2(122.5, 117)
 
 [node name="Limites" type="Area2D" parent="celda_1" unique_id=359345902]
-
-[node name="StartPoint" type="Marker2D" parent="celda_1/Limites" unique_id=1307932]
-position = Vector2(122.5, 117)
 
 [node name="pared_izquierda" type="CollisionShape2D" parent="celda_1/Limites" unique_id=1673267255]
 shape = SubResource("SegmentShape2D_am0s3")
@@ -32,5 +69,376 @@ position = Vector2(245, 0)
 shape = SubResource("SegmentShape2D_rhs3m")
 
 [node name="pared_abajo" type="CollisionShape2D" parent="celda_1/Limites" unique_id=1007222119]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_2" type="StaticBody2D" parent="." unique_id=1681498616]
+position = Vector2(253, 0)
+
+[node name="Pared1" type="Sprite2D" parent="celda_2" unique_id=223999962]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_2" unique_id=1724182086]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_2" unique_id=208092700]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_2" unique_id=2973648]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_2" unique_id=211369462]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_2" unique_id=1996302514 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_2" unique_id=1499806445 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_2" unique_id=2117129465 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="StartPoint" type="Marker2D" parent="celda_2" unique_id=990517974]
+position = Vector2(122.5, 117)
+
+[node name="Limites" type="Area2D" parent="celda_2" unique_id=802271579]
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_2/Limites" unique_id=560504183]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_2/Limites" unique_id=218270355]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_2/Limites" unique_id=414054553]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_2/Limites" unique_id=1963575987]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_3" type="StaticBody2D" parent="." unique_id=1816094167]
+position = Vector2(511, 0)
+
+[node name="Pared1" type="Sprite2D" parent="celda_3" unique_id=1713992364]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_3" unique_id=1871070775]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_3" unique_id=419442895]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_3" unique_id=69245366]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_3" unique_id=313781831]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_3" unique_id=10140169 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_3" unique_id=618515557 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_3" unique_id=1386384925 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="Limites" type="Area2D" parent="celda_3" unique_id=1899977817]
+
+[node name="StartPoint" type="Marker2D" parent="celda_3/Limites" unique_id=1014698121]
+position = Vector2(122.5, 117)
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_3/Limites" unique_id=487490301]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_3/Limites" unique_id=799964050]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_3/Limites" unique_id=559149744]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_3/Limites" unique_id=970677517]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_4" type="StaticBody2D" parent="." unique_id=583785674]
+position = Vector2(764, 0)
+
+[node name="Pared1" type="Sprite2D" parent="celda_4" unique_id=1761406391]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_4" unique_id=2098354396]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_4" unique_id=484578701]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_4" unique_id=1915804363]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_4" unique_id=1668051332]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_4" unique_id=598669113 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_4" unique_id=131158512 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_4" unique_id=570263695 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="Limites" type="Area2D" parent="celda_4" unique_id=203360077]
+
+[node name="StartPoint" type="Marker2D" parent="celda_4/Limites" unique_id=927567428]
+position = Vector2(122.5, 117)
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_4/Limites" unique_id=1715535082]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_4/Limites" unique_id=583776495]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_4/Limites" unique_id=61941852]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_4/Limites" unique_id=470531400]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_5" type="StaticBody2D" parent="." unique_id=521514969]
+position = Vector2(70, 328)
+
+[node name="Pared1" type="Sprite2D" parent="celda_5" unique_id=557857575]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_5" unique_id=1716506401]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_5" unique_id=493449363]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_5" unique_id=317781330]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_5" unique_id=1424419209]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_5" unique_id=350594023 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_5" unique_id=892066378 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_5" unique_id=666033043 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="Limites" type="Area2D" parent="celda_5" unique_id=1048722832]
+
+[node name="StartPoint" type="Marker2D" parent="celda_5/Limites" unique_id=1223813899]
+position = Vector2(122.5, 117)
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_5/Limites" unique_id=1641466874]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_5/Limites" unique_id=1555361407]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_5/Limites" unique_id=358413162]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_5/Limites" unique_id=827715157]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_6" type="StaticBody2D" parent="." unique_id=1117709527]
+position = Vector2(323, 328)
+
+[node name="Pared1" type="Sprite2D" parent="celda_6" unique_id=1832046672]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_6" unique_id=972452324]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_6" unique_id=1571458367]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_6" unique_id=2134896537]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_6" unique_id=1393997436]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_6" unique_id=1304662556 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_6" unique_id=1308290525 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_6" unique_id=1363998210 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="Limites" type="Area2D" parent="celda_6" unique_id=1762038620]
+
+[node name="StartPoint" type="Marker2D" parent="celda_6/Limites" unique_id=1778774803]
+position = Vector2(122.5, 117)
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_6/Limites" unique_id=1396253924]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_6/Limites" unique_id=24168577]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_6/Limites" unique_id=1272096385]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_6/Limites" unique_id=1778454435]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_7" type="StaticBody2D" parent="." unique_id=1552978957]
+position = Vector2(581, 328)
+
+[node name="Pared1" type="Sprite2D" parent="celda_7" unique_id=2084140438]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_7" unique_id=791274353]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_7" unique_id=1746045152]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_7" unique_id=1402040133]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_7" unique_id=1356128426]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_7" unique_id=2043711404 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_7" unique_id=1730722786 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_7" unique_id=1597445314 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="Limites" type="Area2D" parent="celda_7" unique_id=2005015524]
+
+[node name="StartPoint" type="Marker2D" parent="celda_7/Limites" unique_id=1648585770]
+position = Vector2(122.5, 117)
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_7/Limites" unique_id=251715004]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_7/Limites" unique_id=666542680]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_7/Limites" unique_id=715648055]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_7/Limites" unique_id=677351521]
+position = Vector2(0, 128)
+shape = SubResource("SegmentShape2D_1okoa")
+
+[node name="celda_8" type="StaticBody2D" parent="." unique_id=1751148118]
+position = Vector2(834, 328)
+
+[node name="Pared1" type="Sprite2D" parent="celda_8" unique_id=2010560311]
+position = Vector2(-65, 41)
+rotation = 1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared2" type="Sprite2D" parent="celda_8" unique_id=734059916]
+position = Vector2(309, 40)
+rotation = -1.5707964
+texture = ExtResource("1_a20xi")
+
+[node name="Pared3" type="Sprite2D" parent="celda_8" unique_id=1971975780]
+position = Vector2(38, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="Pared4" type="Sprite2D" parent="celda_8" unique_id=1615290935]
+position = Vector2(215, 192)
+texture = ExtResource("1_a20xi")
+
+[node name="piso" type="TileMapLayer" parent="celda_8" unique_id=321081391]
+tile_map_data = PackedByteArray("AAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAHAAEAAgAAAAAAAAAHAAIAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAEAAMAAgAAAAAAAAADAAMAAgAAAAAAAAABAAMAAAAAAAAAAAAAAAMAAgAAAAAAAAAAAAEAAgAAAAAAAAACAAEAAgAAAAAAAAAEAAEAAgAAAAAAAAAFAAEAAgAAAAAAAAAEAAIAAgAAAAAAAAACAAIAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAEAAQAAAAAAAAACAAMAAQAAAAAAAAADAAIAAQAAAAAAAAADAAEAAQAAAAAAAAAGAAAAAQAAAAAAAAAHAAAAAAAAAAAAAAAGAAEAAQAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAQAAAAAAAAAFAAMAAQAAAAAAAAAAAAAAAgAAAAAAAAA=")
+tile_set = ExtResource("1_0bh30")
+
+[node name="pared1" parent="celda_8" unique_id=276720403 instance=ExtResource("1_r5h62")]
+position = Vector2(118, -63)
+
+[node name="pared2" parent="celda_8" unique_id=1381326292 instance=ExtResource("1_r5h62")]
+position = Vector2(-60, -63)
+
+[node name="pared3" parent="celda_8" unique_id=606852468 instance=ExtResource("1_r5h62")]
+position = Vector2(296, -63)
+
+[node name="Limites" type="Area2D" parent="celda_8" unique_id=1657587466]
+
+[node name="StartPoint" type="Marker2D" parent="celda_8/Limites" unique_id=343886591]
+position = Vector2(122.5, 117)
+
+[node name="pared_izquierda" type="CollisionShape2D" parent="celda_8/Limites" unique_id=1795604662]
+shape = SubResource("SegmentShape2D_am0s3")
+
+[node name="pared_arriba" type="CollisionShape2D" parent="celda_8/Limites" unique_id=1889793603]
+shape = SubResource("SegmentShape2D_h1a5f")
+
+[node name="pared_derecha" type="CollisionShape2D" parent="celda_8/Limites" unique_id=475554190]
+position = Vector2(245, 0)
+shape = SubResource("SegmentShape2D_rhs3m")
+
+[node name="pared_abajo" type="CollisionShape2D" parent="celda_8/Limites" unique_id=494452064]
 position = Vector2(0, 128)
 shape = SubResource("SegmentShape2D_1okoa")

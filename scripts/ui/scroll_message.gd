@@ -92,7 +92,7 @@ func show_message(id: String, seconds: float = -1.0) -> void:
 	message_finished.emit()
 
 
-## NUEVO: muestra un texto suelto, sin buscarlo en messages.json. Sirve para
+## muestra un texto suelto, sin buscarlo en messages.json. Sirve para
 ## textos que ya viven en otro archivo de datos (por ejemplo, el mensaje de
 ## éxito de cada acertijo en riddles.json o la descripción de un objeto).
 ## Si 'seconds' es negativo usa display_seconds.
