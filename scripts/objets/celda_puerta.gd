@@ -32,7 +32,8 @@ var _entering: bool = false
 ## Registra la puerta como interactuable.
 func _ready() -> void:
 	add_to_group("interactable")
-
+	if has_node("InteractPrompt"):
+		$InteractPrompt.scale = Vector2(0.5, 0.5)
 
 ## Entra a la celda. Lo invoca el [Player] al interactuar cerca.
 ## [br]El jugador reaparecerá al volver exactamente donde está ahora, que es

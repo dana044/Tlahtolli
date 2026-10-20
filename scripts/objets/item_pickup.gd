@@ -40,7 +40,7 @@ signal picked_up(item_id: String)
 
 ## Escala de la imagen en pantalla (1 = tamaño original). No se ve afectada
 ## por la escala del objeto.
-@export var prompt_scale: Vector2 = Vector2.ONE
+@export var prompt_scale: Vector2 = Vector2(0.5, 0.5)
 
 ## Si es [code]true[/code], la imagen se dibuja con filtro "nearest" para que
 ## el pixel art se vea nítido.

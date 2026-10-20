@@ -89,6 +89,7 @@ var _facing: String = "s"
 ## siempre visible; si estorba, desactiva [code]Show Prompt[/code] en el
 ## Inspector.
 func _ready() -> void:
+	$Music.play()
 	prompt_scale = Vector2(0.5, 0.5)
 	prompt_offset = Vector2(0, -43)
 	super()

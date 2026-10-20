@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://6ao23grmp3v7"]
 
 [ext_resource type="Script" uid="uid://ci3ilvg8bgejs" path="res://scripts/ui/main_menu.gd" id="1_5vafy"]
-[ext_resource type="Texture2D" uid="uid://ckldijjdafqfu" path="res://assets/sprites/ui/portada.png" id="2_byqcc"]
+[ext_resource type="Texture2D" uid="uid://dcv2owpj803ll" path="res://assets/sprites/ui/portada.png" id="2_byqcc"]
 [ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="2_w6ykx"]
 [ext_resource type="PackedScene" uid="uid://k3ei1dm4ale5" path="res://scenes/ui/image_button.tscn" id="3_w6ykx"]
 
-[node name="MainMenu" type="Control" unique_id=2067183163 node_paths=PackedStringArray("play_button", "tutorial_button", "settings_button")]
+[node name="MainMenu" type="Control" unique_id=2067183163 node_paths=PackedStringArray("play_button", "tutorial_button", "credit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,10 +15,11 @@ grow_vertical = 2
 script = ExtResource("1_5vafy")
 play_button = NodePath("ButtonsMargin/Buttons/PlayButton")
 tutorial_button = NodePath("ButtonsMargin/Buttons/TutorialButton")
-settings_button = NodePath("ButtonsMargin/Buttons/SettingsButton")
+credit_button = NodePath("ButtonsMargin/Buttons/CreditButton")
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=319311774]
 stream = ExtResource("2_w6ykx")
+volume_db = 1.0
 
 [node name="Backround" type="ColorRect" parent="." unique_id=1400348030]
 layout_mode = 1
@@ -65,8 +66,7 @@ layout_mode = 2
 label_text = "Tutorial"
 font_size = 30
 
-[node name="SettingsButton" parent="ButtonsMargin/Buttons" unique_id=383215435 instance=ExtResource("3_w6ykx")]
-custom_minimum_size = Vector2(250, 64)
+[node name="CreditButton" parent="ButtonsMargin/Buttons" unique_id=164659629 instance=ExtResource("3_w6ykx")]
 layout_mode = 2
-label_text = "Ajustes"
+label_text = "Créditos"
 font_size = 30

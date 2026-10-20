@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://gvidja8w1ug2"]
+[gd_scene format=4 uid="uid://uf1njyvshnv4"]
 
 [ext_resource type="Script" uid="uid://c0wrq3gn8fg1m" path="res://scripts/levels/level_1_mulata.gd" id="1_t8w26"]
 [ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="2_iuot1"]
@@ -140,3 +140,4 @@ mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1009221920]
+volume_db = 1.0

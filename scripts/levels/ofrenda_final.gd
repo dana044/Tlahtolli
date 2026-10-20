@@ -104,6 +104,7 @@ var _leaving: bool = false
 
 
 func _ready() -> void:
+	$Music.play()
 	darkness.color = darkness_color
 
 	player.global_position = start_point.global_position
