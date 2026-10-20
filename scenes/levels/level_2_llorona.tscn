@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="11_n8jnb"]
 [ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="12_n8jnb"]
 [ext_resource type="PackedScene" uid="uid://b766fmi46f6d2" path="res://scenes/objects/puente.tscn" id="17_5tlnv"]
+[ext_resource type="Texture2D" uid="uid://ccgpg1ukvqdqj" path="res://assets/sprites/ui/icons/icon_bosque.png" id="18_enpwo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5tlnv"]
 texture = ExtResource("2_48p45")
@@ -367,3 +368,8 @@ rotation = 1.5737505
 [node name="Puente2" parent="." unique_id=678050578 instance=ExtResource("17_5tlnv")]
 position = Vector2(959.99994, 530)
 rotation = 1.5712736
+
+[node name="TransitionIcon" type="Sprite2D" parent="." unique_id=1475834541]
+position = Vector2(1122, 466)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("18_enpwo")

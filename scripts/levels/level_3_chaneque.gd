@@ -81,6 +81,26 @@ const MSG_ITEM_PREFIX: String = "item_"
 ## Escala de las imágenes de las ofrendas en el mapa.
 @export var offering_scale: float = 1.0
 
+## Duración del fundido de entrada al llegar desde el nivel 2, en segundos.
+## Sirve para aclarar la pantalla si el nivel anterior usó fundido a negro; si
+## no lo usó, no se nota.
+@export var arrival_fade_time: float = 0.3
+
+## Altura (coordenada Y) a la que el jugador entra por el borde izquierdo al
+## llegar desde el nivel 2. Debe coincidir con el centro vertical de
+## [code]exit_gate_rect[/code] del nivel 2 (a la altura de la casa) para que el
+## paseo se sienta continuo.
+@export var entry_y: float = 231.0
+
+## Distancia, en píxeles, que el jugador camina hacia dentro del mapa al
+## entrar, medida desde el borde izquierdo.
+@export var entry_walk_distance: float = 80.0
+
+## Zona de paso hacia el nivel final (ajusta los valores si tu flecha está en otra posición).
+@export var exit_gate_rect: Rect2 = Rect2(1092, 231, 100, 80)
+
+## Coordenada X donde está la salida.
+@export var exit_trigger_x: float = 1140.0
 
 ## Jugador del nivel.
 @onready var player: Player = $Player
@@ -115,6 +135,7 @@ const MSG_ITEM_PREFIX: String = "item_"
 ## por nombre de método porque su script no declara [code]class_name[/code].
 @onready var scroll_message: CanvasLayer = $ScrollMessage
 
+@onready var transition_icon: Sprite2D = $TransitionIcon
 
 ## Todas las ramas del nivel.
 var _branches: Array[Branch] = []
@@ -159,6 +180,14 @@ func _ready() -> void:
 		return
 
 	_spawn_offerings()
+
+	# Si el jugador viene del nivel de la Llorona, entra caminando por la
+	# izquierda antes de que comience la secuencia inicial.
+	if transition_icon != null:
+		transition_icon.scale = Vector2(2.0, 2.0)
+		transition_icon.global_position = Vector2(exit_trigger_x - 50, exit_gate_rect.position.y - 80)
+		transition_icon.z_index = 50
+		
 	_start_level()
 
 
@@ -357,6 +386,7 @@ func _restore_daylight() -> void:
 
 
 ## El jugador habló con el Chaneque: diálogo final y moneda de oro.
+## El jugador habló con el Chaneque: diálogo final y moneda de oro.
 func _on_chaneque_interacted() -> void:
 	if _busy or _finished:
 		return
@@ -374,6 +404,10 @@ func _on_chaneque_interacted() -> void:
 
 	_lock_player(false)
 	_busy = false
+	
+	if transition_icon != null:
+		transition_icon.visible = true
+		
 	level_completed.emit()
 
 #endregion

@@ -138,6 +138,7 @@ const FLAG_PENDING_PREFIX: String = "mulata_pendiente_"
 @onready var scroll_message: ScrollMessage = $ScrollMessage
 @onready var counter_label: Label = $HUD/ContadorLabel
 @onready var flash: ColorRect = $HUD/Destello
+@onready var transition_icon: Sprite2D = $TransitionIcon
 
 
 ## Acertijos cargados de [code]riddles.json[/code]: { id: {theme, boat_part,
@@ -197,6 +198,11 @@ func _ready() -> void:
 	mulata.interacted.connect(_on_mulata_interacted)
 	riddle_panel.answered.connect(_on_riddle_answered)
 	exit_zone.body_entered.connect(_on_exit_zone_body_entered)
+	
+	if transition_icon != null:
+		transition_icon.scale = Vector2(0.5, 0.5)
+		transition_icon.global_position = Vector2(exit_trigger_x - 50, exit_gate_rect.position.y -10)
+		transition_icon.z_index = 50
 
 	_connect_papers()
 	_restore_progress()
@@ -262,6 +268,9 @@ func _setup_exit() -> void:
 
 	if GameState.has_flag(FLAG_LEVEL_DONE):
 		_exit.enable(false)
+	
+	if transition_icon != null:
+		transition_icon.visible = true
 
 
 ## crea por código las flechas que guían hacia la pared de piedra. Van

@@ -13,6 +13,7 @@
 [ext_resource type="TileSet" uid="uid://b0kxyyhbbnr1m" path="res://assets/tilesets/tileset_piedra.tres" id="10_tileset"]
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="12_vy8vh"]
 [ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="13_1jpxo"]
+[ext_resource type="Texture2D" uid="uid://d1gy77bjmbto" path="res://assets/sprites/ui/icons/icon_rio.png" id="15_0vtq5"]
 [ext_resource type="PackedScene" uid="uid://c4atsjsgbjl7o" path="res://scenes/objects/celda_externa_abierta.tscn" id="15_v1iys"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_salida"]
@@ -141,3 +142,8 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1009221920]
 volume_db = 1.0
+
+[node name="TransitionIcon" type="Sprite2D" parent="." unique_id=6970629]
+position = Vector2(1122, 466)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("15_0vtq5")

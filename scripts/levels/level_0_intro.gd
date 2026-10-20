@@ -66,6 +66,8 @@ const FLAG_WALKING_INTO_LEVEL_1: String = "entrando_nivel_1"
 ## Abuelita con la que se habla.
 @onready var abuela: Abuela = $Abuela
 
+## Ícono de transición que aparece al cambiar de nivel
+@onready var transition_icon: Sprite2D = $TransitionIcon
 
 # Variables para guardar las coordenadas límite del mapa
 var limite_izquierdo: float
@@ -127,6 +129,12 @@ func _ready() -> void:
 	# La salida se crea siempre; si la conversación ya se escuchó (por ejemplo,
 	# al recargar el nivel) queda abierta desde el inicio.
 	_setup_exit()
+	if transition_icon != null:
+		# Hace el ícono al doble de su tamaño (cambia el 2.0 por 3.0 si lo quieres aún más grande)
+		transition_icon.scale = Vector2(2.0, 2.0)
+		# Lo posiciona cerca del borde derecho y usando la altura de la zona de salida (exit_gate_rect) menos 80 píxeles para que quede arriba
+		transition_icon.global_position = Vector2(limite_derecho - 150, exit_gate_rect.position.y - 80)
+		transition_icon.z_index = 50
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -187,19 +195,23 @@ func _on_exit_crossed() -> void:
 	player.can_move = false
 
 	GameState.set_flag(FLAG_WALKING_INTO_LEVEL_1)
+	
+	# Muestra el ícono de transición
+	if transition_icon != null:
+		transition_icon.visible = true
 
 	if exit_fade_time > 0.0:
 		await SceneManager.fade_out(exit_fade_time)
 
 	var error: Error = get_tree().change_scene_to_file(LEVEL_1_PATH)
 	if error != OK:
-		# Sin escena a la que ir (el nivel 1 aún no existe), se devuelve el
-		# control para no dejar bloqueado al jugador.
 		push_error("Level0: no se pudo cargar " + LEVEL_1_PATH)
 		GameState.set_flag(FLAG_WALKING_INTO_LEVEL_1, false)
 		player.can_move = true
 		_leaving = false
-
+		# Si falla el cambio, oculta el ícono de nuevo
+		if transition_icon != null:
+			transition_icon.visible = false
 
 ## Reproduce el bloque [param key] de [constant DIALOGUE_PATH] con el cuadro
 ## de diálogo del juego y espera a que el jugador lo cierre. Puede esperarse
