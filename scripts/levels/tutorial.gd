@@ -19,8 +19,8 @@ const MOVE_ACTIONS: Array[String] = ["move_up", "move_left", "move_down", "move_
 @export_file("*.tscn") var main_menu_scene: String = "res://scenes/main/main_menu.tscn"
 
 @export_group("Nodos de la escena")
-## Fondo de pasto (Sprite2D). Define los límites del mapa.
-@export var background: Sprite2D
+## Fondo de pasto (TileMapLayer). Define los límites del mapa.
+@export var background: TileMapLayer
 ## Jugador de la escena.
 @export var player: Player
 ## Objeto que se recoge en el paso de la tecla E (la muñeca).
@@ -116,10 +116,25 @@ func _ready() -> void:
 
 ## Centra al jugador en el fondo, limita el mapa y esconde el objeto hasta
 ## el paso de la tecla E.
+## Centra al jugador en el fondo, limita el mapa y esconde el objeto hasta
+## el paso de la tecla E.
 func _setup_stage() -> void:
 	var bounds := Rect2()
-	if background.texture != null:
-		bounds = background.get_global_transform() * background.get_rect()
+	
+	# Usamos la lógica de TileMapLayer para calcular el tamaño en lugar de Sprite2D
+	if background != null and background.tile_set != null:
+		var map_rect = background.get_used_rect()
+		var tile_size = background.tile_set.tile_size
+		
+		var x_pos = map_rect.position.x * tile_size.x
+		var y_pos = map_rect.position.y * tile_size.y
+		var width = map_rect.size.x * tile_size.x
+		var height = map_rect.size.y * tile_size.y
+		
+		# Convertimos a coordenadas globales por si el TileMapLayer fue movido
+		var global_pos = background.to_global(Vector2(x_pos, y_pos))
+		bounds = Rect2(global_pos, Vector2(width, height) * background.global_scale)
+
 	if bounds.has_area():
 		player.global_position = bounds.get_center()
 		player.set_world_bounds(bounds)

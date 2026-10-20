@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://bdw6y3vf8q8bh"]
+[gd_scene format=4 uid="uid://gvidja8w1ug2"]
 
 [ext_resource type="Script" uid="uid://c0wrq3gn8fg1m" path="res://scripts/levels/level_1_mulata.gd" id="1_t8w26"]
 [ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="2_iuot1"]
@@ -112,6 +112,7 @@ follow_up_ids = Array[String](["mulata_mision"])
 [node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("12_vy8vh")]
 
 [node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("13_1jpxo")]
+mission_id = "mulata_mision"
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=239755745]
 

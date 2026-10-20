@@ -42,6 +42,11 @@ const AUTO_WALK_ARRIVAL: float = 4.0
 ## linterna. Al ser una luz suave, 128 basta y se genera al instante.
 const LANTERN_TEXTURE_SIZE: int = 128
 
+## Texturas de cono ya generadas, compartidas por todas las instancias del
+## jugador. La clave resume los parámetros del cono. Así el cono se calcula una
+## sola vez y la textura nunca se libera mientras se usa.
+static var _cone_cache: Dictionary = {}
+
 
 #region Movimiento
 
@@ -212,14 +217,31 @@ func _ready() -> void:
 		_lantern_base_scale = lantern.texture_scale
 		_lantern_base_energy = lantern.energy
 
-		lantern.texture = _build_cone_texture()
 		lantern.rotation = _facing_angle()
+		_apply_lantern_texture()
 
 	# La skin parte coherente con el estado de la luz en la escena, incluso si
 	# el nivel no llama a set_lantern_enabled(). Sin nodo de linterna, el
 	# personaje usa la skin normal.
 	_update_skin(lantern != null and lantern.visible)
 
+## Asigna a la linterna la textura de cono. Espera un fotograma para que la
+## luz ya esté registrada en el renderizador, y reutiliza la textura si ya se
+## generó antes con los mismos parámetros.
+func _apply_lantern_texture() -> void:
+	await get_tree().process_frame
+	if lantern == null or not is_instance_valid(lantern):
+		return
+
+	var key: String = "%s_%s_%s" % [lantern_cone_angle, lantern_cone_softness, lantern_halo_radius]
+	var cone: ImageTexture = _cone_cache.get(key)
+	if cone == null:
+		cone = _build_cone_texture()
+		if cone == null:
+			push_warning("Player: no se pudo generar la textura de la linterna.")
+			return
+		_cone_cache[key] = cone
+	lantern.texture = cone
 
 ## Actualiza el movimiento del personaje en cada paso de física.
 ## [param delta] corresponde al tiempo transcurrido desde el paso anterior,

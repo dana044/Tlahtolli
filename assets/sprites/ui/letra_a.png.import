@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blw38p4tlxkrs"
-path="res://.godot/imported/tecla_a.png-fabf3cd0c776a31266f1b7916e12cbff.ctex"
+uid="uid://dubrungwblr7h"
+path="res://.godot/imported/letra_a.png-7337bd5dfd5bddb1d064118085aacaa4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/tecla_a.png"
-dest_files=["res://.godot/imported/tecla_a.png-fabf3cd0c776a31266f1b7916e12cbff.ctex"]
+source_file="res://assets/sprites/ui/letra_a.png"
+dest_files=["res://.godot/imported/letra_a.png-7337bd5dfd5bddb1d064118085aacaa4.ctex"]
 
 [params]
 

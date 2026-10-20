@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cesgo0hqbgf4b" path="res://assets/sprites/characters/chaneque_se.png" id="7_hl5uw"]
 [ext_resource type="Texture2D" uid="uid://bcfcnsjb0wnwx" path="res://assets/sprites/characters/chaneque_sw.png" id="8_csthy"]
 [ext_resource type="Texture2D" uid="uid://lp66pjvcn0d4" path="res://assets/sprites/characters/chaneque_w.png" id="9_xldnm"]
-[ext_resource type="AudioStream" uid="uid://87a8rudgggyk" path="res://assets/audio/sfx/chaneque.mp3" id="10_axmvh"]
+[ext_resource type="AudioStream" uid="uid://dumyjs3ba4o5m" path="res://assets/audio/sfx/chaneque.mp3" id="10_axmvh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_am0s3"]
 animations = [{

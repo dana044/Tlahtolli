@@ -12,4 +12,5 @@ prompt_scale = Vector2(0.5, 0.5)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=423785132]
 position = Vector2(0, -8)
+scale = Vector2(2, 2)
 texture = ExtResource("2_icon")
