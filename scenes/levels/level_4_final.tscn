@@ -42,18 +42,6 @@ sources/0 = SubResource("TileSetAtlasSource_dsnit")
 [node name="Final" type="Node2D" unique_id=938548216]
 y_sort_enabled = true
 script = ExtResource("1_w5t8p")
-map_bounds = null
-use_tilemap_bounds = null
-village_scene = null
-lantern_enabled = null
-darkness_color = null
-daylight_time = null
-offering_scale = null
-exit_gate_rect = null
-exit_gate_height = null
-exit_trigger_x = null
-arrow_glow = null
-exit_fade_time = null
 debug_give_items = true
 
 [node name="TileMap" type="TileMap" parent="." unique_id=2147232356]

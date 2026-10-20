@@ -75,10 +75,6 @@ extends Node2D
 ## [code]SceneManager.fade_in()[/code] al iniciar, o la pantalla quedará negra.
 @export var exit_fade_time: float = 0.0
 
-## Si es true, imprime en la consola los pasos del nivel. Desactívalo al
-## entregar.
-@export var debug_log: bool = true
-
 ## punto al que guían las flechas una vez resueltas las tres hojas, en
 ## coordenadas globales: el lugar frente a la pared de piedra (arriba a la
 ## derecha) donde el jugador debe llegar para que ocurra el final. Ajústalo
@@ -173,7 +169,7 @@ var _returning_from_cell: bool = false
 
 
 func _ready() -> void:
-	$Music.play() 
+	$Music.play()
 	# El jugador debe estar en su posición inicial antes de cualquier lógica.
 	player.global_position = start_point.global_position
 	player.set_lantern_enabled(lantern_enabled)
@@ -206,7 +202,6 @@ func _ready() -> void:
 	_restore_progress()
 	_setup_exit()
 	_update_counter()
-	print("Interactuables: ", get_tree().get_nodes_in_group("interactable"))
 
 	# las flechas guía, la Mulata acompañante y el mensaje de inicio.
 	_setup_guide_arrows()
@@ -264,10 +259,6 @@ func _setup_exit() -> void:
 	_exit.arrow_target = exit_arrow_target
 	add_child(_exit)
 	_exit.player_crossed.connect(_on_exit_crossed)
-	# deja en la consola dónde queda la flecha de salida, para comprobar
-	# que se está usando esta versión del script.
-	_log("Salida: flecha en %s, destino %s, zona de paso %s"
-			% [exit_arrow_target + _exit.arrow_offset, exit_arrow_target, exit_gate_rect])
 
 	if GameState.has_flag(FLAG_LEVEL_DONE):
 		_exit.enable(false)
@@ -336,7 +327,6 @@ func _play_intro() -> void:
 
 	_busy = true
 	player.can_move = false
-	_log("Introducción: inicio")
 
 	# Un fotograma de espera para que toda la escena esté lista.
 	await get_tree().process_frame
@@ -353,10 +343,8 @@ func _play_intro() -> void:
 
 	await get_tree().create_timer(banner_wait).timeout
 
-	_log("Introducción: diálogo de la Mulata")
 	await _play_dialogue("mulata_inicio")
 	GameState.set_flag(FLAG_INTRO_SEEN)
-	_log("Introducción: terminada")
 
 	# La misión sale al terminar el diálogo (sin await: no bloquea).
 	if not launches_itself:
@@ -369,9 +357,6 @@ func _play_intro() -> void:
 func _start_guide_to_wall() -> void:
 	_guiding = true
 	_arrows.activate(player, finale_point)
-	_log("Flechas hacia la pared activadas")
-	# deja en la consola hacia dónde apuntan las flechas.
-	_log("Destino de las flechas: %s" % finale_point)
 
 
 ## comprueba si el jugador llegó a la pared de piedra. Al llegar lo
@@ -388,7 +373,6 @@ func _check_finale_arrival() -> void:
 	_busy = true
 	player.can_move = false
 	_arrows.deactivate()
-	_log("El jugador llegó a la pared")
 
 	await mulata.walk_to(mulata_finale_point)
 	await _play_finale()
@@ -426,7 +410,6 @@ func _play_pending_rewards() -> void:
 		# La bandera se limpia antes del await para no repetir la animación.
 		GameState.set_flag(FLAG_PENDING_PREFIX + id, false)
 		var riddle: Dictionary = _riddles[id]
-		_log("Recompensa pendiente: " + id)
 		await boat.show_part(String(riddle.get("boat_part", "")))
 
 	if _all_solved() and not GameState.has_flag(FLAG_LEVEL_DONE):
@@ -441,11 +424,9 @@ func _play_pending_rewards() -> void:
 ## [param riddle_id] es el id del acertijo de la hoja.
 func _on_paper_read(riddle_id: String) -> void:
 	if _busy or _is_solved(riddle_id) or not _riddles.has(riddle_id):
-		push_warning("Level1: hoja ignorada (%s)" % riddle_id)
 		return
 	_busy = true
 	player.can_move = false
-	_log("Hoja leída: " + riddle_id)
 	riddle_panel.open(riddle_id, _riddles[riddle_id])
 
 
@@ -454,7 +435,6 @@ func _on_paper_read(riddle_id: String) -> void:
 ## acertó. Un error no pierde progreso: se avisa y se permite reintentar.
 func _on_riddle_answered(riddle_id: String, is_correct: bool) -> void:
 	if not is_correct:
-		_log("Respuesta incorrecta en " + riddle_id)
 		# Las opciones siguen bloqueadas mientras se muestra el mensaje.
 		await _play_dialogue("mulata_error")
 		riddle_panel.unlock()
@@ -469,7 +449,6 @@ func _on_riddle_answered(riddle_id: String, is_correct: bool) -> void:
 
 	GameState.set_flag(FLAG_RIDDLE_PREFIX + riddle_id)
 	_update_counter()
-	_log("Acertijo resuelto: " + riddle_id)
 
 	var riddle: Dictionary = _riddles.get(riddle_id, {})
 	var success: String = String(riddle.get("success", ""))
@@ -523,7 +502,6 @@ func _on_exit_zone_body_entered(body: Node2D) -> void:
 		return
 	_busy = true
 	player.can_move = false
-	_log("Intento de salir sin las tres hojas")
 
 	await _play_dialogue("mulata_hoja_incompleta")
 
@@ -546,7 +524,6 @@ func _play_finale() -> void:
 
 	Inventory.add_item(ITEM_CHARCOAL)
 	GameState.set_flag(FLAG_LEVEL_DONE)
-	_log("Nivel completo: carboncillo entregado")
 
 	# La descripción del objeto sale de items.json.
 	var context: String = String(Inventory.get_item_data(ITEM_CHARCOAL).get("context", ""))
@@ -656,16 +633,6 @@ func _load_riddles() -> Dictionary:
 	return {}
 
 
-## Imprime un mensaje de depuración si [member debug_log] está activo.
-func _log(message: String) -> void:
-	if debug_log:
-		print("[Nivel1] ", message)
-
 func _physics_process(_delta: float) -> void:
 	# detecta la llegada del jugador a la pared de piedra.
 	_check_finale_arrival()
-
-	if Input.is_action_just_pressed("interact"):
-		print("E pulsada. can_move=", player.can_move)
-		for n in get_tree().get_nodes_in_group("interactable"):
-			print("  ", n.name, " script=", n.get_script().resource_path, " riddle_id=", n.get("riddle_id"))

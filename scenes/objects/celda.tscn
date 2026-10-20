@@ -23,7 +23,7 @@ position = Vector2(31, 171)
 [node name="celda_1" type="StaticBody2D" parent="." unique_id=761922032]
 
 [node name="Pared1" type="Sprite2D" parent="celda_1" unique_id=499961613]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -76,7 +76,7 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(253, 0)
 
 [node name="Pared1" type="Sprite2D" parent="celda_2" unique_id=223999962]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -129,7 +129,7 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(511, 0)
 
 [node name="Pared1" type="Sprite2D" parent="celda_3" unique_id=1713992364]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -182,12 +182,12 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(764, 0)
 
 [node name="Pared1" type="Sprite2D" parent="celda_4" unique_id=1761406391]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
 [node name="Pared2" type="Sprite2D" parent="celda_4" unique_id=2098354396]
-position = Vector2(309, 40)
+position = Vector2(311, 40)
 rotation = -1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -235,7 +235,7 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(70, 328)
 
 [node name="Pared1" type="Sprite2D" parent="celda_5" unique_id=557857575]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -288,7 +288,7 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(323, 328)
 
 [node name="Pared1" type="Sprite2D" parent="celda_6" unique_id=1832046672]
-position = Vector2(-65, 41)
+position = Vector2(-63, 40.99997)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -341,7 +341,7 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(581, 328)
 
 [node name="Pared1" type="Sprite2D" parent="celda_7" unique_id=2084140438]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 
@@ -394,7 +394,7 @@ shape = SubResource("SegmentShape2D_1okoa")
 position = Vector2(834, 328)
 
 [node name="Pared1" type="Sprite2D" parent="celda_8" unique_id=2010560311]
-position = Vector2(-65, 41)
+position = Vector2(-63, 41)
 rotation = 1.5707964
 texture = ExtResource("1_a20xi")
 

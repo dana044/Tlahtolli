@@ -61,6 +61,13 @@ const FALLBACK_SCENE: String = "res://scenes/main/main_menu.tscn"
 ## Duración, en segundos, del fundido a negro hacia los créditos.
 const CREDITS_FADE_TIME: float = 1.0
 
+## Id (en [code]messages.json[/code]) de la misión que aparece al terminar
+## la ofrenda: hablar con la abuelita.
+const MSG_MISSION_ABUELA: String = "final_mision2"
+
+## Archivo con los textos de los mensajes y las misiones.
+const MESSAGES_PATH: String = "res://data/messages.json"
+
 
 @export_group("Mapa")
 ## Región jugable, en coordenadas globales (posición y tamaño). Con
@@ -172,7 +179,6 @@ var _ending: bool = false
 
 
 func _ready() -> void:
-	$Music.play()
 	darkness.color = darkness_color
 
 	# el mapa empieza a oscuras aunque en el editor se haya ocultado el
@@ -474,10 +480,34 @@ func _set_abuela_active(active: bool) -> void:
 		prompt.visible = active
 
 
+## Muestra la misión "Habla con la abuela" en el diario y en el
+## pergamino. Su texto es el de [constant MSG_MISSION_ABUELA] en
+## [constant MESSAGES_PATH].
+func _show_abuela_mission() -> void:
+	if journal_ui != null:
+		journal_ui.set_mission(_message_text(MSG_MISSION_ABUELA))
+	_show_message(MSG_MISSION_ABUELA)
+
+
+## Devuelve el texto del mensaje [param message_id] de
+## [constant MESSAGES_PATH], o una cadena vacía si no existe.
+func _message_text(message_id: String) -> String:
+	var file: FileAccess = FileAccess.open(MESSAGES_PATH, FileAccess.READ)
+	if file == null:
+		push_warning("OfrendaFinal: no se encontró " + MESSAGES_PATH)
+		return ""
+	var data = JSON.parse_string(file.get_as_text())
+	if data is Dictionary:
+		return data.get(message_id, "")
+	return ""
+
+
 ## Abre el pueblo: enciende las flechas guía y permite hablar con los
 ## habitantes y con la abuelita. Se invoca al terminar la ofrenda (o al
 ## recargar la escena con la ofrenda ya entregada).
 func _open_village() -> void:
+	# nueva misión en el diario y en el pergamino.
+	_show_abuela_mission()
 	for persona in _personas:
 		persona.set_active(true)
 	if abuela != null:
@@ -520,6 +550,10 @@ func _on_abuela_interacted() -> void:
 	_busy = true
 	_ending = true
 	player.can_move = false
+
+	# la misión se cumple al hablar con ella.
+	if journal_ui != null:
+		journal_ui.set_mission("")
 
 	await _play_dialogue(DIALOGUE_ABUELITA_FINAL)
 

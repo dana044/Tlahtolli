@@ -3,7 +3,7 @@
 ## Por ahora solo almacena el checkpoint del jugador. Es deliberadamente
 ## mínimo y no contiene lógica de juego: los niveles deciden cuándo guardar
 ## y cuándo leer. Puede ampliarse más adelante con inventario y progreso.
-## [br][br]NUEVO: también guarda los datos de la visita a una celda (cuál
+## [br][br]también guarda los datos de la visita a una celda (cuál
 ## celda mostrar y a dónde volver), porque las variables de una escena se
 ## pierden al cambiar de escena.
 extends Node
@@ -42,23 +42,23 @@ func has_flag(flag_name: String) -> bool:
 	return _flags.get(flag_name, false)
 
 
-## NUEVO: número de la celda que debe mostrar el interior. Cero indica que
+## número de la celda que debe mostrar el interior. Cero indica que
 ## no se ha entrado a ninguna.
 var _cell_id: int = 0
 
-## NUEVO: ruta de la escena a la que se vuelve al salir de la celda.
+## ruta de la escena a la que se vuelve al salir de la celda.
 var _cell_return_scene: String = ""
 
-## NUEVO: posición global donde reaparece el jugador al volver, en la escena
+## posición global donde reaparece el jugador al volver, en la escena
 ## de regreso.
 var _cell_return_position: Vector2 = Vector2.ZERO
 
-## NUEVO: [code]true[/code] desde que el jugador sale de la celda hasta que la
+## [code]true[/code] desde que el jugador sale de la celda hasta que la
 ## escena de regreso consume el dato con [method clear_cell_visit].
 var _returning_from_cell: bool = false
 
 
-## NUEVO: registra que el jugador va a entrar a la celda [param cell_id].
+## registra que el jugador va a entrar a la celda [param cell_id].
 ## [param return_scene] es la escena a la que volverá y [param return_pos] la
 ## posición global donde debe reaparecer. Lo invoca
 ## [method SceneManager.enter_cell].
@@ -69,38 +69,38 @@ func begin_cell_visit(cell_id: int, return_scene: String, return_pos: Vector2) -
 	_returning_from_cell = false
 
 
-## NUEVO: devuelve el número de la celda que debe mostrar el interior.
+## devuelve el número de la celda que debe mostrar el interior.
 func get_cell_id() -> int:
 	return _cell_id
 
 
-## NUEVO: devuelve la ruta de la escena a la que se vuelve al salir de la
+## devuelve la ruta de la escena a la que se vuelve al salir de la
 ## celda. Es una cadena vacía si no hay visita registrada.
 func get_cell_return_scene() -> String:
 	return _cell_return_scene
 
 
-## NUEVO: marca que el jugador está saliendo de la celda. Lo invoca
+## marca que el jugador está saliendo de la celda. Lo invoca
 ## [method SceneManager.exit_cell] justo antes de cambiar de escena.
 func mark_returning_from_cell() -> void:
 	_returning_from_cell = true
 
 
-## NUEVO: indica si la escena actual acaba de cargarse porque el jugador salió
+## indica si la escena actual acaba de cargarse porque el jugador salió
 ## de una celda. El nivel lo consulta en [code]_ready[/code] para colocar al
 ## jugador frente a la puerta en vez de en el punto de inicio.
 func is_returning_from_cell() -> bool:
 	return _returning_from_cell
 
 
-## NUEVO: devuelve la posición global donde debe reaparecer el jugador al
+## devuelve la posición global donde debe reaparecer el jugador al
 ## volver de la celda. Solo es válida si [method is_returning_from_cell] es
 ## [code]true[/code].
 func get_cell_return_position() -> Vector2:
 	return _cell_return_position
 
 
-## NUEVO: da por terminada la visita a la celda y olvida sus datos. La escena
+## da por terminada la visita a la celda y olvida sus datos. La escena
 ## de regreso debe invocarlo después de leer la posición de regreso.
 func clear_cell_visit() -> void:
 	_cell_id = 0

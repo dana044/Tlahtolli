@@ -6,13 +6,12 @@ extends Control
 ## Qué hace el botón de salida.
 enum ExitAction {
 	BACK_TO_MENU, ## Regresa al menú principal.
-	QUIT_GAME, ## Cierra el juego.
 }
 
 
 @export_group("Salida")
 ## Qué ocurre al presionar el botón.
-@export var exit_action: ExitAction = ExitAction.QUIT_GAME
+@export var exit_action: ExitAction = ExitAction.BACK_TO_MENU
 ## Escena del menú principal (para la opción BACK_TO_MENU).
 @export_file("*.tscn") var main_menu_scene: String = "res://scenes/main/main_menu.tscn"
 
@@ -67,6 +66,12 @@ enum ExitAction {
 @export_range(0.1, 3.0, 0.1) var fade_seconds: float = 0.7
 ## Segundos entre la aparición de un bloque y el siguiente.
 @export_range(0.0, 2.0, 0.05) var block_delay: float = 0.3
+## Segundos que se espera, con los créditos ya terminados, antes de
+## volver solo al menú principal. Con 0 no vuelve solo.
+@export_range(0.0, 15.0, 0.5) var auto_exit_delay: float = 3.0
+## Segundos iniciales en los que se ignora Espacio, para que no se salte
+## los créditos por la pulsación de la pantalla anterior.
+@export_range(0.0, 3.0, 0.1) var skip_lock_seconds: float = 1.0
 
 @export_group("Música")
 ## Música de los créditos. Si queda vacía se usa la del nodo AudioStreamPlayer.
@@ -87,6 +92,8 @@ enum ExitAction {
 var _leaving: bool = false
 ## Indica si los créditos están subiendo.
 var _scrolling: bool = false
+## Segundos transcurridos desde que se abrió la pantalla.
+var _alive: float = 0.0
 
 
 func _ready() -> void:
@@ -173,6 +180,9 @@ func _start_scroll(_blocks: Array[Control]) -> void:
 
 
 func _process(delta: float) -> void:
+	# cuenta el tiempo para el bloqueo inicial de Espacio.
+	_alive += delta
+
 	if _scrolling:
 		content_box.position.y -= scroll_speed * delta
 
@@ -181,6 +191,8 @@ func _process(delta: float) -> void:
 			_scrolling = false
 			var tween: Tween = create_tween()
 			tween.tween_property(exit_button, "modulate:a", 1.0, fade_seconds)
+			# al terminar los créditos, vuelve solo al menú.
+			_exit_after_delay()
 
 #endregion
 
@@ -196,6 +208,26 @@ func _setup_exit_button() -> void:
 	exit_button.pressed.connect(_on_exit_pressed)
 	# Permite activarlo con Enter o Espacio desde el inicio.
 	exit_button.grab_focus()
+
+
+## Espera [member auto_exit_delay] segundos y sale al menú principal. Si
+## el jugador ya salió antes (botón o Espacio), no hace nada.
+func _exit_after_delay() -> void:
+	if auto_exit_delay <= 0.0:
+		return
+	await get_tree().create_timer(auto_exit_delay).timeout
+	_on_exit_pressed()
+
+
+## Con Espacio (o Enter) se salta lo que falte de los créditos y se
+## vuelve al menú principal.
+## [param event] es el evento de entrada recibido.
+func _unhandled_input(event: InputEvent) -> void:
+	if _alive < skip_lock_seconds:
+		return
+	if event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
+		_on_exit_pressed()
 
 
 ## Sale de los créditos: limpia la partida, baja la música y ejecuta la acción.
@@ -214,8 +246,6 @@ func _on_exit_pressed() -> void:
 		await tween.finished
 
 	match exit_action:
-		ExitAction.QUIT_GAME:
-			get_tree().quit()
 		ExitAction.BACK_TO_MENU:
 			if ResourceLoader.exists(main_menu_scene):
 				get_tree().change_scene_to_file(main_menu_scene)
@@ -244,4 +274,4 @@ func _on_music_finished() -> void:
 	if not _leaving:
 		music_player.play()
 
-#endregion
+#endregion	

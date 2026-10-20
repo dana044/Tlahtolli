@@ -6,18 +6,30 @@
 [ext_resource type="Texture2D" uid="uid://c3hslc38cqakj" path="res://assets/sprites/characters/personaje_linterna_n1.png" id="5_rnilr"]
 [ext_resource type="Texture2D" uid="uid://bbjyb018s31p5" path="res://assets/sprites/characters/personaje_linterna_n2.png" id="6_hdv73"]
 [ext_resource type="Texture2D" uid="uid://c536tq2fmfu60" path="res://assets/sprites/characters/personaje_linterna_n3.png" id="7_cvuft"]
-[ext_resource type="Texture2D" uid="uid://134drwbvnlk7" path="res://assets/sprites/characters/personaje_linterna_ne.png" id="8_nawru"]
+[ext_resource type="Texture2D" uid="uid://dmfm15db465dh" path="res://assets/sprites/characters/Personaje_linterna_NE1.png" id="8_f6pe7"]
 [ext_resource type="Texture2D" uid="uid://14huvwvjqbny" path="res://assets/sprites/characters/personaje_linterna_n4.png" id="8_oorb0"]
 [ext_resource type="Texture2D" uid="uid://dg5fmb57lak2p" path="res://assets/sprites/characters/personaje_linterna_s1.png" id="9_cn1cr"]
-[ext_resource type="Texture2D" uid="uid://cdtsq5wf3prqt" path="res://assets/sprites/characters/personaje_linterna_nw.png" id="9_vvyph"]
+[ext_resource type="Texture2D" uid="uid://dckj4iq2shxro" path="res://assets/sprites/characters/Personaje_linterna_NE2.png" id="9_dambq"]
 [ext_resource type="Texture2D" uid="uid://bvr5rjq536jro" path="res://assets/sprites/characters/personaje_linterna_s2.png" id="10_0l53a"]
+[ext_resource type="Texture2D" uid="uid://coym7esbk68jl" path="res://assets/sprites/characters/Personaje_linterna_NE3.png" id="10_0qr17"]
+[ext_resource type="Texture2D" uid="uid://x3ywpl7lyne2" path="res://assets/sprites/characters/Personaje_linterna_NE4.png" id="11_t4erx"]
 [ext_resource type="Texture2D" uid="uid://d2whi7j83shh3" path="res://assets/sprites/characters/personaje_linterna_s3.png" id="11_u22qy"]
+[ext_resource type="Texture2D" uid="uid://djecb6fmgw6e5" path="res://assets/sprites/characters/Personaje_linterna_NW1.png" id="12_631cl"]
 [ext_resource type="Texture2D" uid="uid://csb0r1va4qmud" path="res://assets/sprites/characters/personaje_linterna_s4.png" id="12_f6pe7"]
+[ext_resource type="Texture2D" uid="uid://dnrqfmrhe1q1e" path="res://assets/sprites/characters/Personaje_linterna_NW2.png" id="13_kbp78"]
 [ext_resource type="Texture2D" uid="uid://cphckh5oxrbdb" path="res://assets/sprites/characters/personaje_linterna_w2.png" id="14_0qr17"]
-[ext_resource type="Texture2D" uid="uid://cst5wc0422e52" path="res://assets/sprites/characters/personaje_linterna_se.png" id="14_rnilr"]
-[ext_resource type="Texture2D" uid="uid://c53vf32vcttkj" path="res://assets/sprites/characters/personaje_linterna_sw.png" id="15_hdv73"]
+[ext_resource type="Texture2D" uid="uid://c1gn8exm75ejn" path="res://assets/sprites/characters/Personaje_linterna_NW3.png" id="14_18b1t"]
+[ext_resource type="Texture2D" uid="uid://c4ktpd2njx8rs" path="res://assets/sprites/characters/Personaje_linterna_NW4.png" id="15_7ruaj"]
 [ext_resource type="Texture2D" uid="uid://b2uyphyypyvtc" path="res://assets/sprites/characters/personaje_linterna_w3.png" id="15_t4erx"]
 [ext_resource type="Texture2D" uid="uid://cdphal0y8cdaj" path="res://assets/sprites/characters/personaje_linterna_w4.png" id="16_631cl"]
+[ext_resource type="Texture2D" uid="uid://cebai3qk0fgbo" path="res://assets/sprites/characters/Personaje_linterna_SE1.png" id="20_i55he"]
+[ext_resource type="Texture2D" uid="uid://djwk20mpq2411" path="res://assets/sprites/characters/Personaje_linterna_SE2.png" id="21_f85b7"]
+[ext_resource type="Texture2D" uid="uid://nndk7s6keqjp" path="res://assets/sprites/characters/Personaje_linterna_SE3.png" id="22_tg3xx"]
+[ext_resource type="Texture2D" uid="uid://cig74ky2fq8tl" path="res://assets/sprites/characters/Personaje_linterna_SE4.png" id="23_7al0p"]
+[ext_resource type="Texture2D" uid="uid://c6a11dedrnjux" path="res://assets/sprites/characters/Personaje_linterna_SW1.png" id="24_t4erx"]
+[ext_resource type="Texture2D" uid="uid://dcidvisuh0vt0" path="res://assets/sprites/characters/Personaje_linterna_SW2.png" id="25_631cl"]
+[ext_resource type="Texture2D" uid="uid://dh8yf8w70trlc" path="res://assets/sprites/characters/Personaje_linterna_SW3.png" id="26_kbp78"]
+[ext_resource type="Texture2D" uid="uid://b82xsaubrdlb4" path="res://assets/sprites/characters/Personaje_linterna_SW4.png" id="27_18b1t"]
 
 [resource]
 animations = [{
@@ -57,7 +69,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_nawru")
+"texture": ExtResource("8_f6pe7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_dambq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_0qr17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_t4erx")
 }],
 "loop": 1,
 "name": &"walk_ne",
@@ -65,7 +86,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_vvyph")
+"texture": ExtResource("12_631cl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_kbp78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_18b1t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_7ruaj")
 }],
 "loop": 1,
 "name": &"walk_nw",
@@ -90,7 +120,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("14_rnilr")
+"texture": ExtResource("20_i55he")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_f85b7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_tg3xx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_7al0p")
 }],
 "loop": 1,
 "name": &"walk_se",
@@ -98,7 +137,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("15_hdv73")
+"texture": ExtResource("24_t4erx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_631cl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_kbp78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_18b1t")
 }],
 "loop": 1,
 "name": &"walk_sw",

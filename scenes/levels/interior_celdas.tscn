@@ -17,7 +17,7 @@ position = Vector2(40, 181)
 script = ExtResource("1_interior")
 
 [node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1753106048]
-color = Color(0.09207655, 0.09201489, 0.13029653, 1)
+color = Color(0.13485214, 0.13486338, 0.18586528, 1)
 
 [node name="Celdas" parent="." unique_id=326182928 instance=ExtResource("2_celdas")]
 

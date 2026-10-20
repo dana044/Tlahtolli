@@ -11,7 +11,7 @@
 ## nivel conecta sus señales.
 ## [br][br]Estructura de la escena esperada (ver [code]level_3_chaneque.tscn[/code]):
 ## [code]Player, StartPoint, Fondo, Oscuridad, Ramas, Ofrendas, Altar, Chaneque,
-## ScrollMessage, JournalUI[/code].
+## ScrollMessage[/code].
 extends Node2D
 
 
@@ -45,33 +45,6 @@ const MSG_MISSING_OFFERINGS: String = "altar_faltan_ofrendas"
 ## [code]messages.json[/code]: el id es este prefijo + el id del objeto
 ## (por ejemplo [code]item_liston[/code]).
 const MSG_ITEM_PREFIX: String = "item_"
-
-## Número de este nivel en el diario de pistas (1 = Mulata, 2 = Llorona,
-## 3 = Chaneque). Con él, el diario muestra las pistas que corresponden.
-const JOURNAL_LEVEL: int = 3
-
-## Misión al entrar al nivel: encontrar las tres ofrendas.
-const MISSION_FIND_OFFERINGS: String = "chaneque_mision"
-
-## Misión cuando ya se tienen las tres ofrendas: entregarlas en el altar.
-const MISSION_GO_TO_ALTAR: String = "chaneque_mision2"
-
-## Bandera de [GameState] que deja el nivel 2 al cruzar la salida: el jugador
-## llega caminando desde la izquierda. Se consume (se apaga) al iniciar. Debe
-## coincidir con [code]FLAG_WALKING_INTO_LEVEL_3[/code] de
-## [code]level_2_llorona.gd[/code].
-const FLAG_WALKING_IN: String = "entrando_nivel_3"
-
-## Cuánto se extiende, en píxeles, la zona de paso de entrada hacia fuera del
-## borde izquierdo del mapa.
-const ENTRY_GAP_OUTSIDE: float = 60.0
-
-## Margen extra, en píxeles, que la zona de paso de entrada se prolonga hacia
-## dentro del mapa más allá del punto al que camina el jugador.
-const ENTRY_GAP_INSIDE_MARGIN: float = 20.0
-
-## Mitad del alto, en píxeles, de la zona de paso de entrada.
-const ENTRY_GAP_HALF_HEIGHT: float = 40.0
 
 
 ## Región jugable del nivel, en coordenadas globales (posición y tamaño).
@@ -108,21 +81,6 @@ const ENTRY_GAP_HALF_HEIGHT: float = 40.0
 ## Escala de las imágenes de las ofrendas en el mapa.
 @export var offering_scale: float = 1.0
 
-## Duración del fundido de entrada al llegar desde el nivel 2, en segundos.
-## Sirve para aclarar la pantalla si el nivel anterior usó fundido a negro; si
-## no lo usó, no se nota.
-@export var arrival_fade_time: float = 0.3
-
-## Altura (coordenada Y) a la que el jugador entra por el borde izquierdo al
-## llegar desde el nivel 2. Debe coincidir con el centro vertical de
-## [code]exit_gate_rect[/code] del nivel 2 (a la altura de la casa) para que el
-## paseo se sienta continuo.
-@export var entry_y: float = 231.0
-
-## Distancia, en píxeles, que el jugador camina hacia dentro del mapa al
-## entrar, medida desde el borde izquierdo.
-@export var entry_walk_distance: float = 80.0
-
 
 ## Jugador del nivel.
 @onready var player: Player = $Player
@@ -153,12 +111,9 @@ const ENTRY_GAP_HALF_HEIGHT: float = 40.0
 ## Chaneque (oculto hasta entregar las ofrendas).
 @onready var chaneque: Chaneque = $Chaneque
 
-## Pergamino con mensajes (escena [code]scroll_message.tscn[/code]).
-@onready var scroll_message: ScrollMessage = $ScrollMessage
-
-## Diario del nivel (pistas y misión mostrada). Es [code]null[/code] si la
-## escena no incluye un nodo [code]JournalUI[/code].
-@onready var journal_ui: JournalUI = get_node_or_null("JournalUI")
+## Pergamino con mensajes (escena [code]scroll_message.tscn[/code]). Se usa
+## por nombre de método porque su script no declara [code]class_name[/code].
+@onready var scroll_message: CanvasLayer = $ScrollMessage
 
 
 ## Todas las ramas del nivel.
@@ -181,7 +136,6 @@ var _finished: bool = false
 ## Coloca al jugador, delimita el mapa, registra el checkpoint y arranca la
 ## secuencia inicial (o restaura el estado final si el nivel ya se completó).
 func _ready() -> void:
-	$Music.play()
 	darkness.color = darkness_color
 	chaneque.hide_chaneque()
 
@@ -194,10 +148,6 @@ func _ready() -> void:
 	# El inicio del nivel es el único checkpoint.
 	GameState.set_checkpoint(start_point.global_position)
 
-	# Va antes del posible regreso anticipado de abajo, para que el diario y la
-	# misión también estén bien al recargar un nivel ya completado.
-	_setup_journal()
-
 	_setup_branches()
 	altar.interacted.connect(_on_altar_interacted)
 	chaneque.interacted.connect(_on_chaneque_interacted)
@@ -209,41 +159,10 @@ func _ready() -> void:
 		return
 
 	_spawn_offerings()
-
-	# Si el jugador viene del nivel de la Llorona, entra caminando por la
-	# izquierda antes de que comience la secuencia inicial.
-	if GameState.has_flag(FLAG_WALKING_IN):
-		GameState.set_flag(FLAG_WALKING_IN, false)
-		await _walk_in_from_left()
-
 	_start_level()
 
 
 #region Inicio y tutorial
-
-## Entrada desde el nivel 2: el jugador aparece con medio cuerpo fuera del
-## borde izquierdo, a la altura [member entry_y], y camina solo
-## [member entry_walk_distance] píxeles hacia dentro, como si continuara el
-## paseo del mapa anterior. Se abre una zona de paso en el borde para que el
-## límite del mapa no lo detenga. Puede esperarse con [code]await[/code]:
-## termina cuando el jugador llega a su destino.
-func _walk_in_from_left() -> void:
-	_lock_player(true)
-
-	var left_edge: float = _world_left_edge()
-	var destination: Vector2 = Vector2(left_edge + entry_walk_distance, entry_y)
-	player.set_edge_gap(Rect2(
-			left_edge - ENTRY_GAP_OUTSIDE, entry_y - ENTRY_GAP_HALF_HEIGHT,
-			ENTRY_GAP_OUTSIDE + entry_walk_distance + ENTRY_GAP_INSIDE_MARGIN,
-			ENTRY_GAP_HALF_HEIGHT * 2.0))
-
-	# El centro del personaje queda justo en el borde: medio cuerpo visible.
-	player.teleport_to(Vector2(left_edge, entry_y))
-	SceneManager.fade_in(arrival_fade_time)
-
-	await player.walk_to(destination)
-	player.clear_edge_gap()
-
 
 ## Secuencia inicial: mensaje de bienvenida, rama del tutorial y diálogo.
 ## La primera atenuación de la luz es solo una demostración: no cuenta en el
@@ -369,13 +288,10 @@ func _spawn_offerings() -> void:
 		offerings_root.add_child(pickup)
 
 
-## Muestra la frase de contexto cultural del objeto recién recogido y, si ya
-## están las tres ofrendas, cambia la misión a llevarlas al altar.
+## Muestra la frase de contexto cultural del objeto recién recogido.
 ## [param item_id] es el id del objeto recogido.
 func _on_offering_picked(item_id: String) -> void:
 	_show_message(MSG_ITEM_PREFIX + item_id)
-	if _has_all_offerings():
-		_set_mission(MISSION_GO_TO_ALTAR)
 
 
 ## Devuelve las imágenes de las tres ofrendas, en el orden de [constant OFFERINGS].
@@ -415,9 +331,6 @@ func _on_altar_interacted() -> void:
 	altar.mark_delivered()
 	for branch in _branches:
 		branch.set_active(false)
-
-	# Entregadas las ofrendas, ya no queda ninguna misión por mostrar.
-	_set_mission("")
 	await altar.place_offerings(icons, offering_scale)
 
 	await _restore_daylight()
@@ -466,36 +379,6 @@ func _on_chaneque_interacted() -> void:
 #endregion
 
 
-#region Diario y misión
-
-## Le dice al diario en qué nivel está (así muestra las pistas que
-## corresponden, sin depender de lo guardado en el Inspector) y pone la
-## misión que toca según el avance: ninguna si el nivel ya se completó, la
-## de entregar en el altar si ya se tienen las ofrendas, o la de buscarlas.
-func _setup_journal() -> void:
-	if journal_ui == null:
-		push_warning("Level3: no hay un nodo 'JournalUI'; no habrá pistas ni misión.")
-		return
-	journal_ui.set_level(JOURNAL_LEVEL, true)
-
-	if GameState.has_flag(COMPLETED_FLAG):
-		journal_ui.set_mission("")
-	elif _has_all_offerings():
-		journal_ui.set_mission(MISSION_GO_TO_ALTAR)
-	else:
-		journal_ui.set_mission(MISSION_FIND_OFFERINGS)
-
-
-## Cambia la misión mostrada a la izquierda de la pantalla. Con un id vacío
-## la oculta.
-## [param mission_id] es el id en [code]messages.json[/code].
-func _set_mission(mission_id: String) -> void:
-	if journal_ui != null:
-		journal_ui.set_mission(mission_id)
-
-#endregion
-
-
 #region Utilidades
 
 ## Delimita el mundo para el jugador y la cámara. Usa [member map_bounds] si
@@ -511,14 +394,6 @@ func _setup_world_bounds() -> void:
 	var top_left: Vector2 = background.to_global(rect.position)
 	var size: Vector2 = rect.size * background.global_scale.abs()
 	player.set_world_bounds(Rect2(top_left, size))
-
-
-## Devuelve la coordenada X del borde izquierdo del mapa: la de
-## [member map_bounds] si tiene área o, si no, la de la imagen de fondo.
-func _world_left_edge() -> float:
-	if map_bounds.has_area():
-		return map_bounds.position.x
-	return background.global_position.x
 
 
 ## Reproduce el bloque [param block_id] de [constant DIALOGUE_PATH] con el
@@ -548,6 +423,6 @@ func _lock_player(locked: bool) -> void:
 ## [param message_id] es el id del mensaje (por ejemplo
 ## [code]chaneque_mensaje_inicio[/code] o [code]item_liston[/code]).
 func _show_message(message_id: String) -> void:
-	scroll_message.show_message(message_id)
+	scroll_message.call("show_message", message_id)
 
 #endregion
