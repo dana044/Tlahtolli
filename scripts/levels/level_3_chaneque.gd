@@ -123,6 +123,12 @@ const ENTRY_GAP_HALF_HEIGHT: float = 40.0
 ## entrar, medida desde el borde izquierdo.
 @export var entry_walk_distance: float = 80.0
 
+## Zona de paso hacia el nivel final (ajusta los valores si tu flecha está en otra posición).
+@export var exit_gate_rect: Rect2 = Rect2(1092, 231, 100, 80)
+
+## Coordenada X donde está la salida.
+@export var exit_trigger_x: float = 1140.0
+
 
 ## Jugador del nivel.
 @onready var player: Player = $Player
@@ -160,6 +166,7 @@ const ENTRY_GAP_HALF_HEIGHT: float = 40.0
 ## escena no incluye un nodo [code]JournalUI[/code].
 @onready var journal_ui: JournalUI = get_node_or_null("JournalUI")
 
+@onready var transition_icon: Sprite2D = $TransitionIcon
 
 ## Todas las ramas del nivel.
 var _branches: Array[Branch] = []
@@ -216,6 +223,11 @@ func _ready() -> void:
 		GameState.set_flag(FLAG_WALKING_IN, false)
 		await _walk_in_from_left()
 
+	if transition_icon != null:
+		transition_icon.scale = Vector2(2.0, 2.0)
+		transition_icon.global_position = Vector2(exit_trigger_x - 50, exit_gate_rect.position.y - 80)
+		transition_icon.z_index = 50
+		
 	_start_level()
 
 
@@ -444,6 +456,7 @@ func _restore_daylight() -> void:
 
 
 ## El jugador habló con el Chaneque: diálogo final y moneda de oro.
+## El jugador habló con el Chaneque: diálogo final y moneda de oro.
 func _on_chaneque_interacted() -> void:
 	if _busy or _finished:
 		return
@@ -461,6 +474,10 @@ func _on_chaneque_interacted() -> void:
 
 	_lock_player(false)
 	_busy = false
+	
+	if transition_icon != null:
+		transition_icon.visible = true
+		
 	level_completed.emit()
 
 #endregion

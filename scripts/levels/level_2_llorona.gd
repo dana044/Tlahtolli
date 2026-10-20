@@ -94,6 +94,8 @@ const FLAG_WALKING_INTO_LEVEL_3: String = "entrando_nivel_3"
 ## Pergamino con los mensajes de inicio. Es [code]null[/code] si el nivel
 ## no lo incluye.
 @onready var scroll_message: ScrollMessage = get_node_or_null("ScrollMessage")
+@onready var transition_icon: Sprite2D = $TransitionIcon
+
 
 
 ## Indica si hay una captura en curso. Evita que un segundo contacto inicie
@@ -152,6 +154,11 @@ func _ready() -> void:
 
 	if debug_unlock_all_clues:
 		Journal.unlock_all()
+	
+	if transition_icon != null:
+		transition_icon.scale = Vector2(0.5, 0.5)
+		transition_icon.global_position = Vector2(exit_trigger_x - 100, exit_gate_rect.position.y -0)
+		transition_icon.z_index = 50
 
 	# La salida se crea siempre, también al recargar el nivel con la misión
 	# ya completada (en ese caso queda abierta desde el inicio).
@@ -340,6 +347,9 @@ func _on_exit_crossed() -> void:
 		GameState.set_flag(FLAG_WALKING_INTO_LEVEL_3, false)
 		player.can_move = true
 		_leaving = false
+	
+	if transition_icon != null:
+		transition_icon.visible = true
 
 
 ## Reproduce el bloque [param key] de [constant DIALOGUE_PATH] con el cuadro
@@ -354,7 +364,7 @@ func _play_dialogue(key: String) -> void:
 	# emite la señal de fin; se sale para no dejar al jugador bloqueado.
 	if not DialogueManager.is_active():
 		return
-
+	
 	await DialogueManager.dialogue_finished
 
 

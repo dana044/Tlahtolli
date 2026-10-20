@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://chqxf56jwn3g2" path="res://assets/tilesets/Mosaico1.png" id="7_rcucp"]
 [ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="9_pc4ij"]
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="13_pc4ij"]
+[ext_resource type="Texture2D" uid="uid://bm0kvk4pwbcqn" path="res://assets/sprites/ui/icons/icon_prision.png" id="14_kls6a"]
 [ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="14_wunoc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txyc1"]
@@ -190,3 +191,8 @@ scale = Vector2(4, 4)
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=1282522138]
 stream = ExtResource("14_wunoc")
 volume_db = 1.0
+
+[node name="TransitionIcon" type="Sprite2D" parent="." unique_id=437846906]
+position = Vector2(1122, 466)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("14_kls6a")

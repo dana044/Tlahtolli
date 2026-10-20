@@ -16,10 +16,23 @@
 [ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="13_5fp2a"]
 [ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="14_vl65c"]
 [ext_resource type="AudioStream" uid="uid://dh410xwx5egfi" path="res://assets/audio/music/Haunted Woods.wav" id="16_hudyw"]
+[ext_resource type="Texture2D" uid="uid://bclae2dti65r4" path="res://assets/sprites/ui/icons/icon_pueblo.png" id="17_4bl2p"]
 
 [node name="Level3Chaneque" type="Node2D" unique_id=408040604]
 y_sort_enabled = true
 script = ExtResource("1_level")
+map_bounds = null
+lantern_enabled = null
+darkness_color = null
+light_levels = null
+light_fade_time = null
+noise_dialogue_delay = null
+tutorial_delay = null
+daylight_time = null
+offering_scale = null
+arrival_fade_time = null
+entry_y = null
+entry_walk_distance = null
 
 [node name="Fondo" type="Sprite2D" parent="." unique_id=244748479]
 z_index = -10
@@ -166,6 +179,9 @@ position = Vector2(433, 46)
 
 [node name="Altar" parent="." unique_id=1304170713 instance=ExtResource("5_altar")]
 position = Vector2(975, 559)
+placeholder_size = null
+offering_offsets = null
+offering_delay = null
 
 [node name="Chaneque" parent="." unique_id=308015040 instance=ExtResource("3_chaneque")]
 position = Vector2(1034, 549)
@@ -938,3 +954,8 @@ volume_db = 1.0
 
 [node name="Oscuridad" type="CanvasModulate" parent="." unique_id=488248458]
 color = Color(0.027549954, 0.02754723, 0.047924392, 1)
+
+[node name="TransitionIcon" type="Sprite2D" parent="." unique_id=1646147968]
+position = Vector2(1122, 466)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("17_4bl2p")
