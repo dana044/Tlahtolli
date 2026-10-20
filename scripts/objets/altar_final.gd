@@ -38,6 +38,20 @@ const GLOW_TEXTURE_SIZE: int = 256
 ## Segundos entre la colocación de un objeto y el siguiente.
 @export var offering_delay: float = 0.5
 
+## NUEVO: Si es [code]true[/code], las ofrendas se colocan sobre la parte más
+## alta de la imagen del altar (se calcula con el tamaño de su sprite), una
+## junto a otra y centradas. Con [code]false[/code] se usan las posiciones de
+## [member offering_offsets].
+@export var offerings_on_top: bool = true
+
+## NUEVO: Separación mínima entre una ofrenda y la siguiente, en píxeles. Si las
+## imágenes son más anchas, la separación crece sola para que no se encimen.
+@export var offerings_spacing: float = 28.0
+
+## NUEVO: Píxeles que cada ofrenda se hunde en el borde superior del altar para
+## que parezca apoyada sobre él. Con 0 queda justo encima.
+@export var offerings_sink: float = 4.0
+
 @export_group("Brillo")
 ## Si es [code]true[/code], al entregar los objetos el altar se ilumina.
 @export var glow_enabled: bool = true
@@ -101,6 +115,9 @@ func place_offerings(textures: Array[Texture2D], item_scale: float = 1.0, animat
 		item.texture = textures[i]
 		# Si hay más objetos que posiciones, los sobrantes se apilan arriba.
 		item.position = offering_offsets[i] if i < offering_offsets.size() else Vector2(0, -36)
+		# NUEVO: sobre la parte alta del altar, centradas y sin encimarse.
+		if offerings_on_top:
+			item.position = _top_position(textures, i, item_scale)
 		item.scale = Vector2.ONE * item_scale
 		add_child(item)
 
@@ -113,6 +130,54 @@ func place_offerings(textures: Array[Texture2D], item_scale: float = 1.0, animat
 
 	if animate:
 		await get_tree().create_timer(0.3).timeout
+
+
+## NUEVO: Calcula dónde va la ofrenda número [param index] para que quede sobre
+## la parte más alta del altar. Las ofrendas se reparten en fila, centradas en
+## el eje del altar.
+## [param textures] son las imágenes de todas las ofrendas y [param item_scale]
+## su escala; con ellas se calcula el ancho de cada una.
+func _top_position(textures: Array[Texture2D], index: int, item_scale: float) -> Vector2:
+	# La separación crece si alguna imagen es más ancha que la separación mínima.
+	var spacing: float = offerings_spacing
+	for texture_item in textures:
+		if texture_item != null:
+			spacing = maxf(spacing, texture_item.get_width() * item_scale + 2.0)
+
+	var x: float = (index - (textures.size() - 1) / 2.0) * spacing
+
+	# El origen de la ofrenda es su centro: se sube media altura para que su
+	# base quede en el borde superior del altar.
+	var half_height: float = 0.0
+	if textures[index] != null:
+		half_height = textures[index].get_height() * item_scale / 2.0
+
+	return Vector2(x, _altar_top_y() - half_height + offerings_sink)
+
+
+## NUEVO: Devuelve la coordenada Y (relativa al origen del altar) del borde
+## superior de su imagen, teniendo en cuenta su posición, escala y si está
+## centrada. Si no encuentra el sprite, usa la posición más alta de
+## [member offering_offsets].
+func _altar_top_y() -> float:
+	# El nodo puede llamarse "Sprite2D" (lo que busca [member sprite]) o "Altar".
+	var altar_sprite: Sprite2D = sprite
+	if altar_sprite == null:
+		altar_sprite = get_node_or_null("Altar") as Sprite2D
+
+	if altar_sprite == null or altar_sprite.texture == null:
+		var highest: float = -50.0
+		for offset in offering_offsets:
+			highest = minf(highest, offset.y)
+		return highest
+
+	var height: float = altar_sprite.texture.get_height()
+	if altar_sprite.region_enabled:
+		height = altar_sprite.region_rect.size.y
+	height *= absf(altar_sprite.scale.y)
+
+	var origin_y: float = altar_sprite.position.y + altar_sprite.offset.y * altar_sprite.scale.y
+	return origin_y - height / 2.0 if altar_sprite.centered else origin_y
 
 
 ## Enciende el brillo del altar con un fundido. Puede esperarse con

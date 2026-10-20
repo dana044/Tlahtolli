@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cdhr6ue31omxf"]
+
+[ext_resource type="Texture2D" uid="uid://d05xk1d0k82er" path="res://assets/sprites/characters/Cuyito.png" id="1_sqeml"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(6, 5)
+
+[node name="Cuyo" type="StaticBody2D" unique_id=3920109]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=859903127]
+position = Vector2(1, -7)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_sqeml")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2083475079]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_am0s3")

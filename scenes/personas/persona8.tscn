@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://kbf36uksif8m"]
+
+[ext_resource type="Texture2D" uid="uid://cqno4x2wtebqt" path="res://assets/sprites/personas/persona8.png" id="1_d8iko"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_am0s3"]
+size = Vector2(12, 5)
+
+[node name="Persona1" type="StaticBody2D" unique_id=1537977830]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=311139365]
+position = Vector2(0, -13)
+texture = ExtResource("1_d8iko")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1635781198]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_am0s3")

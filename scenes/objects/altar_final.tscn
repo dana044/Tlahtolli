@@ -11,14 +11,17 @@ size = Vector2(94, 63)
 script = ExtResource("1_j2naj")
 
 [node name="Altar" type="Sprite2D" parent="." unique_id=1912045796]
-position = Vector2(0, -48)
+position = Vector2(0, -58)
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("1_qbkc7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=517699383]
-position = Vector2(0, -33.5)
+position = Vector2(0, -40.5)
+scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_ulp5v")
 
 [node name="PromptE" type="Sprite2D" parent="." unique_id=13187404]
+position = Vector2(0, -7)
 script = ExtResource("1_y3tas")
 prompt_distance = 100.0
 prompt_offset = Vector2(0, -100)

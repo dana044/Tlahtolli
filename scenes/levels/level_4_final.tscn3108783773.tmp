@@ -1,0 +1,559 @@
+[gd_scene format=3 uid="uid://drm7m6ht1v7sa"]
+
+[ext_resource type="Texture2D" uid="uid://chqxf56jwn3g2" path="res://assets/tilesets/Mosaico1.png" id="1_hedjq"]
+[ext_resource type="Script" uid="uid://b0dwcd5dmcron" path="res://scripts/levels/level_4_final.gd" id="1_w5t8p"]
+[ext_resource type="PackedScene" uid="uid://bsvx6q0a2bfos" path="res://scenes/characters/player.tscn" id="2_dsnit"]
+[ext_resource type="PackedScene" uid="uid://byfj14rnemv3a" path="res://scenes/objects/altar_final.tscn" id="3_lia11"]
+[ext_resource type="PackedScene" uid="uid://ctiudr7fk68k3" path="res://scenes/ui/inventory_bar.tscn" id="4_dqvne"]
+[ext_resource type="PackedScene" uid="uid://76l6kocgcea0" path="res://scenes/ui/journal.tscn" id="5_d3hlp"]
+[ext_resource type="PackedScene" uid="uid://dwfm7xibx3vxo" path="res://scenes/ui/scroll_message.tscn" id="6_w5t8p"]
+[ext_resource type="PackedScene" uid="uid://d2nwaqxlu5tnx" path="res://scenes/main/pause_menu.tscn" id="7_w5t8p"]
+[ext_resource type="PackedScene" uid="uid://sate3g0h4ayc" path="res://scenes/personas/persona1.tscn" id="9_12fuq"]
+[ext_resource type="PackedScene" uid="uid://hyg5s1irbb1" path="res://scenes/personas/persona2.tscn" id="10_pwj04"]
+[ext_resource type="PackedScene" uid="uid://d3njb72i6ropd" path="res://scenes/personas/persona3.tscn" id="11_dcu56"]
+[ext_resource type="PackedScene" uid="uid://b6b3f6n71fgdm" path="res://scenes/objects/arbusto.tscn" id="12_ubrap"]
+[ext_resource type="PackedScene" uid="uid://d0idbn78frvvo" path="res://scenes/personas/persona4.tscn" id="13_ro5aj"]
+[ext_resource type="PackedScene" uid="uid://4imfbi2ghpn7" path="res://scenes/personas/persona5.tscn" id="14_qdunp"]
+[ext_resource type="PackedScene" uid="uid://dquvwujqnhgnq" path="res://scenes/personas/persona6.tscn" id="15_3efi5"]
+[ext_resource type="PackedScene" uid="uid://cyc0usxbm3ok6" path="res://scenes/personas/persona7.tscn" id="16_jb5fw"]
+[ext_resource type="PackedScene" uid="uid://kbf36uksif8m" path="res://scenes/personas/persona8.tscn" id="17_bm1q7"]
+[ext_resource type="PackedScene" uid="uid://bbam81hrgixpu" path="res://scenes/objects/pino.tscn" id="18_20j0o"]
+[ext_resource type="PackedScene" uid="uid://csr6djppbb3p0" path="res://scenes/objects/pinos.tscn" id="19_gnn5c"]
+[ext_resource type="PackedScene" uid="uid://camubbgcmv2se" path="res://scenes/objects/piedra.tscn" id="21_jcpyu"]
+[ext_resource type="PackedScene" uid="uid://b6a5boyk88251" path="res://scenes/objects/casa1.tscn" id="22_xqdtu"]
+[ext_resource type="PackedScene" uid="uid://dryp0y711g6je" path="res://scenes/objects/casa2.tscn" id="23_cckx8"]
+[ext_resource type="PackedScene" uid="uid://cvov2utv0psd0" path="res://scenes/objects/casa3.tscn" id="24_gt4gq"]
+[ext_resource type="PackedScene" uid="uid://bmkcr2xxl3fhw" path="res://scenes/objects/casa4.tscn" id="25_8sv4d"]
+[ext_resource type="PackedScene" uid="uid://cinqwhljmt6ek" path="res://scenes/objects/casa5.tscn" id="26_sevrb"]
+[ext_resource type="PackedScene" uid="uid://b6f8v4rq4cgcr" path="res://scenes/objects/casa6.tscn" id="27_ovm6a"]
+[ext_resource type="PackedScene" uid="uid://bprcfq3vsdris" path="res://scenes/characters/abuela.tscn" id="28_pwj04"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dsnit"]
+texture = ExtResource("1_hedjq")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_vymam"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 0
+sources/0 = SubResource("TileSetAtlasSource_dsnit")
+
+[node name="Final" type="Node2D" unique_id=938548216]
+y_sort_enabled = true
+script = ExtResource("1_w5t8p")
+map_bounds = null
+use_tilemap_bounds = null
+village_scene = null
+lantern_enabled = null
+darkness_color = null
+daylight_time = null
+offering_scale = null
+exit_gate_rect = null
+exit_gate_height = null
+exit_trigger_x = null
+arrow_glow = null
+exit_fade_time = null
+debug_give_items = true
+
+[node name="TileMap" type="TileMap" parent="." unique_id=2147232356]
+tile_set = SubResource("TileSet_vymam")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 524288, 0, 0, 589824, 0, 0, 655360, 0, 0, 720896, 0, 0, 786432, 0, 0, 851968, 0, 0, 917504, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 30, 0, 0, 31, 0, 0, 32, 0, 0, 33, 0, 0, 34, 0, 0, 35, 0, 0, 458787, 0, 0, 524323, 0, 0, 589859, 0, 0, 655395, 0, 0, 720931, 0, 0, 786467, 0, 0, 852003, 0, 0, 983040, 0, 0, 1048576, 0, 0, 1245184, 0, 0, 1179648, 0, 0, 1114112, 0, 0, 1310720, 0, 0, 1245185, 0, 0, 1245186, 0, 0, 1245187, 0, 0, 1310723, 0, 0, 1310722, 0, 0, 1310721, 0, 0, 1310724, 0, 0, 1310725, 0, 0, 1310726, 0, 0, 1310727, 0, 0, 1310728, 0, 0, 1310729, 0, 0, 1310730, 0, 0, 1310731, 0, 0, 1310732, 0, 0, 1310733, 0, 0, 1310734, 0, 0, 1310735, 0, 0, 1310736, 0, 0, 1310737, 0, 0, 1310738, 0, 0, 1310739, 0, 0, 1310740, 0, 0, 1310741, 0, 0, 1310742, 0, 0, 1310743, 0, 0, 1310744, 0, 0, 1310745, 0, 0, 1310746, 0, 0, 1310747, 0, 0, 1310748, 0, 0, 1310749, 0, 0, 1310750, 0, 0, 1310751, 0, 0, 1310752, 0, 0, 1310753, 0, 0, 1310754, 0, 0, 1310755, 0, 0, 1245219, 0, 0, 1179683, 0, 0, 1114147, 0, 0, 1048611, 0, 0, 983075, 0, 0, 917539, 0, 0, 720930, 0, 0, 655394, 0, 0, 589858, 0, 0, 524322, 0, 0, 458786, 0, 0, 393250, 0, 0, 393251, 0, 0, 327715, 0, 0, 262179, 0, 0, 196643, 0, 0, 196642, 0, 0, 131106, 0, 0, 65570, 0, 0, 65571, 0, 0, 131107, 0, 0, 131105, 0, 0, 131104, 0, 0, 131103, 0, 0, 196638, 0, 0, 196637, 0, 0, 196636, 0, 0, 196635, 0, 0, 196634, 0, 0, 196633, 0, 0, 196632, 0, 0, 196631, 0, 0, 196630, 0, 0, 196629, 0, 0, 196628, 0, 0, 262166, 0, 0, 262167, 0, 0, 262168, 0, 0, 262169, 0, 0, 262170, 0, 0, 262165, 0, 0, 262164, 0, 0, 327699, 0, 0, 327698, 0, 0, 327697, 0, 0, 327696, 0, 0, 327695, 0, 0, 327694, 0, 0, 327693, 0, 0, 327692, 0, 0, 327691, 0, 0, 327690, 0, 0, 327689, 0, 0, 327688, 0, 0, 327687, 0, 0, 393227, 0, 0, 393228, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 393235, 0, 0, 393236, 0, 0, 458773, 0, 0, 458774, 0, 0, 458775, 0, 0, 458772, 0, 0, 458771, 0, 0, 458770, 0, 0, 458769, 0, 0, 458768, 0, 0, 458767, 0, 0, 458766, 0, 0, 458765, 0, 0, 458764, 0, 0, 458763, 0, 0, 458762, 0, 0, 458761, 0, 0, 458760, 0, 0, 524296, 0, 0, 524297, 0, 0, 524298, 0, 0, 524299, 0, 0, 524300, 0, 0, 524301, 0, 0, 524302, 0, 0, 524303, 0, 0, 524304, 0, 0, 524305, 0, 0, 524306, 0, 0, 524307, 0, 0, 524308, 0, 0, 524309, 0, 0, 524310, 0, 0, 524311, 0, 0, 524312, 0, 0, 589843, 0, 0, 589842, 0, 0, 589841, 0, 0, 589840, 0, 0, 589839, 0, 0, 589838, 0, 0, 589837, 0, 0, 589836, 0, 0, 589835, 0, 0, 589834, 0, 0, 589844, 0, 0, 589845, 0, 0, 589846, 0, 0, 589847, 0, 0, 589848, 0, 0, 589849, 0, 0, 589850, 0, 0, 589851, 0, 0, 589852, 0, 0, 589853, 0, 0, 589854, 0, 0, 655386, 0, 0, 655385, 0, 0, 655384, 0, 0, 655383, 0, 0, 655382, 0, 0, 655381, 0, 0, 655380, 0, 0, 655379, 0, 0, 655378, 0, 0, 655377, 0, 0, 655376, 0, 0, 655375, 0, 0, 655374, 0, 0, 655373, 0, 0, 720915, 0, 0, 720914, 0, 0, 720913, 0, 0, 720912, 0, 0, 720911, 0, 0, 720910, 0, 0, 720909, 0, 0, 720908, 0, 0, 720907, 0, 0, 720906, 0, 0, 720905, 0, 0, 720904, 0, 0, 720903, 0, 0, 786439, 0, 0, 786440, 0, 0, 786441, 0, 0, 786442, 0, 0, 786443, 0, 0, 786444, 0, 0, 786445, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 786449, 0, 0, 786450, 0, 0, 786451, 0, 0, 786452, 0, 0, 786453, 0, 0, 786454, 0, 0, 851989, 0, 0, 851988, 0, 0, 851987, 0, 0, 851986, 0, 0, 851985, 0, 0, 851984, 0, 0, 851983, 0, 0, 851982, 0, 0, 851981, 0, 0, 851980, 0, 0, 851979, 0, 0, 851978, 0, 0, 851977, 0, 0, 917517, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917523, 0, 0, 917524, 0, 0, 917525, 0, 0, 983062, 0, 0, 983063, 0, 0, 983064, 0, 0, 983065, 0, 0, 983066, 0, 0, 983067, 0, 0, 1048603, 0, 0, 1048602, 0, 0, 1048601, 0, 0, 1048600, 0, 0, 1048599, 0, 0, 1048598, 0, 0, 1048597, 0, 0, 1048596, 0, 0, 1048595, 0, 0, 1048594, 0, 0, 1048593, 0, 0, 1048592, 0, 0, 1048591, 0, 0, 1048590, 0, 0, 1048589, 0, 0, 1048588, 0, 0, 1114134, 0, 0, 1114135, 0, 0, 1114133, 0, 0, 1114132, 0, 0, 1114131, 0, 0, 1114130, 0, 0, 1114129, 0, 0, 1114128, 0, 0, 1114127, 0, 0, 1114126, 0, 0, 1114125, 0, 0, 1114124, 0, 0, 1114123, 0, 0, 1114122, 0, 0, 1114121, 0, 0, 1179671, 0, 0, 1179672, 0, 0, 1179673, 0, 0, 1179670, 0, 0, 1179669, 0, 0, 1179668, 0, 0, 1179667, 0, 0, 1179666, 0, 0, 1179665, 0, 0, 1179664, 0, 0, 1179663, 0, 0, 1179662, 0, 0, 1179661, 0, 0, 1179660, 0, 0, 1179659, 0, 0, 1179658, 0, 0, 983055, 0, 0, 983054, 0, 0, 983053, 0, 0, 983052, 0, 0, 983051, 0, 0, 983050, 0, 0, 983049, 0, 0, 983048, 0, 0, 917511, 0, 0, 917510, 0, 0, 917509, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 983057, 0, 0, 983058, 0, 0, 983059, 0, 0, 983060, 0, 0, 983056, 0, 0, 983061, 0, 0, 851990, 0, 0, 851991, 0, 0, 851992, 0, 0, 851993, 0, 0, 851994, 0, 0, 786459, 0, 0, 786458, 0, 0, 720921, 0, 0, 720920, 0, 0, 720919, 0, 0, 720918, 0, 0, 524295, 0, 0, 458758, 0, 0, 458759, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 262159, 0, 0, 262158, 0, 0, 262157, 0, 0, 262156, 0, 0, 262155, 0, 0, 262154, 0, 0, 262153, 0, 0, 196616, 0, 0, 196615, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196623, 0, 0, 196624, 0, 0, 196625, 0, 0, 196626, 0, 0, 196627, 0, 0, 131086, 0, 0, 131085, 0, 0, 131084, 0, 0, 131083, 0, 0, 131082, 0, 0, 131081, 0, 0, 131080, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 131090, 0, 0, 65548, 0, 0, 65547, 0, 0, 65546, 0, 0, 65545, 0, 0, 65544, 0, 0, 65549, 0, 0, 65550, 0, 0, 65551, 0, 0, 65552, 0, 0, 65553, 0, 0, 65554, 0, 0, 65555, 0, 0, 65556, 0, 0, 131093, 0, 0, 131094, 0, 0, 131092, 0, 0, 131091, 0, 0, 131095, 0, 0, 327704, 0, 0, 327703, 0, 0, 327702, 0, 0, 327701, 0, 0, 327700, 0, 0, 262160, 0, 0, 262161, 0, 0, 262162, 0, 0, 262163, 0, 0, 131096, 0, 0, 131097, 0, 0, 65557, 0, 0, 65558, 0, 0, 65559, 0, 0, 65560, 0, 0, 131098, 0, 0, 65561, 0, 0, 65562, 0, 0, 65563, 0, 0, 65564, 0, 0, 65565, 0, 0, 65566, 0, 0, 65567, 0, 0, 65568, 0, 0, 65569, 0, 0, 131102, 0, 0, 196640, 0, 0, 196641, 0, 0, 196639, 0, 0, 131099, 0, 0, 131100, 0, 0, 131101, 0, 0, 327707, 0, 0, 327706, 0, 0, 327705, 0, 0, 393239, 0, 0, 393238, 0, 0, 393237, 0, 0, 458776, 0, 0, 458777, 0, 0, 458778, 0, 0, 458779, 0, 0, 524316, 0, 0, 524317, 0, 0, 524318, 0, 0, 720923, 0, 0, 720922, 0, 0, 720917, 0, 0, 720916, 0, 0, 720924, 0, 0, 786457, 0, 0, 786456, 0, 0, 917526, 0, 0, 917527, 0, 0, 917528, 0, 0, 917529, 0, 0, 917530, 0, 0, 983068, 0, 0, 1114136, 0, 0, 1114137, 0, 0, 1114138, 0, 0, 1179674, 0, 0, 1245204, 0, 0, 1245205, 0, 0, 1245206, 0, 0, 1245207, 0, 0, 1245208, 0, 0, 1245213, 0, 0, 1245212, 0, 0, 1245211, 0, 0, 1245210, 0, 0, 1245209, 0, 0, 1245214, 0, 0, 1245215, 0, 0, 1245216, 0, 0, 1245217, 0, 0, 1245218, 0, 0, 1179682, 0, 0, 1114145, 0, 0, 1048609, 0, 0, 983073, 0, 0, 917537, 0, 0, 852001, 0, 0, 786466, 0, 0, 786465, 0, 0, 1048610, 0, 0, 1114146, 0, 0, 983074, 0, 0, 917538, 0, 0, 852002, 0, 0, 917536, 0, 0, 983071, 0, 0, 1048607, 0, 0, 1114142, 0, 0, 1179677, 0, 0, 1179678, 0, 0, 1179679, 0, 0, 1179680, 0, 0, 1114140, 0, 0, 1114141, 0, 0, 1114143, 0, 0, 1114144, 0, 0, 1179681, 0, 0, 1114139, 0, 0, 1048604, 0, 0, 1048605, 0, 0, 1048606, 0, 0, 1179676, 0, 0, 1179675, 0, 0, 1048608, 0, 0, 983070, 0, 0, 983069, 0, 0, 917534, 0, 0, 917535, 0, 0, 917533, 0, 0, 917532, 0, 0, 917531, 0, 0, 851997, 0, 0, 851996, 0, 0, 851995, 0, 0, 786460, 0, 0, 786461, 0, 0, 786462, 0, 0, 786463, 0, 0, 851999, 0, 0, 852000, 0, 0, 983072, 0, 0, 851998, 0, 0, 786464, 0, 0, 720929, 0, 0, 720928, 0, 0, 720927, 0, 0, 655393, 0, 0, 655392, 0, 0, 655391, 0, 0, 655390, 0, 0, 589855, 0, 0, 589856, 0, 0, 655389, 0, 0, 655388, 0, 0, 655387, 0, 0, 720926, 0, 0, 720925, 0, 0, 589857, 0, 0, 524321, 0, 0, 524320, 0, 0, 524319, 0, 0, 458783, 0, 0, 458782, 0, 0, 458781, 0, 0, 393244, 0, 0, 393243, 0, 0, 393245, 0, 0, 393246, 0, 0, 393247, 0, 0, 393248, 0, 0, 393249, 0, 0, 458785, 0, 0, 458784, 0, 0, 327714, 0, 0, 327713, 0, 0, 262177, 0, 0, 262176, 0, 0, 262175, 0, 0, 262174, 0, 0, 262173, 0, 0, 262178, 0, 0, 262172, 0, 0, 262171, 0, 0, 327710, 0, 0, 327709, 0, 0, 327708, 0, 0, 327711, 0, 0, 327712, 0, 0, 393241, 0, 0, 393240, 0, 0, 393242, 0, 0, 458780, 0, 0, 524315, 0, 0, 524314, 0, 0, 524313, 0, 0, 786455, 0, 0, 1245203, 0, 0, 1245202, 0, 0, 1245201, 0, 0, 1245200, 0, 0, 1245199, 0, 0, 1245198, 0, 0, 1245197, 0, 0, 1245196, 0, 0, 1245195, 0, 0, 1245194, 0, 0, 1245193, 0, 0, 1245192, 0, 0, 1245191, 0, 0, 1245190, 0, 0, 1245189, 0, 0, 1245188, 0, 0, 1179652, 0, 0, 1179651, 0, 0, 1179650, 0, 0, 1179649, 0, 0, 1114113, 0, 0, 1048577, 0, 0, 983041, 0, 0, 917505, 0, 0, 851969, 0, 0, 851970, 0, 0, 786434, 0, 0, 720898, 0, 0, 655362, 0, 0, 589826, 0, 0, 524290, 0, 0, 524289, 0, 0, 458753, 0, 0, 393217, 0, 0, 327681, 0, 0, 262145, 0, 0, 196609, 0, 0, 131073, 0, 0, 65537, 0, 0, 589825, 0, 0, 655361, 0, 0, 720897, 0, 0, 786433, 0, 0, 458754, 0, 0, 393218, 0, 0, 327682, 0, 0, 262146, 0, 0, 196610, 0, 0, 131074, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 131079, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 196614, 0, 0, 196613, 0, 0, 196612, 0, 0, 196611, 0, 0, 65543, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 327686, 0, 0, 327685, 0, 0, 327684, 0, 0, 327683, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 458757, 0, 0, 458756, 0, 0, 458755, 0, 0, 524293, 0, 0, 524294, 0, 0, 589831, 0, 0, 589830, 0, 0, 589829, 0, 0, 589828, 0, 0, 589827, 0, 0, 589832, 0, 0, 589833, 0, 0, 524292, 0, 0, 524291, 0, 0, 655366, 0, 0, 655365, 0, 0, 655364, 0, 0, 655363, 0, 0, 720899, 0, 0, 720900, 0, 0, 655367, 0, 0, 655368, 0, 0, 655369, 0, 0, 655370, 0, 0, 655371, 0, 0, 655372, 0, 0, 720902, 0, 0, 720901, 0, 0, 786438, 0, 0, 786437, 0, 0, 786436, 0, 0, 786435, 0, 0, 851975, 0, 0, 851974, 0, 0, 851973, 0, 0, 851972, 0, 0, 851971, 0, 0, 851976, 0, 0, 917508, 0, 0, 917507, 0, 0, 917506, 0, 0, 983043, 0, 0, 983042, 0, 0, 983044, 0, 0, 983045, 0, 0, 983046, 0, 0, 983047, 0, 0, 1048582, 0, 0, 1048583, 0, 0, 1048581, 0, 0, 1048580, 0, 0, 1048579, 0, 0, 1048578, 0, 0, 1114118, 0, 0, 1114117, 0, 0, 1114116, 0, 0, 1114115, 0, 0, 1114119, 0, 0, 1179655, 0, 0, 1179654, 0, 0, 1179653, 0, 0, 1179656, 0, 0, 1179657, 0, 0, 1048584, 0, 0, 1048585, 0, 0, 1048586, 0, 0, 1048587, 0, 0, 1114120, 0, 0, 1114114, 0, 0)
+
+[node name="Oscuridad" type="CanvasModulate" parent="." unique_id=1074225423]
+visible = false
+position = Vector2(1, 0)
+color = Color(0.5336766, 0.54320675, 0.64456075, 1)
+
+[node name="StartPoint" type="Marker2D" parent="." unique_id=740508956]
+position = Vector2(104, 572)
+
+[node name="AltarFinal" parent="." unique_id=1508812033 instance=ExtResource("3_lia11")]
+position = Vector2(265, 499)
+
+[node name="Player" parent="." unique_id=1088824485 instance=ExtResource("2_dsnit")]
+
+[node name="InventoryBar" parent="." unique_id=1376625741 instance=ExtResource("4_dqvne")]
+
+[node name="JournalUI" parent="." unique_id=1229920834 instance=ExtResource("5_d3hlp")]
+visible = false
+current_level = 3
+
+[node name="ScrollMessaje" parent="." unique_id=233710266 instance=ExtResource("6_w5t8p")]
+visible = false
+message_id = "final_mensaje"
+follow_up_ids = Array[String](["final_mision"])
+
+[node name="PauseMenu" parent="." unique_id=653895923 instance=ExtResource("7_w5t8p")]
+visible = false
+
+[node name="Persona1" parent="." unique_id=1537977830 instance=ExtResource("9_12fuq")]
+position = Vector2(705, 204.99998)
+
+[node name="Persona2" parent="." unique_id=1451249498 instance=ExtResource("10_pwj04")]
+position = Vector2(795, 211.99998)
+
+[node name="Persona3" parent="." unique_id=1053273708 instance=ExtResource("11_dcu56")]
+position = Vector2(885, 201.99998)
+
+[node name="Arbusto" parent="." unique_id=565208816 instance=ExtResource("12_ubrap")]
+position = Vector2(512, 280)
+
+[node name="Persona4" parent="." unique_id=1687973691 instance=ExtResource("13_ro5aj")]
+position = Vector2(975, 214.99998)
+
+[node name="Persona5" parent="." unique_id=1575225632 instance=ExtResource("14_qdunp")]
+position = Vector2(1065, 204.99998)
+
+[node name="Persona6" parent="." unique_id=1069742183 instance=ExtResource("15_3efi5")]
+position = Vector2(790, 345)
+
+[node name="Persona7" parent="." unique_id=709716000 instance=ExtResource("16_jb5fw")]
+position = Vector2(955, 350)
+
+[node name="Persona8" parent="." unique_id=1402062924 instance=ExtResource("17_bm1q7")]
+position = Vector2(1055, 342)
+
+[node name="Pino" parent="." unique_id=1061197245 instance=ExtResource("18_20j0o")]
+position = Vector2(160, 50)
+
+[node name="Pinos" parent="." unique_id=577072453 instance=ExtResource("19_gnn5c")]
+position = Vector2(1086, 577)
+
+[node name="Pinos2" parent="." unique_id=445313671 instance=ExtResource("19_gnn5c")]
+position = Vector2(1031, 532)
+
+[node name="Piedra" parent="." unique_id=294083158 instance=ExtResource("21_jcpyu")]
+position = Vector2(590, 206)
+
+[node name="Casa" parent="." unique_id=1874260870 instance=ExtResource("22_xqdtu")]
+position = Vector2(705, 130)
+
+[node name="Casa2" parent="." unique_id=1696826778 instance=ExtResource("23_cckx8")]
+position = Vector2(875, 130)
+
+[node name="Casa3" parent="." unique_id=1554298396 instance=ExtResource("24_gt4gq")]
+position = Vector2(1045, 130)
+
+[node name="Casa4" parent="." unique_id=1956701468 instance=ExtResource("25_8sv4d")]
+position = Vector2(705, 280)
+
+[node name="Casa5" parent="." unique_id=16116632 instance=ExtResource("26_sevrb")]
+position = Vector2(875, 280)
+
+[node name="Casa6" parent="." unique_id=757628370 instance=ExtResource("27_ovm6a")]
+position = Vector2(1045, 280)
+
+[node name="VegArbusto_01" parent="." unique_id=1962053480 instance=ExtResource("12_ubrap")]
+position = Vector2(835, 520)
+
+[node name="VegPino_01" parent="." unique_id=1253919995 instance=ExtResource("18_20j0o")]
+position = Vector2(478, 562)
+
+[node name="VegArbusto_02" parent="." unique_id=685594615 instance=ExtResource("12_ubrap")]
+position = Vector2(420, 198)
+
+[node name="VegPino_02" parent="." unique_id=1962836038 instance=ExtResource("18_20j0o")]
+position = Vector2(388, 283)
+
+[node name="Abuelita" parent="." unique_id=1520478841 instance=ExtResource("28_pwj04")]
+position = Vector2(960, 114)
+
+[node name="VegPiedra_01" parent="." unique_id=218386805 instance=ExtResource("21_jcpyu")]
+position = Vector2(206, 590)
+
+[node name="VegArbusto_03" parent="." unique_id=915995571 instance=ExtResource("12_ubrap")]
+position = Vector2(662, 550)
+
+[node name="VegArbusto_37" parent="." unique_id=1993889135 instance=ExtResource("12_ubrap")]
+position = Vector2(650, 558)
+
+[node name="VegArbusto_38" parent="." unique_id=162610073 instance=ExtResource("12_ubrap")]
+position = Vector2(866, 418)
+
+[node name="VegArbusto_39" parent="." unique_id=2130761349 instance=ExtResource("12_ubrap")]
+position = Vector2(879, 427)
+
+[node name="VegArbusto_40" parent="." unique_id=1298599137 instance=ExtResource("12_ubrap")]
+position = Vector2(818, 468)
+
+[node name="VegArbusto_04" parent="." unique_id=1157342 instance=ExtResource("12_ubrap")]
+position = Vector2(891, 643)
+
+[node name="VegArbusto_05" parent="." unique_id=880011965 instance=ExtResource("12_ubrap")]
+position = Vector2(555, 74)
+
+[node name="VegPino_03" parent="." unique_id=1142879544 instance=ExtResource("18_20j0o")]
+position = Vector2(424, 98)
+
+[node name="VegArbusto_06" parent="." unique_id=594830768 instance=ExtResource("12_ubrap")]
+position = Vector2(430, 361)
+
+[node name="VegArbusto_55" parent="." unique_id=1395262197 instance=ExtResource("12_ubrap")]
+position = Vector2(441, 368)
+
+[node name="VegArbusto_56" parent="." unique_id=2108545732 instance=ExtResource("12_ubrap")]
+position = Vector2(552, 418)
+
+[node name="VegArbusto_57" parent="." unique_id=172842601 instance=ExtResource("12_ubrap")]
+position = Vector2(559, 425)
+
+[node name="VegArbusto_58" parent="." unique_id=1913867033 instance=ExtResource("12_ubrap")]
+position = Vector2(498, 285)
+
+[node name="VegArbusto_07" parent="." unique_id=797856984 instance=ExtResource("12_ubrap")]
+position = Vector2(150, 264)
+
+[node name="VegArbusto_08" parent="." unique_id=190556445 instance=ExtResource("12_ubrap")]
+position = Vector2(510, 155)
+
+[node name="VegPinos_01" parent="." unique_id=2088832985 instance=ExtResource("19_gnn5c")]
+position = Vector2(111, 395)
+
+[node name="VegPinos_02" parent="." unique_id=203409970 instance=ExtResource("19_gnn5c")]
+position = Vector2(183, 330)
+
+[node name="VegPinos_17" parent="." unique_id=702837965 instance=ExtResource("19_gnn5c")]
+position = Vector2(66, 279)
+
+[node name="VegPinos_18" parent="." unique_id=199934028 instance=ExtResource("19_gnn5c")]
+position = Vector2(159, 101)
+
+[node name="VegPinos_19" parent="." unique_id=1124994230 instance=ExtResource("19_gnn5c")]
+position = Vector2(515, 379)
+
+[node name="VegPinos_20" parent="." unique_id=685756211 instance=ExtResource("19_gnn5c")]
+position = Vector2(450, 165)
+
+[node name="VegPinos_21" parent="." unique_id=1794372294 instance=ExtResource("19_gnn5c")]
+position = Vector2(720, 542)
+
+[node name="VegPinos_22" parent="." unique_id=1135635400 instance=ExtResource("19_gnn5c")]
+position = Vector2(39, 498)
+
+[node name="VegPino_04" parent="." unique_id=861118167 instance=ExtResource("18_20j0o")]
+position = Vector2(303, 286)
+
+[node name="VegPino_21" parent="." unique_id=1857274984 instance=ExtResource("18_20j0o")]
+position = Vector2(57, 162)
+
+[node name="VegPino_22" parent="." unique_id=400339616 instance=ExtResource("18_20j0o")]
+position = Vector2(313, 147)
+
+[node name="VegPino_23" parent="." unique_id=1376235985 instance=ExtResource("18_20j0o")]
+position = Vector2(235, 280)
+
+[node name="VegPino_24" parent="." unique_id=923477456 instance=ExtResource("18_20j0o")]
+position = Vector2(557, 118)
+
+[node name="VegPino_25" parent="." unique_id=366669221 instance=ExtResource("18_20j0o")]
+position = Vector2(546, 220)
+
+[node name="VegPino_26" parent="." unique_id=1628078698 instance=ExtResource("18_20j0o")]
+position = Vector2(589, 351)
+
+[node name="VegPino_27" parent="." unique_id=789046672 instance=ExtResource("18_20j0o")]
+position = Vector2(487, 449)
+
+[node name="VegPino_28" parent="." unique_id=1378927760 instance=ExtResource("18_20j0o")]
+position = Vector2(401, 526)
+
+[node name="VegPino_29" parent="." unique_id=608071058 instance=ExtResource("18_20j0o")]
+position = Vector2(448, 626)
+
+[node name="VegPino_30" parent="." unique_id=1947715116 instance=ExtResource("18_20j0o")]
+position = Vector2(740, 623)
+
+[node name="VegPino_32" parent="." unique_id=761502910 instance=ExtResource("18_20j0o")]
+position = Vector2(619, 606)
+
+[node name="VegPino_31" parent="." unique_id=1870358483 instance=ExtResource("18_20j0o")]
+position = Vector2(737, 447)
+
+[node name="VegPino_05" parent="." unique_id=1738110554 instance=ExtResource("18_20j0o")]
+position = Vector2(349, 369)
+
+[node name="VegArbusto_09" parent="." unique_id=1931845418 instance=ExtResource("12_ubrap")]
+position = Vector2(618, 615)
+
+[node name="VegPinos_03" parent="." unique_id=348164677 instance=ExtResource("19_gnn5c")]
+position = Vector2(137, 202)
+
+[node name="VegPino_06" parent="." unique_id=1362907050 instance=ExtResource("18_20j0o")]
+position = Vector2(330, 71)
+
+[node name="VegPiedra_02" parent="." unique_id=1624648283 instance=ExtResource("21_jcpyu")]
+position = Vector2(96, 155)
+
+[node name="VegPinos_04" parent="." unique_id=725293383 instance=ExtResource("19_gnn5c")]
+position = Vector2(623, 449)
+
+[node name="VegPino_07" parent="." unique_id=2114736020 instance=ExtResource("18_20j0o")]
+position = Vector2(922, 450)
+
+[node name="VegPino_19" parent="." unique_id=1189512817 instance=ExtResource("18_20j0o")]
+position = Vector2(833, 466)
+
+[node name="VegPino_20" parent="." unique_id=1511223640 instance=ExtResource("18_20j0o")]
+position = Vector2(874, 412)
+
+[node name="VegArbusto_10" parent="." unique_id=232433270 instance=ExtResource("12_ubrap")]
+position = Vector2(88, 67)
+
+[node name="VegPino_08" parent="." unique_id=1560479422 instance=ExtResource("18_20j0o")]
+position = Vector2(450, 267)
+
+[node name="VegPiedra_03" parent="." unique_id=1638732494 instance=ExtResource("21_jcpyu")]
+position = Vector2(991, 443)
+
+[node name="VegArbusto_11" parent="." unique_id=507859511 instance=ExtResource("12_ubrap")]
+position = Vector2(471, 33)
+
+[node name="VegPino_09" parent="." unique_id=724824991 instance=ExtResource("18_20j0o")]
+position = Vector2(989, 569)
+
+[node name="VegPino_33" parent="." unique_id=554197514 instance=ExtResource("18_20j0o")]
+position = Vector2(1120, 488)
+
+[node name="VegArbusto_12" parent="." unique_id=1325808952 instance=ExtResource("12_ubrap")]
+position = Vector2(218, 109)
+
+[node name="VegPiedra_04" parent="." unique_id=497207636 instance=ExtResource("21_jcpyu")]
+position = Vector2(773, 554)
+
+[node name="VegPinos_05" parent="." unique_id=789290519 instance=ExtResource("19_gnn5c")]
+position = Vector2(357, 210)
+
+[node name="VegArbusto_13" parent="." unique_id=980716863 instance=ExtResource("12_ubrap")]
+position = Vector2(33, 202)
+
+[node name="VegPinos_06" parent="." unique_id=236194068 instance=ExtResource("19_gnn5c")]
+position = Vector2(27, 84)
+
+[node name="VegArbusto_14" parent="." unique_id=315313012 instance=ExtResource("12_ubrap")]
+position = Vector2(539, 641)
+
+[node name="VegArbusto_15" parent="." unique_id=1613127028 instance=ExtResource("12_ubrap")]
+position = Vector2(225, 192)
+
+[node name="VegPiedra_05" parent="." unique_id=1933081414 instance=ExtResource("21_jcpyu")]
+position = Vector2(1038, 617)
+
+[node name="VegPiedra_06" parent="." unique_id=962110802 instance=ExtResource("21_jcpyu")]
+position = Vector2(1108, 492)
+
+[node name="VegPino_10" parent="." unique_id=129980909 instance=ExtResource("18_20j0o")]
+position = Vector2(548, 557)
+
+[node name="VegArbusto_16" parent="." unique_id=1974989567 instance=ExtResource("12_ubrap")]
+position = Vector2(261, 45)
+
+[node name="VegPiedra_07" parent="." unique_id=838999377 instance=ExtResource("21_jcpyu")]
+position = Vector2(41, 518)
+
+[node name="VegArbusto_17" parent="." unique_id=1929928474 instance=ExtResource("12_ubrap")]
+position = Vector2(1067, 30)
+
+[node name="VegPino_11" parent="." unique_id=1580718561 instance=ExtResource("18_20j0o")]
+position = Vector2(819, 649)
+
+[node name="VegPinos_07" parent="." unique_id=543788070 instance=ExtResource("19_gnn5c")]
+position = Vector2(363, 124)
+
+[node name="VegPinos_15" parent="." unique_id=559875101 instance=ExtResource("19_gnn5c")]
+position = Vector2(705, 384)
+
+[node name="VegPinos_16" parent="." unique_id=352720377 instance=ExtResource("19_gnn5c")]
+position = Vector2(705, 384)
+
+[node name="VegPiedra_08" parent="." unique_id=1454987869 instance=ExtResource("21_jcpyu")]
+position = Vector2(543, 251)
+
+[node name="VegPiedra_16" parent="." unique_id=1531260990 instance=ExtResource("21_jcpyu")]
+position = Vector2(212, 323)
+
+[node name="VegPiedra_17" parent="." unique_id=260533791 instance=ExtResource("21_jcpyu")]
+position = Vector2(177, 461)
+
+[node name="VegArbusto_18" parent="." unique_id=204022746 instance=ExtResource("12_ubrap")]
+position = Vector2(257, 353)
+
+[node name="VegArbusto_27" parent="." unique_id=741725721 instance=ExtResource("12_ubrap")]
+position = Vector2(181, 334)
+
+[node name="VegArbusto_46" parent="." unique_id=116198492 instance=ExtResource("12_ubrap")]
+position = Vector2(191, 342)
+
+[node name="VegArbusto_51" parent="." unique_id=1837109249 instance=ExtResource("12_ubrap")]
+position = Vector2(133, 207)
+
+[node name="VegArbusto_52" parent="." unique_id=1823329094 instance=ExtResource("12_ubrap")]
+position = Vector2(144, 212)
+
+[node name="VegArbusto_53" parent="." unique_id=1048106369 instance=ExtResource("12_ubrap")]
+position = Vector2(253, 147)
+
+[node name="VegArbusto_54" parent="." unique_id=1780084113 instance=ExtResource("12_ubrap")]
+position = Vector2(243, 152)
+
+[node name="VegArbusto_47" parent="." unique_id=567495181 instance=ExtResource("12_ubrap")]
+position = Vector2(240, 290)
+
+[node name="VegArbusto_48" parent="." unique_id=1876009479 instance=ExtResource("12_ubrap")]
+position = Vector2(372, 135)
+
+[node name="VegArbusto_49" parent="." unique_id=2088927428 instance=ExtResource("12_ubrap")]
+position = Vector2(377, 143)
+
+[node name="VegArbusto_50" parent="." unique_id=1233189946 instance=ExtResource("12_ubrap")]
+position = Vector2(464, 169)
+
+[node name="VegArbusto_19" parent="." unique_id=194017074 instance=ExtResource("12_ubrap")]
+position = Vector2(84, 458)
+
+[node name="VegArbusto_41" parent="." unique_id=1932008838 instance=ExtResource("12_ubrap")]
+position = Vector2(78, 463)
+
+[node name="VegArbusto_42" parent="." unique_id=1605565690 instance=ExtResource("12_ubrap")]
+position = Vector2(35, 388)
+
+[node name="VegArbusto_43" parent="." unique_id=1363029454 instance=ExtResource("12_ubrap")]
+position = Vector2(35, 388)
+
+[node name="VegPino_12" parent="." unique_id=1891250381 instance=ExtResource("18_20j0o")]
+position = Vector2(608, 269)
+
+[node name="VegPinos_08" parent="." unique_id=1250435355 instance=ExtResource("19_gnn5c")]
+position = Vector2(317, 594)
+
+[node name="VegArbusto_20" parent="." unique_id=483170232 instance=ExtResource("12_ubrap")]
+position = Vector2(120, 649)
+
+[node name="VegArbusto_21" parent="." unique_id=19546963 instance=ExtResource("12_ubrap")]
+position = Vector2(531, 493)
+
+[node name="VegArbusto_22" parent="." unique_id=1403175480 instance=ExtResource("12_ubrap")]
+position = Vector2(29, 599)
+
+[node name="VegArbusto_23" parent="." unique_id=913526315 instance=ExtResource("12_ubrap")]
+position = Vector2(38, 435)
+
+[node name="VegArbusto_44" parent="." unique_id=1302409841 instance=ExtResource("12_ubrap")]
+position = Vector2(47, 442)
+
+[node name="VegArbusto_45" parent="." unique_id=779102405 instance=ExtResource("12_ubrap")]
+position = Vector2(309, 292)
+
+[node name="VegArbusto_24" parent="." unique_id=390214974 instance=ExtResource("12_ubrap")]
+position = Vector2(609, 132)
+
+[node name="VegPiedra_09" parent="." unique_id=1053828138 instance=ExtResource("21_jcpyu")]
+position = Vector2(879, 574)
+
+[node name="VegPinos_09" parent="." unique_id=626190335 instance=ExtResource("19_gnn5c")]
+position = Vector2(288, 218)
+
+[node name="VegArbusto_25" parent="." unique_id=769922457 instance=ExtResource("12_ubrap")]
+position = Vector2(643, 39)
+
+[node name="VegArbusto_26" parent="." unique_id=101159708 instance=ExtResource("12_ubrap")]
+position = Vector2(1048, 526)
+
+[node name="VegArbusto_59" parent="." unique_id=405722633 instance=ExtResource("12_ubrap")]
+position = Vector2(1041, 537)
+
+[node name="VegArbusto_60" parent="." unique_id=1146239172 instance=ExtResource("12_ubrap")]
+position = Vector2(1078, 581)
+
+[node name="VegArbusto_61" parent="." unique_id=1986827473 instance=ExtResource("12_ubrap")]
+position = Vector2(1092, 586)
+
+[node name="VegArbusto_62" parent="." unique_id=204834082 instance=ExtResource("12_ubrap")]
+position = Vector2(990, 574)
+
+[node name="VegArbusto_63" parent="." unique_id=1578006148 instance=ExtResource("12_ubrap")]
+position = Vector2(982, 579)
+
+[node name="VegPino_13" parent="." unique_id=1785421002 instance=ExtResource("18_20j0o")]
+position = Vector2(366, 434)
+
+[node name="VegArbusto_28" parent="." unique_id=1999029846 instance=ExtResource("12_ubrap")]
+position = Vector2(683, 473)
+
+[node name="VegPino_14" parent="." unique_id=908603919 instance=ExtResource("18_20j0o")]
+position = Vector2(163, 476)
+
+[node name="VegPinos_10" parent="." unique_id=1228624085 instance=ExtResource("19_gnn5c")]
+position = Vector2(245, 141)
+
+[node name="VegArbusto_29" parent="." unique_id=632149050 instance=ExtResource("12_ubrap")]
+position = Vector2(265, 628)
+
+[node name="VegArbusto_30" parent="." unique_id=1615632459 instance=ExtResource("12_ubrap")]
+position = Vector2(685, 610)
+
+[node name="VegPiedra_10" parent="." unique_id=1817661050 instance=ExtResource("21_jcpyu")]
+position = Vector2(1061, 431)
+
+[node name="VegArbusto_31" parent="." unique_id=1302980788 instance=ExtResource("12_ubrap")]
+position = Vector2(931, 43)
+
+[node name="VegPino_15" parent="." unique_id=1577323232 instance=ExtResource("18_20j0o")]
+position = Vector2(1123, 648)
+
+[node name="VegArbusto_32" parent="." unique_id=2104971831 instance=ExtResource("12_ubrap")]
+position = Vector2(353, 645)
+
+[node name="VegPinos_11" parent="." unique_id=1863092483 instance=ExtResource("19_gnn5c")]
+position = Vector2(384, 32)
+
+[node name="VegPiedra_11" parent="." unique_id=59557385 instance=ExtResource("21_jcpyu")]
+position = Vector2(489, 218)
+
+[node name="VegPinos_12" parent="." unique_id=374613640 instance=ExtResource("19_gnn5c")]
+position = Vector2(839, 36)
+
+[node name="VegPiedra_12" parent="." unique_id=840718770 instance=ExtResource("21_jcpyu")]
+position = Vector2(903, 512)
+
+[node name="VegPiedra_14" parent="." unique_id=1137606885 instance=ExtResource("21_jcpyu")]
+position = Vector2(896, 518)
+
+[node name="VegPiedra_15" parent="." unique_id=531404071 instance=ExtResource("21_jcpyu")]
+position = Vector2(913, 520)
+
+[node name="VegPino_16" parent="." unique_id=523858443 instance=ExtResource("18_20j0o")]
+position = Vector2(602, 514)
+
+[node name="VegPiedra_13" parent="." unique_id=1056571101 instance=ExtResource("21_jcpyu")]
+position = Vector2(436, 423)
+
+[node name="VegArbusto_33" parent="." unique_id=386947161 instance=ExtResource("12_ubrap")]
+position = Vector2(160, 138)
+
+[node name="VegPino_17" parent="." unique_id=737287788 instance=ExtResource("18_20j0o")]
+position = Vector2(708, 30)
+
+[node name="VegPinos_13" parent="." unique_id=924048860 instance=ExtResource("19_gnn5c")]
+position = Vector2(971, 507)
+
+[node name="VegPinos_14" parent="." unique_id=543900549 instance=ExtResource("19_gnn5c")]
+position = Vector2(963, 650)
+
+[node name="VegArbusto_34" parent="." unique_id=1395760140 instance=ExtResource("12_ubrap")]
+position = Vector2(490, 96)
+
+[node name="VegPino_18" parent="." unique_id=1415095533 instance=ExtResource("18_20j0o")]
+position = Vector2(1004, 33)
+
+[node name="VegArbusto_35" parent="." unique_id=2112523177 instance=ExtResource("12_ubrap")]
+position = Vector2(1126, 432)
+
+[node name="VegArbusto_64" parent="." unique_id=481855429 instance=ExtResource("12_ubrap")]
+position = Vector2(1007, 446)
+
+[node name="VegArbusto_65" parent="." unique_id=1096064614 instance=ExtResource("12_ubrap")]
+position = Vector2(1002, 435)
+
+[node name="VegArbusto_36" parent="." unique_id=1494446758 instance=ExtResource("12_ubrap")]
+position = Vector2(290, 406)

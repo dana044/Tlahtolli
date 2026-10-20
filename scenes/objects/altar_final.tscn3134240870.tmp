@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://byfj14rnemv3a"]
+
+[ext_resource type="Script" uid="uid://dd1i8lw7ov3ig" path="res://scripts/objets/altar_final.gd" id="1_j2naj"]
+[ext_resource type="Texture2D" uid="uid://gfh3j4a7sp3k" path="res://assets/sprites/objects/altar_final.png" id="1_qbkc7"]
+[ext_resource type="Script" uid="uid://deyi3ngpcrnwa" path="res://scripts/ui/interact_prompt.gd" id="1_y3tas"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulp5v"]
+size = Vector2(94, 63)
+
+[node name="AltarFinal" type="StaticBody2D" unique_id=1508812033]
+script = ExtResource("1_j2naj")
+show_placeholder = null
+placeholder_size = null
+offering_offsets = null
+offering_delay = null
+glow_enabled = null
+glow_color = null
+glow_energy = null
+glow_scale = null
+glow_offset = null
+glow_fade_time = null
+
+[node name="Altar" type="Sprite2D" parent="." unique_id=1912045796]
+position = Vector2(0, -58)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_qbkc7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=517699383]
+position = Vector2(0, -40.5)
+scale = Vector2(1.2, 1.2)
+shape = SubResource("RectangleShape2D_ulp5v")
+
+[node name="PromptE" type="Sprite2D" parent="." unique_id=13187404]
+position = Vector2(0, -7)
+script = ExtResource("1_y3tas")
+prompt_distance = 100.0
+prompt_offset = Vector2(0, -100)
+prompt_scale = Vector2(0.5, 0.5)
+require_interactable_group = false
+required_items = Array[String](["moneda", "medallon", "carboncillo"])

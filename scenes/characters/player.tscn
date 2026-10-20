@@ -23,7 +23,7 @@ script = ExtResource("1_yewv4")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276208741]
 position = Vector2(0, -13)
 sprite_frames = ExtResource("2_yewv4")
-animation = &"walk_e"
+animation = &"walk_w"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1946720363]
 position = Vector2(0, -2.5)

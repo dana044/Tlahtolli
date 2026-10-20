@@ -1,9 +1,34 @@
 {
   "ofrenda_inicio": [
-    {"speaker": "Protagonista", "text": "Moneda de oro, medallón de plata y carboncillo… Es hora."}
+	{"speaker": "Protagonista", "text": "Moneda de oro, medallón de plata y carboncillo… Es hora."}
   ],
   "abuelita_final": [
-    {"speaker": "Abuelita", "text": "Gracias, mijo/a. Las leyendas ya no tendrán que gritar para ser recordadas."},
-    {"speaker": "Abuelita", "text": "Y tú ya sabes que todo pueblo vive mientras alguien cuente sus historias."}
+	{"speaker": "Abuelita", "text": "Gracias, mijo/a. Las leyendas ya no tendrán que gritar para ser recordadas."},
+	{"speaker": "Abuelita", "text": "Y tú ya sabes que todo pueblo vive mientras alguien cuente sus historias."}
+  ],
+  "persona_1": [
+	{"speaker": "Habitante", "text": "¡Gracias! Nos salvaste."},
+	{"speaker": "Habitante", "text": "Ya podemos volver a escuchar las historias de siempre."}
+  ],
+  "persona_2": [
+	{"speaker": "Habitante", "text": "Qué bueno que llegaste a tiempo. Las leyendas ya no se sienten tan lejos."}
+  ],
+  "persona_3": [
+	{"speaker": "Habitante", "text": "Gracias por devolvernos la luz. Esta noche volveremos a contar las historias."}
+  ],
+  "persona_4": [
+	{"speaker": "Habitante", "text": "Mi abuela decía que las leyendas siempre encuentran a quien las escucha. Tenía razón."}
+  ],
+  "persona_5": [
+	{"speaker": "Habitante", "text": "Gracias por no dejar que se olvidaran. ¡Todo el pueblo te lo agradece!"}
+  ],
+  "persona_6": [
+	{"speaker": "Habitante", "text": "Cuando la neblina se disolvió, sentí que el pueblo respiraba de nuevo."}
+  ],
+  "persona_7": [
+	{"speaker": "Habitante", "text": "Gracias, de verdad. Ahora mis hijos conocerán a la Mulata, a la Llorona y a los chaneques."}
+  ],
+  "persona_8": [
+	{"speaker": "Habitante", "text": "Ve con la abuelita, ella te estaba esperando. ¡Gracias por todo!"}
   ]
 }
